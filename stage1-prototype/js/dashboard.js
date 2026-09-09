@@ -330,15 +330,37 @@ function renderAllKpis() {
       "Unable to find data for the selected ward.",
       "error"
     );
-
     return;
   }
 
   hideMessage();
 
+  /* ----------------------------------------------------------
+     KPI rendering
+     ---------------------------------------------------------- */
+
   renderOverviewKpis(dataset);
   renderPatientProfileKpis(dataset);
   renderMortalityKpis(dataset);
+
+
+  /* ----------------------------------------------------------
+     Chart rendering
+     ---------------------------------------------------------- */
+
+  if (window.ICUCharts) {
+
+    window.ICUCharts.renderAll(
+      dataset
+    );
+
+  } else {
+
+    console.warn(
+      "ICUCharts is not available. Check that charts.js is loaded before dashboard.js."
+    );
+
+  }
 }
 
 

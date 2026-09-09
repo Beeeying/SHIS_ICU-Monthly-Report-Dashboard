@@ -2,26 +2,32 @@
  * HGH ICU Monthly Report Dashboard
  * charts.js
  *
- * Purpose:
- * - Render all Chart.js visualizations
- * - Map dashboard JSON data to chart components
- * - Reuse visual rules from chart-config.js
- * - Destroy and recreate charts safely when filters change
+ * Stage 1 Reference Implementation
  *
- * Data / UI responsibilities:
+ * Implemented:
  *
+ * ICU Overview
+ * ├── Admissions by Ward
+ * ├── Patient Disposition
+ * ├── Age Distribution
+ * └── Admission Source
+ *
+ *
+ * Architecture:
+ *
+ * mock_august_data.json
+ *        ↓
  * dashboard.js
- *   → loads data
- *   → manages filters
- *   → selects active dataset
- *   → calls ICUCharts.renderAll(dataset)
- *
+ *        ↓
+ * active dataset
+ *        ↓
+ * ICUCharts.renderAll(dataset)
+ *        ↓
  * charts.js
- *   → receives already-selected dataset
- *   → renders charts
- *
- * chart-config.js
- *   → owns shared colors / tooltip / axis / styling rules
+ *        ↓
+ * ICUChartConfig
+ *        ↓
+ * Chart.js
  */
 
 "use strict";
@@ -37,15 +43,30 @@
     if (!window.ICUChartConfig) {
 
       console.error(
-        "ICUChartConfig is not available. Load chart-config.js before charts.js."
+        "ICUChartConfig is not available. " +
+        "Make sure chart-config.js is loaded before charts.js."
       );
 
       return null;
-
     }
 
     return window.ICUChartConfig;
+  }
 
+
+  function isChartJsAvailable() {
+
+    if (typeof Chart === "undefined") {
+
+      console.error(
+        "Chart.js is not available. " +
+        "Make sure Chart.js is loaded before chart-config.js and charts.js."
+      );
+
+      return false;
+    }
+
+    return true;
   }
 
 
@@ -54,23 +75,17 @@
      ======================================================================== */
 
   /**
-   * Store Chart.js instances here.
+   * Store every active Chart.js instance here.
    *
-   * Important:
-   * Chart.js does not allow a new chart to reuse the same canvas
-   * before the previous chart instance is destroyed.
-   *
-   * Example:
-   *
-   * chartInstances.overviewWard
-   * chartInstances.patientAge
+   * Before a chart is rendered again,
+   * the previous instance must be destroyed.
    */
 
   const chartInstances = {};
 
 
   /* ========================================================================
-     3. Generic chart lifecycle helpers
+     3. Chart lifecycle
      ======================================================================== */
 
   function destroyChart(chartKey) {
@@ -78,14 +93,13 @@
     const chart =
       chartInstances[chartKey];
 
-    if (chart) {
-
-      chart.destroy();
-
-      delete chartInstances[chartKey];
-
+    if (!chart) {
+      return;
     }
 
+    chart.destroy();
+
+    delete chartInstances[chartKey];
   }
 
 
@@ -93,20 +107,12 @@
 
     Object.keys(chartInstances)
       .forEach(destroyChart);
-
   }
 
 
-  /**
-   * The current index.html uses <div> placeholders.
-   *
-   * When Chart.js implementation starts, each placeholder should contain
-   * or be replaced by:
-   *
-   * <canvas id="..."></canvas>
-   *
-   * This helper retrieves a canvas safely.
-   */
+  /* ========================================================================
+     4. DOM helpers
+     ======================================================================== */
 
   function getCanvas(canvasId) {
 
@@ -120,16 +126,26 @@
       );
 
       return null;
+    }
 
+
+    if (
+      canvas.tagName.toLowerCase() !== "canvas"
+    ) {
+
+      console.warn(
+        `#${canvasId} exists but is not a <canvas> element.`
+      );
+
+      return null;
     }
 
     return canvas;
-
   }
 
 
   /* ========================================================================
-     4. Data helpers
+     5. Data helpers
      ======================================================================== */
 
   function getLabels(items = []) {
@@ -137,71 +153,44 @@
     return items.map(
       (item) => item.label
     );
-
   }
 
 
   function getCounts(items = []) {
 
     return items.map(
-      (item) => item.count
+      (item) =>
+        Number(item.count) || 0
     );
-
   }
 
 
   function getPercentages(items = []) {
 
     return items.map(
-      (item) => item.percentage
+      (item) => {
+
+        const value =
+          Number(item.percentage);
+
+        return Number.isFinite(value)
+          ? value
+          : null;
+      }
     );
-
   }
 
 
-  /**
-   * Create a standard Chart.js dataset from:
-   *
-   * [
-   *   {
-   *     label: "ICU",
-   *     count: 16,
-   *     percentage: 39.0
-   *   }
-   * ]
-   *
-   * `percentages` is intentionally attached as custom metadata
-   * because chart-config.js uses it for tooltips.
-   */
+  function getTotalCount(items = []) {
 
-  function buildDataset(
-    items,
-    {
-      label = "",
-      style = {}
-    } = {}
-  ) {
-
-    return {
-
-      label,
-
-      data:
-        getCounts(items),
-
-      percentages:
-        getPercentages(items),
-
-      ...style
-
-    };
-
+    return items.reduce(
+      (total, item) =>
+        total +
+        (Number(item.count) || 0),
+      0
+    );
   }
 
-
-  /* ========================================================================
-     5. Empty-state helper
-     ======================================================================== */
 
   function hasChartData(items) {
 
@@ -209,44 +198,288 @@
       Array.isArray(items) &&
       items.length > 0 &&
       items.some(
-        (item) => Number(item.count) > 0
+        (item) =>
+          Number(item.count) > 0
       )
     );
-
   }
 
 
   /**
-   * Future implementation:
+   * Sort a copy of an array by count descending.
    *
-   * Instead of creating an empty chart, show:
-   *
-   * "No data available for the selected filters."
+   * Original JSON data is not mutated.
    */
 
-  function handleEmptyChart(
-    chartKey,
-    canvasId,
-    items
+  function sortByCountDescending(
+    items = []
   ) {
 
-    if (hasChartData(items)) {
-      return false;
-    }
-
-    destroyChart(chartKey);
-
-    console.info(
-      `No chart data for ${canvasId}`
+    return [...items].sort(
+      (a, b) =>
+        Number(b.count || 0) -
+        Number(a.count || 0)
     );
+  }
 
-    return true;
 
+  /**
+   * Apply a fixed semantic ordering.
+   *
+   * Any unexpected / future categories
+   * are placed after the preferred categories.
+   */
+
+  function applyPreferredOrder(
+    items = [],
+    preferredOrder = []
+  ) {
+
+    const orderMap =
+      new Map(
+        preferredOrder.map(
+          (label, index) => [
+            label,
+            index
+          ]
+        )
+      );
+
+
+    return [...items].sort(
+      (a, b) => {
+
+        const aOrder =
+          orderMap.has(a.label)
+            ? orderMap.get(a.label)
+            : Number.MAX_SAFE_INTEGER;
+
+
+        const bOrder =
+          orderMap.has(b.label)
+            ? orderMap.get(b.label)
+            : Number.MAX_SAFE_INTEGER;
+
+
+        return aOrder - bOrder;
+      }
+    );
   }
 
 
   /* ========================================================================
-     6. Generic chart builders
+     6. Empty-state handling
+     ======================================================================== */
+
+  function showEmptyState(
+    canvas,
+    message =
+      "No data available for the selected filters."
+  ) {
+
+    const container =
+      canvas.parentElement;
+
+    if (!container) {
+      return;
+    }
+
+
+    canvas.hidden = true;
+
+
+    let emptyState =
+      container.querySelector(
+        ".chart-empty-state"
+      );
+
+
+    if (!emptyState) {
+
+      emptyState =
+        document.createElement("div");
+
+      emptyState.className =
+        "chart-empty-state";
+
+      /*
+       * Override outer empty-state dimensions
+       * because this element lives inside chart-container.
+       */
+
+      emptyState.style.width =
+        "100%";
+
+      emptyState.style.height =
+        "100%";
+
+      emptyState.style.margin =
+        "0";
+
+
+      container.appendChild(
+        emptyState
+      );
+    }
+
+
+    emptyState.textContent =
+      message;
+  }
+
+
+  function clearEmptyState(canvas) {
+
+    const container =
+      canvas.parentElement;
+
+    if (!container) {
+      return;
+    }
+
+
+    const emptyState =
+      container.querySelector(
+        ".chart-empty-state"
+      );
+
+
+    if (emptyState) {
+      emptyState.remove();
+    }
+
+
+    canvas.hidden = false;
+  }
+
+
+  /* ========================================================================
+     7. Doughnut centre-label plugin
+     ======================================================================== */
+
+  /**
+   * Displays:
+   *
+   *       41
+   *   Admissions
+   *
+   * in the centre of the ward doughnut.
+   */
+
+  const doughnutCenterLabelPlugin = {
+
+    id:
+      "icuDoughnutCenterLabel",
+
+
+    afterDraw(chart) {
+
+      const options =
+        chart.options
+          ?.plugins
+          ?.icuDoughnutCenterLabel;
+
+
+      if (
+        !options ||
+        options.display === false
+      ) {
+        return;
+      }
+
+
+      const {
+        ctx,
+        chartArea
+      } = chart;
+
+
+      if (!chartArea) {
+        return;
+      }
+
+
+      const centerX =
+        (
+          chartArea.left +
+          chartArea.right
+        ) / 2;
+
+
+      const centerY =
+        (
+          chartArea.top +
+          chartArea.bottom
+        ) / 2;
+
+
+      const config =
+        getChartConfig();
+
+
+      const textPrimary =
+        config?.COLORS?.textPrimary ||
+        "#1F2933";
+
+
+      const textSecondary =
+        config?.COLORS?.textSecondary ||
+        "#667085";
+
+
+      const fontFamily =
+        config?.FONT_FAMILY ||
+        "Arial, sans-serif";
+
+
+      ctx.save();
+
+
+      ctx.textAlign =
+        "center";
+
+      ctx.textBaseline =
+        "middle";
+
+
+      /* Main total */
+
+      ctx.fillStyle =
+        textPrimary;
+
+      ctx.font =
+        `700 26px ${fontFamily}`;
+
+      ctx.fillText(
+        String(options.total ?? 0),
+        centerX,
+        centerY - 8
+      );
+
+
+      /* Supporting text */
+
+      ctx.fillStyle =
+        textSecondary;
+
+      ctx.font =
+        `500 11px ${fontFamily}`;
+
+      ctx.fillText(
+        options.label ||
+        "Admissions",
+        centerX,
+        centerY + 16
+      );
+
+
+      ctx.restore();
+    }
+  };
+
+
+  /* ========================================================================
+     8. Generic vertical bar builder
      ======================================================================== */
 
   function createVerticalBarChart({
@@ -259,21 +492,7 @@
     unitPlural = "admissions"
   }) {
 
-    if (
-      handleEmptyChart(
-        chartKey,
-        canvasId,
-        items
-      )
-    ) {
-      return;
-    }
-
-
-    const canvas =
-      getCanvas(canvasId);
-
-    if (!canvas) {
+    if (!isChartJsAvailable()) {
       return;
     }
 
@@ -286,19 +505,38 @@
     }
 
 
+    const canvas =
+      getCanvas(canvasId);
+
+    if (!canvas) {
+      return;
+    }
+
+
+    if (!hasChartData(items)) {
+
+      destroyChart(chartKey);
+
+      showEmptyState(canvas);
+
+      return;
+    }
+
+
+    clearEmptyState(canvas);
+
     destroyChart(chartKey);
 
 
-    const labels =
-      getLabels(items);
-
-
     const backgroundColor =
-      colors || color || config.COLORS.primary;
+      colors ||
+      color ||
+      config.COLORS.primary;
 
 
-    const datasetStyle =
+    const style =
       config.getBarDatasetStyle({
+
         color:
           Array.isArray(backgroundColor)
             ? config.COLORS.primary
@@ -306,16 +544,21 @@
       });
 
 
-    const dataset =
-      buildDataset(
-        items,
-        {
-          style: {
-            ...datasetStyle,
-            backgroundColor
-          }
-        }
-      );
+    const dataset = {
+
+      label:
+        "Admissions",
+
+      data:
+        getCounts(items),
+
+      percentages:
+        getPercentages(items),
+
+      ...style,
+
+      backgroundColor
+    };
 
 
     const tooltipCallbacks =
@@ -329,23 +572,38 @@
       new Chart(
         canvas,
         {
-          type: "bar",
+
+          type:
+            "bar",
+
 
           data: {
-            labels,
-            datasets: [dataset]
+
+            labels:
+              getLabels(items),
+
+            datasets: [
+              dataset
+            ]
           },
+
 
           options:
             config.getVerticalBarOptions({
+
               tooltipCallbacks,
-              showLegend: false
+
+              showLegend:
+                false
             })
         }
       );
-
   }
 
+
+  /* ========================================================================
+     9. Generic horizontal bar builder
+     ======================================================================== */
 
   function createHorizontalBarChart({
     chartKey,
@@ -356,21 +614,7 @@
     unitPlural = "admissions"
   }) {
 
-    if (
-      handleEmptyChart(
-        chartKey,
-        canvasId,
-        items
-      )
-    ) {
-      return;
-    }
-
-
-    const canvas =
-      getCanvas(canvasId);
-
-    if (!canvas) {
+    if (!isChartJsAvailable()) {
       return;
     }
 
@@ -383,21 +627,50 @@
     }
 
 
+    const canvas =
+      getCanvas(canvasId);
+
+    if (!canvas) {
+      return;
+    }
+
+
+    if (!hasChartData(items)) {
+
+      destroyChart(chartKey);
+
+      showEmptyState(canvas);
+
+      return;
+    }
+
+
+    clearEmptyState(canvas);
+
     destroyChart(chartKey);
 
 
-    const dataset =
-      buildDataset(
-        items,
-        {
-          style:
-            config.getBarDatasetStyle({
-              color:
-                color ||
-                config.COLORS.primary
-            })
-        }
-      );
+    const chartColor =
+      color ||
+      config.COLORS.primary;
+
+
+    const dataset = {
+
+      label:
+        "Admissions",
+
+      data:
+        getCounts(items),
+
+      percentages:
+        getPercentages(items),
+
+      ...config.getBarDatasetStyle({
+        color:
+          chartColor
+      })
+    };
 
 
     const tooltipCallbacks =
@@ -411,9 +684,13 @@
       new Chart(
         canvas,
         {
-          type: "bar",
+
+          type:
+            "bar",
+
 
           data: {
+
             labels:
               getLabels(items),
 
@@ -421,110 +698,41 @@
               dataset
             ]
           },
+
 
           options:
             config.getHorizontalBarOptions({
+
               tooltipCallbacks,
-              showLegend: false
+
+              showLegend:
+                false
             })
         }
       );
-
-  }
-
-
-  function createDoughnutChart({
-    chartKey,
-    canvasId,
-    items,
-    colors,
-    unitSingular = "admission",
-    unitPlural = "admissions"
-  }) {
-
-    if (
-      handleEmptyChart(
-        chartKey,
-        canvasId,
-        items
-      )
-    ) {
-      return;
-    }
-
-
-    const canvas =
-      getCanvas(canvasId);
-
-    if (!canvas) {
-      return;
-    }
-
-
-    const config =
-      getChartConfig();
-
-    if (!config) {
-      return;
-    }
-
-
-    destroyChart(chartKey);
-
-
-    const dataset =
-      buildDataset(
-        items,
-        {
-          style:
-            config.getDoughnutDatasetStyle({
-              colors
-            })
-        }
-      );
-
-
-    const tooltipCallbacks =
-      config.createCountPercentageTooltip(
-        unitSingular,
-        unitPlural
-      );
-
-
-    chartInstances[chartKey] =
-      new Chart(
-        canvas,
-        {
-          type: "doughnut",
-
-          data: {
-
-            labels:
-              getLabels(items),
-
-            datasets: [
-              dataset
-            ]
-
-          },
-
-          options:
-            config.getDoughnutOptions({
-              tooltipCallbacks,
-              showLegend: true
-            })
-
-        }
-      );
-
   }
 
 
   /* ========================================================================
-     7. ICU Overview
+     10. ICU Overview — Admissions by Ward
      ======================================================================== */
 
-  function renderOverviewCharts(dataset) {
+  function renderOverviewWardChart(
+    dataset
+  ) {
+
+    const chartKey =
+      "overviewWard";
+
+
+    const canvasId =
+      "overview-ward-chart";
+
+
+    if (!isChartJsAvailable()) {
+      return;
+    }
+
 
     const config =
       getChartConfig();
@@ -534,39 +742,183 @@
     }
 
 
-    /*
-     * 1. Admissions by Ward
-     * Doughnut
-     */
+    const canvas =
+      getCanvas(canvasId);
+
+    if (!canvas) {
+      return;
+    }
+
 
     const wardData =
-      dataset?.patientProfile
+      dataset
+        ?.patientProfile
         ?.wardDistribution || [];
 
 
-    createDoughnutChart({
+    if (!hasChartData(wardData)) {
 
-      chartKey:
-        "overviewWard",
+      destroyChart(chartKey);
 
-      canvasId:
-        "overview-ward-chart",
+      showEmptyState(canvas);
 
-      items:
-        wardData,
+      return;
+    }
 
-      colors:
-        config.getWardColors(
-          getLabels(wardData)
-        )
 
-    });
+    clearEmptyState(canvas);
+
+    destroyChart(chartKey);
+
+
+    const labels =
+      getLabels(wardData);
+
+
+    const counts =
+      getCounts(wardData);
+
+
+    const percentages =
+      getPercentages(wardData);
+
+
+    const totalAdmissions =
+      getTotalCount(wardData);
+
+
+    const colors =
+      config.getWardColors(
+        labels
+      );
+
+
+    const datasetStyle =
+      config.getDoughnutDatasetStyle({
+        colors
+      });
+
+
+    const chartDataset = {
+
+      label:
+        "Admissions",
+
+      data:
+        counts,
+
+      percentages,
+
+      ...datasetStyle
+    };
+
+
+    const tooltipCallbacks =
+      config.createCountPercentageTooltip(
+        "admission",
+        "admissions"
+      );
+
+
+    const options =
+      config.getDoughnutOptions({
+
+        tooltipCallbacks,
+
+        showLegend:
+          true
+      });
+
+
+    options.plugins =
+      options.plugins || {};
+
+
+    options.plugins
+      .icuDoughnutCenterLabel = {
+
+        display:
+          true,
+
+        total:
+          totalAdmissions,
+
+        label:
+          totalAdmissions === 1
+            ? "Admission"
+            : "Admissions"
+      };
+
+
+    chartInstances[chartKey] =
+      new Chart(
+        canvas,
+        {
+
+          type:
+            "doughnut",
+
+
+          data: {
+
+            labels,
+
+            datasets: [
+              chartDataset
+            ]
+          },
+
+
+          options,
+
+
+          plugins: [
+            doughnutCenterLabelPlugin
+          ]
+        }
+      );
+  }
+
+
+  /* ========================================================================
+     11. ICU Overview — Patient Disposition
+     ======================================================================== */
+
+  function renderOverviewDispositionChart(
+    dataset
+  ) {
+
+    const rawData =
+      dataset
+        ?.clinicalProfile
+        ?.disposition || [];
 
 
     /*
-     * 2. Patient Disposition
-     * Horizontal bar
+     * Keep a stable clinical / reporting order.
+     *
+     * Do not sort this chart by count because disposition categories
+     * represent meaningful outcome states rather than a ranking.
      */
+
+    const dispositionOrder = [
+
+      "Transfer to General Ward",
+
+      "Death in ICU",
+
+      "Still in Admission",
+
+      "Transfer to Another Facility"
+    ];
+
+
+    const dispositionData =
+      applyPreferredOrder(
+        rawData,
+        dispositionOrder
+      );
+
 
     createHorizontalBarChart({
 
@@ -577,16 +929,36 @@
         "overview-disposition-chart",
 
       items:
-        dataset?.clinicalProfile
-          ?.disposition || []
+        dispositionData,
 
+      color:
+        getChartConfig()
+          ?.COLORS
+          ?.primary
     });
+  }
 
+
+  /* ========================================================================
+     12. ICU Overview — Age Distribution
+     ======================================================================== */
+
+  function renderOverviewAgeChart(
+    dataset
+  ) {
 
     /*
-     * 3. Age Distribution
-     * Vertical bar
+     * Age groups are already stored in clinically meaningful
+     * ordinal order in the dashboard dataset.
+     *
+     * Therefore do NOT sort by count.
      */
+
+    const ageData =
+      dataset
+        ?.patientProfile
+        ?.ageGroupDistribution || [];
+
 
     createVerticalBarChart({
 
@@ -597,19 +969,41 @@
         "overview-age-chart",
 
       items:
-        dataset?.patientProfile
-          ?.ageGroupDistribution || [],
+        ageData,
 
       color:
-        config.COLORS.primary
-
+        getChartConfig()
+          ?.COLORS
+          ?.primary
     });
+  }
+
+
+  /* ========================================================================
+     13. ICU Overview — Admission Source
+     ======================================================================== */
+
+  function renderOverviewAdmissionSourceChart(
+    dataset
+  ) {
+
+    const rawData =
+      dataset
+        ?.clinicalProfile
+        ?.admissionSource || [];
 
 
     /*
-     * 4. Admission Source
-     * Horizontal bar
+     * Admission source is an unordered categorical distribution.
+     *
+     * Display largest source first.
      */
+
+    const admissionSourceData =
+      sortByCountDescending(
+        rawData
+      );
+
 
     createHorizontalBarChart({
 
@@ -620,374 +1014,75 @@
         "overview-admission-source-chart",
 
       items:
-        dataset?.clinicalProfile
-          ?.admissionSource || []
+        admissionSourceData,
 
+      color:
+        getChartConfig()
+          ?.COLORS
+          ?.primary
     });
-
   }
 
 
   /* ========================================================================
-     8. Patient Profile
+     14. ICU Overview renderer
      ======================================================================== */
 
-  function renderPatientProfileCharts(dataset) {
+  function renderOverviewCharts(
+    dataset
+  ) {
 
-    const config =
-      getChartConfig();
+    if (!dataset) {
 
-    if (!config) {
+      console.warn(
+        "No dataset provided to ICUCharts.renderOverviewCharts()."
+      );
+
       return;
     }
 
 
-    /*
-     * Age Group Distribution
-     */
-
-    createVerticalBarChart({
-
-      chartKey:
-        "patientAge",
-
-      canvasId:
-        "patient-age-chart",
-
-      items:
-        dataset?.patientProfile
-          ?.ageGroupDistribution || [],
-
-      color:
-        config.COLORS.primary
-
-    });
+    renderOverviewWardChart(
+      dataset
+    );
 
 
-    /*
-     * Sex Distribution
-     */
-
-    const sexData =
-      dataset?.patientProfile
-        ?.sexDistribution || [];
+    renderOverviewDispositionChart(
+      dataset
+    );
 
 
-    createDoughnutChart({
-
-      chartKey:
-        "patientSex",
-
-      canvasId:
-        "patient-sex-chart",
-
-      items:
-        sexData,
-
-      colors:
-        config.getSexColors(
-          getLabels(sexData)
-        )
-
-    });
+    renderOverviewAgeChart(
+      dataset
+    );
 
 
-    /*
-     * Admissions by Ward
-     */
-
-    const wardData =
-      dataset?.patientProfile
-        ?.wardDistribution || [];
-
-
-    createDoughnutChart({
-
-      chartKey:
-        "patientWard",
-
-      canvasId:
-        "patient-ward-chart",
-
-      items:
-        wardData,
-
-      colors:
-        config.getWardColors(
-          getLabels(wardData)
-        )
-
-    });
-
-
-    /*
-     * LOS Distribution
-     */
-
-    createVerticalBarChart({
-
-      chartKey:
-        "patientLos",
-
-      canvasId:
-        "patient-los-chart",
-
-      items:
-        dataset?.patientProfile
-          ?.losDistribution || [],
-
-      color:
-        config.COLORS.primary
-
-    });
-
+    renderOverviewAdmissionSourceChart(
+      dataset
+    );
   }
 
 
   /* ========================================================================
-     9. Clinical Profile
+     15. Main dashboard renderer
      ======================================================================== */
 
-  function renderClinicalProfileCharts(dataset) {
-
-    const config =
-      getChartConfig();
-
-    if (!config) {
-      return;
-    }
-
-
-    /*
-     * Admission Source
-     */
-
-    createHorizontalBarChart({
-
-      chartKey:
-        "clinicalAdmissionSource",
-
-      canvasId:
-        "clinical-admission-source-chart",
-
-      items:
-        dataset?.clinicalProfile
-          ?.admissionSource || []
-
-    });
-
-
-    /*
-     * Patient Disposition
-     */
-
-    createHorizontalBarChart({
-
-      chartKey:
-        "clinicalDisposition",
-
-      canvasId:
-        "clinical-disposition-chart",
-
-      items:
-        dataset?.clinicalProfile
-          ?.disposition || []
-
-    });
-
-
-    /*
-     * Primary Diagnosis Category
-     */
-
-    const categoryData =
-      dataset?.clinicalProfile
-        ?.diagnosisCategory || [];
-
-
-    createVerticalBarChart({
-
-      chartKey:
-        "clinicalDiagnosisCategory",
-
-      canvasId:
-        "clinical-diagnosis-category-chart",
-
-      items:
-        categoryData,
-
-      colors:
-        config.getDiagnosisCategoryColors(
-          getLabels(categoryData)
-        )
-
-    });
-
-
-    /*
-     * ICD-10 Chapter
-     */
-
-    createHorizontalBarChart({
-
-      chartKey:
-        "clinicalIcd",
-
-      canvasId:
-        "clinical-icd-chart",
-
-      items:
-        dataset?.clinicalProfile
-          ?.icdChapter || []
-
-    });
-
-  }
-
-
-  /* ========================================================================
-     10. Mortality Review
-     ======================================================================== */
-
-  function renderMortalityCharts(dataset) {
-
-    const config =
-      getChartConfig();
-
-    if (!config) {
-      return;
-    }
-
-
-    const mortality =
-      dataset?.mortalityReview;
-
-    if (!mortality) {
-      return;
-    }
-
-
-    /*
-     * Deaths by Diagnosis Category
-     */
-
-    const categoryData =
-      mortality.diagnosisCategory || [];
-
-
-    createVerticalBarChart({
-
-      chartKey:
-        "mortalityDiagnosisCategory",
-
-      canvasId:
-        "mortality-diagnosis-category-chart",
-
-      items:
-        categoryData,
-
-      colors:
-        config.getDiagnosisCategoryColors(
-          getLabels(categoryData)
-        ),
-
-      unitSingular:
-        "death",
-
-      unitPlural:
-        "deaths"
-
-    });
-
-
-    /*
-     * Deaths by ICD-10 Chapter
-     */
-
-    createHorizontalBarChart({
-
-      chartKey:
-        "mortalityIcd",
-
-      canvasId:
-        "mortality-icd-chart",
-
-      items:
-        mortality.icdChapter || [],
-
-      color:
-        config.COLORS.lavender,
-
-      unitSingular:
-        "death",
-
-      unitPlural:
-        "deaths"
-
-    });
-
-
-    /*
-     * LOS among Death Cases
-     */
-
-    createVerticalBarChart({
-
-      chartKey:
-        "mortalityLos",
-
-      canvasId:
-        "mortality-los-chart",
-
-      items:
-        mortality.losDistribution || [],
-
-      color:
-        config.COLORS.lavender,
-
-      unitSingular:
-        "death",
-
-      unitPlural:
-        "deaths"
-
-    });
-
-
-    /*
-     * Admission Source among Death Cases
-     */
-
-    createHorizontalBarChart({
-
-      chartKey:
-        "mortalityAdmissionSource",
-
-      canvasId:
-        "mortality-admission-source-chart",
-
-      items:
-        mortality.admissionSource || [],
-
-      color:
-        config.COLORS.lavender,
-
-      unitSingular:
-        "death",
-
-      unitPlural:
-        "deaths"
-
-    });
-
-  }
-
-
-  /* ========================================================================
-     11. Render all dashboard charts
-     ======================================================================== */
-
-  function renderAll(dataset) {
+  /**
+   * Stage 1:
+   *
+   * Currently only ICU Overview charts are implemented.
+   *
+   * Future:
+   *
+   * renderOverviewCharts(dataset);
+   * renderPatientProfileCharts(dataset);
+   * renderClinicalProfileCharts(dataset);
+   * renderMortalityCharts(dataset);
+   */
+
+  function renderAll(
+    dataset
+  ) {
 
     if (!dataset) {
 
@@ -996,23 +1091,17 @@
       );
 
       return;
-
     }
 
 
-    renderOverviewCharts(dataset);
-
-    renderPatientProfileCharts(dataset);
-
-    renderClinicalProfileCharts(dataset);
-
-    renderMortalityCharts(dataset);
-
+    renderOverviewCharts(
+      dataset
+    );
   }
 
 
   /* ========================================================================
-     12. Public API
+     16. Public API
      ======================================================================== */
 
   window.ICUCharts =
@@ -1022,14 +1111,15 @@
 
       renderOverviewCharts,
 
-      renderPatientProfileCharts,
+      renderOverviewWardChart,
 
-      renderClinicalProfileCharts,
+      renderOverviewDispositionChart,
 
-      renderMortalityCharts,
+      renderOverviewAgeChart,
+
+      renderOverviewAdmissionSourceChart,
 
       destroyAllCharts
-
     });
 
 })();
