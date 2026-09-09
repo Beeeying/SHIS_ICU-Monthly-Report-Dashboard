@@ -1,0 +1,936 @@
+/* ==========================================================================
+   HGH ICU Monthly Report Dashboard
+   Stage 1 visual prototype
+   Design direction:
+   - Clean clinical analytics
+   - Soft gray page background
+   - White rounded cards
+   - Deep teal healthcare accent
+   - Lightweight shadows
+   - Horizontal tab navigation
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Core colors */
+  --color-bg: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f8fafb;
+  --color-surface-muted: #eef3f4;
+
+  --color-text-primary: #182126;
+  --color-text-secondary: #68757d;
+  --color-text-muted: #8b969d;
+
+  --color-border: #e4eaed;
+  --color-border-strong: #d8e0e4;
+
+  /* Primary healthcare accent */
+  --color-primary: #176f68;
+  --color-primary-hover: #125f59;
+  --color-primary-soft: #e8f4f2;
+  --color-primary-soft-strong: #d6ebe8;
+
+  /* Mortality / attention */
+  --color-danger: #b84e56;
+  --color-danger-soft: #f9ecee;
+
+  /* Supporting states */
+  --color-success: #2f7d59;
+  --color-success-soft: #e8f3ec;
+  --color-warning: #9b6b21;
+  --color-warning-soft: #fbf2df;
+
+  /* Typography */
+  --font-family:
+    Inter,
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-base: 0.9375rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.375rem;
+  --font-size-2xl: 1.875rem;
+  --font-size-kpi: clamp(1.8rem, 2.3vw, 2.45rem);
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  /* Shape */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  /* Shadow */
+  --shadow-card:
+    0 1px 2px rgba(18, 28, 33, 0.03),
+    0 8px 24px rgba(18, 28, 33, 0.04);
+
+  --shadow-card-hover:
+    0 2px 4px rgba(18, 28, 33, 0.04),
+    0 12px 28px rgba(18, 28, 33, 0.07);
+
+  /* Layout */
+  --page-max-width: 1500px;
+  --header-height: auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Base / reset
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    linear-gradient(180deg, #f6f8f9 0%, var(--color-bg) 100%);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+button {
+  color: inherit;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Main shell
+   -------------------------------------------------------------------------- */
+
+.dashboard-shell {
+  width: min(100% - 32px, var(--page-max-width));
+  margin: 0 auto;
+  padding: 24px 0 48px;
+}
+
+.dashboard-content {
+  display: block;
+}
+
+.dashboard-page {
+  animation: pageFadeIn 180ms ease-out;
+}
+
+.dashboard-page:not(.active-page) {
+  display: none;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Global header
+   -------------------------------------------------------------------------- */
+
+.dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-6) var(--space-7);
+  margin-bottom: var(--space-4);
+
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(224, 231, 235, 0.9);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.dashboard-title-group {
+  min-width: 0;
+}
+
+.eyebrow,
+.section-kicker {
+  margin-bottom: var(--space-2);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dashboard-title-group h1 {
+  margin-bottom: var(--space-2);
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.dashboard-subtitle {
+  margin-bottom: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.global-controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.filter-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-control label,
+.compact-filter label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.filter-control select,
+.table-controls select,
+.table-controls input,
+.global-controls select {
+  min-height: 42px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  outline: none;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    background-color 140ms ease;
+}
+
+.global-controls select {
+  min-width: 148px;
+  padding: 0 34px 0 12px;
+}
+
+.filter-control select:focus,
+.table-controls select:focus,
+.table-controls input:focus,
+.global-controls select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(23, 111, 104, 0.12);
+}
+
+.secondary-button {
+  min-height: 42px;
+  padding: 0 15px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
+}
+
+.secondary-button:hover {
+  border-color: var(--color-primary-soft-strong);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.last-updated {
+  min-height: 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.last-updated span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.last-updated strong {
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Horizontal navigation
+   -------------------------------------------------------------------------- */
+
+.dashboard-tabs {
+  position: sticky;
+  top: 10px;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--space-6);
+  padding: 7px;
+
+  overflow-x: auto;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 5px 18px rgba(20, 31, 36, 0.035);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.tab-button {
+  position: relative;
+  flex: 0 0 auto;
+
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+
+  transition:
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.tab-button:hover {
+  background: var(--color-surface-soft);
+  color: var(--color-text-primary);
+}
+
+.tab-button.active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  box-shadow: inset 0 0 0 1px rgba(23, 111, 104, 0.05);
+}
+
+.tab-button.active::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 4px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. Page headings
+   -------------------------------------------------------------------------- */
+
+.page-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-bottom: var(--space-5);
+  padding: 0 2px;
+}
+
+.page-heading h2 {
+  margin-bottom: 6px;
+  font-size: clamp(1.4rem, 2vw, 1.7rem);
+  line-height: 1.2;
+}
+
+.page-heading p:not(.section-kicker) {
+  max-width: 760px;
+  margin-bottom: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.subsection-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin: var(--space-8) 2px var(--space-4);
+}
+
+.subsection-heading h3 {
+  margin-bottom: 4px;
+  font-size: var(--font-size-lg);
+}
+
+.subsection-heading p {
+  margin-bottom: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+
+/* --------------------------------------------------------------------------
+   7. KPI cards
+   -------------------------------------------------------------------------- */
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.kpi-grid-overview {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.mortality-kpi-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.kpi-card {
+  position: relative;
+  min-height: 132px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 18px 18px 16px;
+
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fbfcfc 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+
+  overflow: hidden;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    border-color 150ms ease;
+}
+
+.kpi-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 3px;
+  border-radius: 0 0 var(--radius-pill) var(--radius-pill);
+  background: var(--color-primary-soft-strong);
+  opacity: 0.95;
+}
+
+.kpi-card:hover {
+  transform: translateY(-1px);
+  border-color: #dce5e8;
+  box-shadow: var(--shadow-card-hover);
+}
+
+.kpi-label {
+  margin-bottom: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+}
+
+.kpi-value {
+  display: block;
+  margin-top: auto;
+  margin-bottom: 1px;
+  font-size: var(--font-size-kpi);
+  font-weight: 720;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.kpi-note {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* Mortality visual accent without turning the whole page red */
+#mortality-review .kpi-card:nth-child(1)::before,
+#mortality-review .kpi-card:nth-child(2)::before,
+#overview .kpi-card:nth-child(2)::before,
+#overview .kpi-card:nth-child(3)::before {
+  background: #e9b8bd;
+}
+
+#mortality-deaths,
+#mortality-rate,
+#overview-deaths,
+#overview-mortality-rate {
+  color: var(--color-danger);
+}
+
+
+/* --------------------------------------------------------------------------
+   8. General dashboard cards
+   -------------------------------------------------------------------------- */
+
+.dashboard-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 18px 20px 0;
+}
+
+.card-heading h3 {
+  margin-bottom: 4px;
+  font-size: var(--font-size-md);
+  font-weight: 680;
+}
+
+.card-heading p {
+  margin-bottom: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+
+/* --------------------------------------------------------------------------
+   9. Chart grids and placeholders
+   -------------------------------------------------------------------------- */
+
+.chart-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.chart-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.chart-card {
+  min-height: 350px;
+  overflow: hidden;
+}
+
+.full-width-card {
+  grid-column: 1 / -1;
+}
+
+.chart-placeholder {
+  min-height: 275px;
+  margin: 14px 18px 18px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px dashed #cfd8dc;
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(23, 111, 104, 0.025),
+      rgba(23, 111, 104, 0.055)
+    );
+
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+/* Future Chart.js canvas layout */
+.chart-card canvas {
+  width: 100% !important;
+  max-height: 290px;
+  padding: 10px 18px 18px;
+}
+
+
+/* --------------------------------------------------------------------------
+   10. Clinical table / Death case table
+   -------------------------------------------------------------------------- */
+
+.table-card,
+.death-case-card {
+  overflow: hidden;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  padding: 12px 18px 18px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 720px;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+
+  padding: 11px 12px;
+
+  background: var(--color-surface-soft);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  text-align: left;
+  white-space: nowrap;
+}
+
+thead th:first-child {
+  border-left: 1px solid var(--color-border);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+thead th:last-child {
+  border-right: 1px solid var(--color-border);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+tbody td {
+  padding: 13px 12px;
+  border-bottom: 1px solid #edf1f3;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background-color 120ms ease;
+}
+
+tbody tr:hover {
+  background: #fafcfc;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   11. Mortality review / case-review work area
+   -------------------------------------------------------------------------- */
+
+.death-case-section {
+  margin-top: var(--space-8);
+}
+
+.death-case-heading {
+  margin-top: 0;
+}
+
+.record-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 30px;
+  padding: 0 11px;
+
+  border-radius: var(--radius-pill);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+.death-case-card {
+  border-color: #e6e9eb;
+}
+
+.table-controls {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: 18px 18px 6px;
+}
+
+.search-control {
+  flex: 1 1 320px;
+}
+
+.search-control input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 13px;
+}
+
+.search-control input::placeholder {
+  color: #9ca7ad;
+}
+
+.compact-filter {
+  min-width: 150px;
+}
+
+.compact-filter select {
+  width: 100%;
+  padding: 0 34px 0 12px;
+}
+
+
+/* --------------------------------------------------------------------------
+   12. Utility classes
+   -------------------------------------------------------------------------- */
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   13. Responsive behaviour
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .global-controls {
+    justify-content: flex-start;
+  }
+
+  .kpi-grid,
+  .kpi-grid-overview {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mortality-kpi-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-shell {
+    width: min(100% - 24px, var(--page-max-width));
+    padding-top: 12px;
+  }
+
+  .dashboard-header {
+    padding: 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .dashboard-tabs {
+    top: 6px;
+    margin-bottom: var(--space-5);
+  }
+
+  .chart-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    min-height: 330px;
+  }
+
+  .full-width-card {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .dashboard-shell {
+    width: min(100% - 16px, var(--page-max-width));
+    padding-bottom: 28px;
+  }
+
+  .dashboard-header {
+    padding: 17px;
+  }
+
+  .global-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .global-controls .filter-control,
+  .global-controls select,
+  .secondary-button {
+    width: 100%;
+  }
+
+  .last-updated {
+    grid-column: 1 / -1;
+  }
+
+  .kpi-grid,
+  .kpi-grid-overview,
+  .mortality-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kpi-card {
+    min-height: 120px;
+    padding: 16px;
+  }
+
+  .chart-placeholder {
+    min-height: 235px;
+  }
+
+  .table-controls {
+    align-items: stretch;
+  }
+
+  .search-control,
+  .compact-filter {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 440px) {
+  .global-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .last-updated {
+    grid-column: auto;
+  }
+
+  .kpi-grid,
+  .kpi-grid-overview,
+  .mortality-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-title-group h1 {
+    font-size: 1.55rem;
+  }
+
+  .dashboard-tabs {
+    border-radius: var(--radius-md);
+  }
+
+  .tab-button {
+    padding: 9px 13px;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   14. Reduced motion support
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

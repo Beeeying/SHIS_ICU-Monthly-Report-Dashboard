@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Stage 1 structural prototype for the HGH ICU Monthly Report Dashboard."
+  />
+  <title>HGH ICU Monthly Report Dashboard</title>
+
+  <link rel="stylesheet" href="./css/dashboard.css" />
+
+  <!-- Chart.js will be enabled in the chart implementation step.
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  -->
+</head>
+
+<body>
+  <div class="dashboard-shell">
+
+    <!-- =========================================================
+         GLOBAL HEADER
+         ========================================================= -->
+    <header class="dashboard-header">
+      <div class="dashboard-title-group">
+        <p class="eyebrow">Hargeisa Group Hospital</p>
+        <h1>ICU Monthly Report Dashboard</h1>
+        <p id="cohort-label" class="dashboard-subtitle">Loading cohort...</p>
+      </div>
+
+      <div class="global-controls">
+        <div class="filter-control">
+          <label for="month-filter">Reporting Month</label>
+          <select id="month-filter" name="month">
+            <option value="2026-08" selected>August 2026</option>
+          </select>
+        </div>
+
+        <div class="filter-control">
+          <label for="ward-filter">Ward</label>
+          <select id="ward-filter" name="ward">
+            <option value="All" selected>All</option>
+            <option value="ICU">ICU</option>
+            <option value="HDU">HDU</option>
+          </select>
+        </div>
+
+        <button id="reset-filters" class="secondary-button" type="button">
+          Reset filters
+        </button>
+
+        <div class="last-updated">
+          <span>Data through</span>
+          <strong id="data-through">—</strong>
+        </div>
+      </div>
+    </header>
+
+    <!-- =========================================================
+         PRIMARY NAVIGATION
+         ========================================================= -->
+    <nav class="dashboard-tabs" aria-label="ICU dashboard sections">
+      <button
+        class="tab-button active"
+        type="button"
+        data-tab="overview"
+        aria-controls="overview"
+        aria-selected="true"
+      >
+        ICU Overview
+      </button>
+
+      <button
+        class="tab-button"
+        type="button"
+        data-tab="patient-profile"
+        aria-controls="patient-profile"
+        aria-selected="false"
+      >
+        Patient Profile
+      </button>
+
+      <button
+        class="tab-button"
+        type="button"
+        data-tab="clinical-profile"
+        aria-controls="clinical-profile"
+        aria-selected="false"
+      >
+        Clinical Profile
+      </button>
+
+      <button
+        class="tab-button"
+        type="button"
+        data-tab="mortality-review"
+        aria-controls="mortality-review"
+        aria-selected="false"
+      >
+        Mortality Review
+      </button>
+    </nav>
+
+    <!-- Optional runtime message; normally hidden -->
+    <div id="dashboard-message" hidden role="status" aria-live="polite"></div>
+
+    <main class="dashboard-content">
+
+      <!-- =======================================================
+           PAGE 1 — ICU OVERVIEW
+           ======================================================= -->
+      <section id="overview" class="dashboard-page active-page">
+        <div class="page-heading">
+          <div>
+            <p class="section-kicker">Monthly snapshot</p>
+            <h2>ICU Overview</h2>
+            <p>
+              High-level summary of the selected ICU/HDU admission cohort.
+            </p>
+          </div>
+        </div>
+
+        <div class="kpi-grid kpi-grid-overview">
+          <article class="kpi-card">
+            <span class="kpi-label">Total Admissions</span>
+            <strong id="overview-total-admissions" class="kpi-value">—</strong>
+            <span class="kpi-note">Admission episodes</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Deaths</span>
+            <strong id="overview-deaths" class="kpi-value">—</strong>
+            <span class="kpi-note">Within admission episode</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Mortality Rate</span>
+            <strong id="overview-mortality-rate" class="kpi-value">—</strong>
+            <span class="kpi-note">Deaths / admissions</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Mean LOS</span>
+            <strong id="overview-mean-los" class="kpi-value">—</strong>
+            <span class="kpi-note">Days</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Median LOS</span>
+            <strong id="overview-median-los" class="kpi-value">—</strong>
+            <span class="kpi-note">Days</span>
+          </article>
+        </div>
+
+        <div class="chart-grid chart-grid-2">
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Admissions by Ward</h3>
+                <p>ICU and HDU distribution</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="overview-ward-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Patient Disposition</h3>
+                <p>Outcome status for the selected cohort</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="overview-disposition-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Age Distribution</h3>
+                <p>Admissions by age group</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="overview-age-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Admission Source</h3>
+                <p>Where ICU/HDU patients were admitted from</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="overview-admission-source-chart">
+              Chart placeholder
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           PAGE 2 — PATIENT PROFILE
+           ======================================================= -->
+      <section id="patient-profile" class="dashboard-page" hidden>
+        <div class="page-heading">
+          <div>
+            <p class="section-kicker">Demographics & stay profile</p>
+            <h2>Patient Profile</h2>
+            <p>
+              Demographic and length-of-stay characteristics of ICU/HDU admissions.
+            </p>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <span class="kpi-label">Total Admissions</span>
+            <strong id="patient-total-admissions" class="kpi-value">—</strong>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Mean Age</span>
+            <strong id="patient-mean-age" class="kpi-value">—</strong>
+            <span class="kpi-note">Years</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Median Age</span>
+            <strong id="patient-median-age" class="kpi-value">—</strong>
+            <span class="kpi-note">Years</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Mean LOS</span>
+            <strong id="patient-mean-los" class="kpi-value">—</strong>
+            <span class="kpi-note">Days</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Median LOS</span>
+            <strong id="patient-median-los" class="kpi-value">—</strong>
+            <span class="kpi-note">Days</span>
+          </article>
+        </div>
+
+        <div class="chart-grid chart-grid-2">
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Age Group Distribution</h3>
+                <p>Admissions grouped by patient age</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="patient-age-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Sex Distribution</h3>
+                <p>Male and female admissions</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="patient-sex-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Admissions by Ward</h3>
+                <p>ICU versus HDU</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="patient-ward-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Length of Stay Distribution</h3>
+                <p>Distribution of LOS across admission episodes</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="patient-los-chart">
+              Chart placeholder
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           PAGE 3 — CLINICAL PROFILE
+           ======================================================= -->
+      <section id="clinical-profile" class="dashboard-page" hidden>
+        <div class="page-heading">
+          <div>
+            <p class="section-kicker">Clinical characteristics</p>
+            <h2>Clinical Profile</h2>
+            <p>
+              Admission source, disposition, and diagnosis profile of the cohort.
+            </p>
+          </div>
+        </div>
+
+        <div class="chart-grid chart-grid-2">
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Admission Source</h3>
+                <p>Where ICU/HDU patients were admitted from</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="clinical-admission-source-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Patient Disposition</h3>
+                <p>Transfer, death, and admission status</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="clinical-disposition-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Primary Diagnosis Category</h3>
+                <p>NCD, Infectious, Surgery, and Other</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="clinical-diagnosis-category-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Primary Diagnosis by ICD-10 Chapter</h3>
+                <p>Clinical distribution using ICD-10 chapter groupings</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="clinical-icd-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card table-card full-width-card">
+            <div class="card-heading">
+              <div>
+                <h3>Top Primary Diagnoses</h3>
+                <p>Ranked diagnosis summary for the selected cohort</p>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table id="primary-diagnosis-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Primary Diagnosis</th>
+                    <th>Cases</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="3">Table placeholder</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           PAGE 4 — MORTALITY REVIEW
+           ======================================================= -->
+      <section id="mortality-review" class="dashboard-page" hidden>
+        <div class="page-heading">
+          <div>
+            <p class="section-kicker">Outcome & case review</p>
+            <h2>Mortality Review</h2>
+            <p>
+              Mortality indicators, patterns, and de-identified death case review.
+            </p>
+          </div>
+        </div>
+
+        <div class="kpi-grid mortality-kpi-grid">
+          <article class="kpi-card">
+            <span class="kpi-label">Death Cases</span>
+            <strong id="mortality-deaths" class="kpi-value">—</strong>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Mortality Rate</span>
+            <strong id="mortality-rate" class="kpi-value">—</strong>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Mean Age</span>
+            <strong id="mortality-mean-age" class="kpi-value">—</strong>
+            <span class="kpi-note">Years</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Median Age</span>
+            <strong id="mortality-median-age" class="kpi-value">—</strong>
+            <span class="kpi-note">Years</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Mean LOS</span>
+            <strong id="mortality-mean-los" class="kpi-value">—</strong>
+            <span class="kpi-note">Days</span>
+          </article>
+
+          <article class="kpi-card">
+            <span class="kpi-label">Median LOS</span>
+            <strong id="mortality-median-los" class="kpi-value">—</strong>
+            <span class="kpi-note">Days</span>
+          </article>
+        </div>
+
+        <div class="subsection-heading">
+          <div>
+            <h3>Mortality Patterns</h3>
+            <p>Aggregate patterns among death cases in the selected cohort.</p>
+          </div>
+        </div>
+
+        <div class="chart-grid chart-grid-2">
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Deaths by Diagnosis Category</h3>
+                <p>Primary clinical category among death cases</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="mortality-diagnosis-category-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Deaths by ICD-10 Chapter</h3>
+                <p>ICD-10 distribution among death cases</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="mortality-icd-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>LOS Among Death Cases</h3>
+                <p>Length of stay before death</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="mortality-los-chart">
+              Chart placeholder
+            </div>
+          </article>
+
+          <article class="dashboard-card chart-card">
+            <div class="card-heading">
+              <div>
+                <h3>Admission Source Among Death Cases</h3>
+                <p>Where patients who died were admitted from</p>
+              </div>
+            </div>
+            <div class="chart-placeholder" id="mortality-admission-source-chart">
+              Chart placeholder
+            </div>
+          </article>
+        </div>
+
+        <section class="death-case-section">
+          <div class="subsection-heading death-case-heading">
+            <div>
+              <h3>Death Cases Detail</h3>
+              <p>
+                De-identified case-level information for clinical death case review.
+              </p>
+            </div>
+
+            <span id="death-case-count" class="record-count">—</span>
+          </div>
+
+          <div class="dashboard-card death-case-card">
+            <div class="table-controls">
+              <div class="search-control">
+                <label class="sr-only" for="death-case-search">
+                  Search death cases
+                </label>
+                <input
+                  id="death-case-search"
+                  type="search"
+                  placeholder="Search case ID or clinical category..."
+                />
+              </div>
+
+              <div class="filter-control compact-filter">
+                <label for="death-category-filter">Category</label>
+                <select id="death-category-filter">
+                  <option value="All" selected>All</option>
+                  <option value="NCD">NCD</option>
+                  <option value="Infectious">Infectious</option>
+                  <option value="Surgery">Surgery</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="filter-control compact-filter">
+                <label for="death-sort">Sort by</label>
+                <select id="death-sort">
+                  <option value="caseId" selected>Case ID</option>
+                  <option value="los-desc">LOS: longest first</option>
+                  <option value="los-asc">LOS: shortest first</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table id="death-case-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Age Group</th>
+                    <th>Sex</th>
+                    <th>Ward</th>
+                    <th>Admission Source</th>
+                    <th>Diagnosis Category</th>
+                    <th>ICD-10 Chapter</th>
+                    <th>LOS</th>
+                    <th aria-label="View details"></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td colspan="9">Table placeholder</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="./js/dashboard.js"></script>
+</body>
+</html>

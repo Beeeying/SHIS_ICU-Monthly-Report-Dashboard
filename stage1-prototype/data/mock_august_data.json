@@ -1,0 +1,1866 @@
+{
+  "metadata": {
+    "dashboard": "HGH ICU Monthly Report Dashboard",
+    "sourceWorkbook": "ICU August Report Final Version.xlsx",
+    "reportingPeriod": "2026-08",
+    "periodLabel": "August 2026",
+    "reportStart": "2026-08-01",
+    "reportCutoff": "2026-08-31",
+    "dataThrough": "2026-08-30",
+    "cohortLabel": "August 2026 ICU/HDU Admission Cohort",
+    "cohortDefinition": "Patients admitted to ICU/HDU during August 2026; outcomes are followed through the same inpatient admission episode.",
+    "unitOfAnalysis": "Inpatient admission episode",
+    "mockData": true,
+    "privacy": {
+      "containsPatientNames": false,
+      "containsMobileNumbers": false,
+      "containsHealthIds": false,
+      "containsInpatientIds": false,
+      "deathCaseDetailsAreSynthetic": true,
+      "note": "Aggregate values are derived from the validated August workbook. Death-case detail rows are de-identified prototype rows and should not be used as clinical source data."
+    }
+  },
+  "filters": {
+    "ward": {
+      "default": "All",
+      "options": [
+        "All",
+        "ICU",
+        "HDU"
+      ]
+    }
+  },
+  "datasets": {
+    "All": {
+      "overview": {
+        "totalAdmissions": 41,
+        "deaths": 18,
+        "mortalityRate": 43.9,
+        "meanAge": 45.44,
+        "medianAge": 46,
+        "meanLosDays": 4.12,
+        "medianLosDays": 3,
+        "currentlyAdmitted": 2,
+        "discharged": 39
+      },
+      "patientProfile": {
+        "summary": {
+          "totalAdmissions": 41,
+          "meanAge": 45.44,
+          "medianAge": 46,
+          "meanLosDays": 4.12,
+          "medianLosDays": 3
+        },
+        "ageGroupDistribution": [
+          {
+            "label": "<18",
+            "count": 6,
+            "percentage": 14.6
+          },
+          {
+            "label": "18–39",
+            "count": 10,
+            "percentage": 24.4
+          },
+          {
+            "label": "40–59",
+            "count": 10,
+            "percentage": 24.4
+          },
+          {
+            "label": "60–79",
+            "count": 10,
+            "percentage": 24.4
+          },
+          {
+            "label": "80+",
+            "count": 5,
+            "percentage": 12.2
+          }
+        ],
+        "sexDistribution": [
+          {
+            "label": "Male",
+            "count": 28,
+            "percentage": 68.3
+          },
+          {
+            "label": "Female",
+            "count": 13,
+            "percentage": 31.7
+          }
+        ],
+        "wardDistribution": [
+          {
+            "label": "ICU",
+            "count": 16,
+            "percentage": 39.0
+          },
+          {
+            "label": "HDU",
+            "count": 25,
+            "percentage": 61.0
+          }
+        ],
+        "losDistribution": [
+          {
+            "label": "1 day",
+            "count": 5,
+            "percentage": 12.2
+          },
+          {
+            "label": "2–3 days",
+            "count": 16,
+            "percentage": 39.0
+          },
+          {
+            "label": "4–7 days",
+            "count": 14,
+            "percentage": 34.1
+          },
+          {
+            "label": "8+ days",
+            "count": 6,
+            "percentage": 14.6
+          }
+        ]
+      },
+      "clinicalProfile": {
+        "admissionSource": [
+          {
+            "label": "Emergency Ward",
+            "count": 18,
+            "percentage": 43.9
+          },
+          {
+            "label": "Source Not Captured",
+            "count": 12,
+            "percentage": 29.3
+          },
+          {
+            "label": "Operation Theater",
+            "count": 8,
+            "percentage": 19.5
+          },
+          {
+            "label": "New Payment Ward",
+            "count": 2,
+            "percentage": 4.9
+          },
+          {
+            "label": "Gynecology Ward",
+            "count": 1,
+            "percentage": 2.4
+          }
+        ],
+        "disposition": [
+          {
+            "label": "Transfer to General Ward",
+            "count": 20,
+            "percentage": 48.8
+          },
+          {
+            "label": "Death in ICU",
+            "count": 18,
+            "percentage": 43.9
+          },
+          {
+            "label": "Still in Admission",
+            "count": 2,
+            "percentage": 4.9
+          },
+          {
+            "label": "Transfer to Another Facility",
+            "count": 1,
+            "percentage": 2.4
+          }
+        ],
+        "diagnosisCategory": [
+          {
+            "label": "NCD",
+            "count": 24,
+            "percentage": 58.5
+          },
+          {
+            "label": "Infectious",
+            "count": 7,
+            "percentage": 17.1
+          },
+          {
+            "label": "Surgery",
+            "count": 6,
+            "percentage": 14.6
+          },
+          {
+            "label": "Other",
+            "count": 4,
+            "percentage": 9.8
+          }
+        ],
+        "icdChapter": [
+          {
+            "label": "Injury / Poisoning",
+            "count": 8,
+            "percentage": 19.5
+          },
+          {
+            "label": "Circulatory",
+            "count": 6,
+            "percentage": 14.6
+          },
+          {
+            "label": "Respiratory",
+            "count": 5,
+            "percentage": 12.2
+          },
+          {
+            "label": "Nervous System",
+            "count": 5,
+            "percentage": 12.2
+          },
+          {
+            "label": "Endocrine / Metabolic",
+            "count": 5,
+            "percentage": 12.2
+          },
+          {
+            "label": "Symptoms / Abnormal Findings",
+            "count": 3,
+            "percentage": 7.3
+          },
+          {
+            "label": "Pregnancy / Childbirth",
+            "count": 2,
+            "percentage": 4.9
+          },
+          {
+            "label": "Digestive",
+            "count": 2,
+            "percentage": 4.9
+          },
+          {
+            "label": "Genitourinary",
+            "count": 2,
+            "percentage": 4.9
+          },
+          {
+            "label": "Skin / Subcutaneous",
+            "count": 1,
+            "percentage": 2.4
+          },
+          {
+            "label": "External Causes",
+            "count": 1,
+            "percentage": 2.4
+          },
+          {
+            "label": "Neoplasms",
+            "count": 1,
+            "percentage": 2.4
+          }
+        ],
+        "primaryDiagnosisCounts": [
+          {
+            "label": "G93.41 - Metabolic encephalopathy",
+            "count": 4
+          },
+          {
+            "label": "E11.62 - Type 2 diabetes mellitus with skin complications",
+            "count": 2
+          },
+          {
+            "label": "I60.9 - Nontraumatic subarachnoid hemorrhage, unspecified",
+            "count": 2
+          },
+          {
+            "label": "R57.0 - Cardiogenic shock",
+            "count": 2
+          },
+          {
+            "label": "C11 - Malignant neoplasm of nasopharynx",
+            "count": 1
+          },
+          {
+            "label": "E10.10 - Type 1 diabetes mellitus with ketoacidosis without coma",
+            "count": 1
+          },
+          {
+            "label": "E11.11 - Type 2 diabetes mellitus with ketoacidosis with coma",
+            "count": 1
+          },
+          {
+            "label": "E87.2 - Acidosis",
+            "count": 1
+          },
+          {
+            "label": "G37.3 - Acute transverse myelitis in demyelinating disease of central nervous system",
+            "count": 1
+          },
+          {
+            "label": "I50 - Heart failure",
+            "count": 1
+          },
+          {
+            "label": "I50.9 - Heart failure, unspecified",
+            "count": 1
+          },
+          {
+            "label": "I60 - Nontraumatic subarachnoid hemorrhage",
+            "count": 1
+          },
+          {
+            "label": "I61.5 - Nontraumatic intracerebral hemorrhage, intraventricular",
+            "count": 1
+          },
+          {
+            "label": "J15 - Bacterial pneumonia, not elsewhere classified",
+            "count": 1
+          },
+          {
+            "label": "J18 - Pneumonia, unspecified organism",
+            "count": 1
+          },
+          {
+            "label": "J18.0 - Bronchopneumonia, unspecified organism",
+            "count": 1
+          },
+          {
+            "label": "J81.0 - Acute pulmonary edema",
+            "count": 1
+          },
+          {
+            "label": "J96.02 - Acute respiratory failure with hypercapnia",
+            "count": 1
+          },
+          {
+            "label": "K51.012 - Ulcerative (chronic) pancolitis with intestinal obstruction",
+            "count": 1
+          },
+          {
+            "label": "K72.0 - Acute and subacute hepatic failure",
+            "count": 1
+          },
+          {
+            "label": "L51.3 - Stevens-Johnson syndrome-toxic epidermal necrolysis overlap syndrome",
+            "count": 1
+          },
+          {
+            "label": "N17 - Acute kidney failure",
+            "count": 1
+          },
+          {
+            "label": "N18.6 - End stage renal disease",
+            "count": 1
+          },
+          {
+            "label": "O14.24 - HELLP syndrome, complicating childbirth",
+            "count": 1
+          },
+          {
+            "label": "O15 - Eclampsia",
+            "count": 1
+          },
+          {
+            "label": "R65.21 - Severe sepsis with septic shock",
+            "count": 1
+          },
+          {
+            "label": "S06.2X - Diffuse traumatic brain injury",
+            "count": 1
+          },
+          {
+            "label": "S06.2X0S - Diffuse traumatic brain injury without loss of consciousness, sequela",
+            "count": 1
+          },
+          {
+            "label": "S06.2X1 - Diffuse traumatic brain injury with loss of consciousness of 30 minutes or less",
+            "count": 1
+          },
+          {
+            "label": "S17.0 - Crushing injury of larynx and trachea",
+            "count": 1
+          },
+          {
+            "label": "S31.639A - Puncture wound without foreign body of abdominal wall, unspecified quadrant with penetration into peritoneal cavity, initial encounter",
+            "count": 1
+          },
+          {
+            "label": "S36.113 - Laceration of liver, unspecified degree",
+            "count": 1
+          },
+          {
+            "label": "S68.411A - Complete traumatic amputation of right hand at wrist level, initial encounter",
+            "count": 1
+          },
+          {
+            "label": "T60.0 - Toxic effect of organophosphate and carbamate insecticides",
+            "count": 1
+          },
+          {
+            "label": "V89.2 - Person injured in unspecified motor-vehicle accident, traffic",
+            "count": 1
+          }
+        ]
+      },
+      "mortalityReview": {
+        "summary": {
+          "deathCases": 18,
+          "mortalityRate": 43.9,
+          "meanAge": 49.78,
+          "medianAge": 58.0,
+          "meanLosDays": 3.28,
+          "medianLosDays": 3.0
+        },
+        "diagnosisCategory": [
+          {
+            "label": "NCD",
+            "count": 10,
+            "percentage": 55.6
+          },
+          {
+            "label": "Infectious",
+            "count": 6,
+            "percentage": 33.3
+          },
+          {
+            "label": "Surgery",
+            "count": 0,
+            "percentage": 0.0
+          },
+          {
+            "label": "Other",
+            "count": 2,
+            "percentage": 11.1
+          }
+        ],
+        "icdChapter": [
+          {
+            "label": "Nervous System",
+            "count": 3,
+            "percentage": 16.7
+          },
+          {
+            "label": "Respiratory",
+            "count": 3,
+            "percentage": 16.7
+          },
+          {
+            "label": "Circulatory",
+            "count": 3,
+            "percentage": 16.7
+          },
+          {
+            "label": "Symptoms / Abnormal Findings",
+            "count": 2,
+            "percentage": 11.1
+          },
+          {
+            "label": "Endocrine / Metabolic",
+            "count": 2,
+            "percentage": 11.1
+          },
+          {
+            "label": "Injury / Poisoning",
+            "count": 1,
+            "percentage": 5.6
+          },
+          {
+            "label": "Pregnancy / Childbirth",
+            "count": 1,
+            "percentage": 5.6
+          },
+          {
+            "label": "Digestive",
+            "count": 1,
+            "percentage": 5.6
+          },
+          {
+            "label": "Genitourinary",
+            "count": 1,
+            "percentage": 5.6
+          },
+          {
+            "label": "Neoplasms",
+            "count": 1,
+            "percentage": 5.6
+          }
+        ],
+        "losDistribution": [
+          {
+            "label": "1 day",
+            "count": 3,
+            "percentage": 16.7
+          },
+          {
+            "label": "2–3 days",
+            "count": 9,
+            "percentage": 50.0
+          },
+          {
+            "label": "4–7 days",
+            "count": 5,
+            "percentage": 27.8
+          },
+          {
+            "label": "8+ days",
+            "count": 1,
+            "percentage": 5.6
+          }
+        ],
+        "admissionSource": [
+          {
+            "label": "Emergency Ward",
+            "count": 8,
+            "percentage": 44.4
+          },
+          {
+            "label": "Source Not Captured",
+            "count": 7,
+            "percentage": 38.9
+          },
+          {
+            "label": "Operation Theater",
+            "count": 1,
+            "percentage": 5.6
+          },
+          {
+            "label": "New Payment Ward",
+            "count": 1,
+            "percentage": 5.6
+          },
+          {
+            "label": "Gynecology Ward",
+            "count": 1,
+            "percentage": 5.6
+          }
+        ],
+        "primaryDiagnosisCounts": [
+          {
+            "label": "G93.41 - Metabolic encephalopathy",
+            "count": 3
+          },
+          {
+            "label": "C11 - Malignant neoplasm of nasopharynx",
+            "count": 1
+          },
+          {
+            "label": "E11.62 - Type 2 diabetes mellitus with skin complications",
+            "count": 1
+          },
+          {
+            "label": "E87.2 - Acidosis",
+            "count": 1
+          },
+          {
+            "label": "I50 - Heart failure",
+            "count": 1
+          },
+          {
+            "label": "I60.9 - Nontraumatic subarachnoid hemorrhage, unspecified",
+            "count": 1
+          },
+          {
+            "label": "I61.5 - Nontraumatic intracerebral hemorrhage, intraventricular",
+            "count": 1
+          },
+          {
+            "label": "J15 - Bacterial pneumonia, not elsewhere classified",
+            "count": 1
+          },
+          {
+            "label": "J18 - Pneumonia, unspecified organism",
+            "count": 1
+          },
+          {
+            "label": "J18.0 - Bronchopneumonia, unspecified organism",
+            "count": 1
+          },
+          {
+            "label": "K72.0 - Acute and subacute hepatic failure",
+            "count": 1
+          },
+          {
+            "label": "N18.6 - End stage renal disease",
+            "count": 1
+          },
+          {
+            "label": "O14.24 - HELLP syndrome, complicating childbirth",
+            "count": 1
+          },
+          {
+            "label": "R57.0 - Cardiogenic shock",
+            "count": 1
+          },
+          {
+            "label": "R65.21 - Severe sepsis with septic shock",
+            "count": 1
+          },
+          {
+            "label": "S06.2X - Diffuse traumatic brain injury",
+            "count": 1
+          }
+        ],
+        "deathCases": [
+          {
+            "caseId": "AUG-D001",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "New Payment Ward",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Nervous System",
+            "losDays": 1,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D002",
+            "ageGroup": "18–39",
+            "sex": "Female",
+            "ward": "ICU",
+            "admissionSource": "Gynecology Ward",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Symptoms / Abnormal Findings",
+            "losDays": 1,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D003",
+            "ageGroup": "18–39",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Other",
+            "icdChapter": "Injury / Poisoning",
+            "losDays": 3,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D004",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Nervous System",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D005",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Respiratory",
+            "losDays": 1,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D006",
+            "ageGroup": "40–59",
+            "sex": "Female",
+            "ward": "HDU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Respiratory",
+            "losDays": 6,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D007",
+            "ageGroup": "18–39",
+            "sex": "Female",
+            "ward": "ICU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Other",
+            "icdChapter": "Pregnancy / Childbirth",
+            "losDays": 9,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D008",
+            "ageGroup": "80+",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Endocrine / Metabolic",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D009",
+            "ageGroup": "18–39",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Circulatory",
+            "losDays": 4,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D010",
+            "ageGroup": "<18",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Circulatory",
+            "losDays": 3,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D011",
+            "ageGroup": "80+",
+            "sex": "Female",
+            "ward": "HDU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Digestive",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D012",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Nervous System",
+            "losDays": 6,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D013",
+            "ageGroup": "18–39",
+            "sex": "Female",
+            "ward": "ICU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Symptoms / Abnormal Findings",
+            "losDays": 4,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D014",
+            "ageGroup": "60–79",
+            "sex": "Female",
+            "ward": "HDU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Genitourinary",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D015",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Neoplasms",
+            "losDays": 5,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D016",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Operation Theater",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Circulatory",
+            "losDays": 3,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D017",
+            "ageGroup": "<18",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Respiratory",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D018",
+            "ageGroup": "40–59",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Endocrine / Metabolic",
+            "losDays": 3,
+            "disposition": "Death in ICU"
+          }
+        ]
+      }
+    },
+    "ICU": {
+      "overview": {
+        "totalAdmissions": 16,
+        "deaths": 10,
+        "mortalityRate": 62.5,
+        "meanAge": 36.31,
+        "medianAge": 35.0,
+        "meanLosDays": 3.81,
+        "medianLosDays": 3.0,
+        "currentlyAdmitted": 1,
+        "discharged": 15
+      },
+      "patientProfile": {
+        "summary": {
+          "totalAdmissions": 16,
+          "meanAge": 36.31,
+          "medianAge": 35.0,
+          "meanLosDays": 3.81,
+          "medianLosDays": 3.0
+        },
+        "ageGroupDistribution": [
+          {
+            "label": "<18",
+            "count": 3,
+            "percentage": 18.8
+          },
+          {
+            "label": "18–39",
+            "count": 6,
+            "percentage": 37.5
+          },
+          {
+            "label": "40–59",
+            "count": 4,
+            "percentage": 25.0
+          },
+          {
+            "label": "60–79",
+            "count": 3,
+            "percentage": 18.8
+          }
+        ],
+        "sexDistribution": [
+          {
+            "label": "Male",
+            "count": 12,
+            "percentage": 75.0
+          },
+          {
+            "label": "Female",
+            "count": 4,
+            "percentage": 25.0
+          }
+        ],
+        "wardDistribution": [
+          {
+            "label": "ICU",
+            "count": 16,
+            "percentage": 100.0
+          }
+        ],
+        "losDistribution": [
+          {
+            "label": "1 day",
+            "count": 3,
+            "percentage": 18.8
+          },
+          {
+            "label": "2–3 days",
+            "count": 6,
+            "percentage": 37.5
+          },
+          {
+            "label": "4–7 days",
+            "count": 4,
+            "percentage": 25.0
+          },
+          {
+            "label": "8+ days",
+            "count": 3,
+            "percentage": 18.8
+          }
+        ]
+      },
+      "clinicalProfile": {
+        "admissionSource": [
+          {
+            "label": "Emergency Ward",
+            "count": 8,
+            "percentage": 50.0
+          },
+          {
+            "label": "Source Not Captured",
+            "count": 4,
+            "percentage": 25.0
+          },
+          {
+            "label": "Operation Theater",
+            "count": 3,
+            "percentage": 18.8
+          },
+          {
+            "label": "Gynecology Ward",
+            "count": 1,
+            "percentage": 6.2
+          }
+        ],
+        "disposition": [
+          {
+            "label": "Transfer to General Ward",
+            "count": 5,
+            "percentage": 31.2
+          },
+          {
+            "label": "Death in ICU",
+            "count": 10,
+            "percentage": 62.5
+          },
+          {
+            "label": "Still in Admission",
+            "count": 1,
+            "percentage": 6.2
+          }
+        ],
+        "diagnosisCategory": [
+          {
+            "label": "NCD",
+            "count": 5,
+            "percentage": 31.2
+          },
+          {
+            "label": "Infectious",
+            "count": 5,
+            "percentage": 31.2
+          },
+          {
+            "label": "Surgery",
+            "count": 3,
+            "percentage": 18.8
+          },
+          {
+            "label": "Other",
+            "count": 3,
+            "percentage": 18.8
+          }
+        ],
+        "icdChapter": [
+          {
+            "label": "Injury / Poisoning",
+            "count": 4,
+            "percentage": 25.0
+          },
+          {
+            "label": "Respiratory",
+            "count": 3,
+            "percentage": 18.8
+          },
+          {
+            "label": "Symptoms / Abnormal Findings",
+            "count": 2,
+            "percentage": 12.5
+          },
+          {
+            "label": "Circulatory",
+            "count": 2,
+            "percentage": 12.5
+          },
+          {
+            "label": "Nervous System",
+            "count": 1,
+            "percentage": 6.2
+          },
+          {
+            "label": "External Causes",
+            "count": 1,
+            "percentage": 6.2
+          },
+          {
+            "label": "Pregnancy / Childbirth",
+            "count": 1,
+            "percentage": 6.2
+          },
+          {
+            "label": "Neoplasms",
+            "count": 1,
+            "percentage": 6.2
+          },
+          {
+            "label": "Endocrine / Metabolic",
+            "count": 1,
+            "percentage": 6.2
+          }
+        ],
+        "primaryDiagnosisCounts": [
+          {
+            "label": "C11 - Malignant neoplasm of nasopharynx",
+            "count": 1
+          },
+          {
+            "label": "E11.62 - Type 2 diabetes mellitus with skin complications",
+            "count": 1
+          },
+          {
+            "label": "G93.41 - Metabolic encephalopathy",
+            "count": 1
+          },
+          {
+            "label": "I60.9 - Nontraumatic subarachnoid hemorrhage, unspecified",
+            "count": 1
+          },
+          {
+            "label": "I61.5 - Nontraumatic intracerebral hemorrhage, intraventricular",
+            "count": 1
+          },
+          {
+            "label": "J18.0 - Bronchopneumonia, unspecified organism",
+            "count": 1
+          },
+          {
+            "label": "J81.0 - Acute pulmonary edema",
+            "count": 1
+          },
+          {
+            "label": "J96.02 - Acute respiratory failure with hypercapnia",
+            "count": 1
+          },
+          {
+            "label": "O14.24 - HELLP syndrome, complicating childbirth",
+            "count": 1
+          },
+          {
+            "label": "R57.0 - Cardiogenic shock",
+            "count": 1
+          },
+          {
+            "label": "R65.21 - Severe sepsis with septic shock",
+            "count": 1
+          },
+          {
+            "label": "S06.2X - Diffuse traumatic brain injury",
+            "count": 1
+          },
+          {
+            "label": "S06.2X0S - Diffuse traumatic brain injury without loss of consciousness, sequela",
+            "count": 1
+          },
+          {
+            "label": "S06.2X1 - Diffuse traumatic brain injury with loss of consciousness of 30 minutes or less",
+            "count": 1
+          },
+          {
+            "label": "S68.411A - Complete traumatic amputation of right hand at wrist level, initial encounter",
+            "count": 1
+          },
+          {
+            "label": "V89.2 - Person injured in unspecified motor-vehicle accident, traffic",
+            "count": 1
+          }
+        ]
+      },
+      "mortalityReview": {
+        "summary": {
+          "deathCases": 10,
+          "mortalityRate": 62.5,
+          "meanAge": 40.9,
+          "medianAge": 35.0,
+          "meanLosDays": 3.6,
+          "medianLosDays": 3.0
+        },
+        "diagnosisCategory": [
+          {
+            "label": "NCD",
+            "count": 4,
+            "percentage": 40.0
+          },
+          {
+            "label": "Infectious",
+            "count": 4,
+            "percentage": 40.0
+          },
+          {
+            "label": "Surgery",
+            "count": 0,
+            "percentage": 0.0
+          },
+          {
+            "label": "Other",
+            "count": 2,
+            "percentage": 20.0
+          }
+        ],
+        "icdChapter": [
+          {
+            "label": "Symptoms / Abnormal Findings",
+            "count": 2,
+            "percentage": 20.0
+          },
+          {
+            "label": "Circulatory",
+            "count": 2,
+            "percentage": 20.0
+          },
+          {
+            "label": "Injury / Poisoning",
+            "count": 1,
+            "percentage": 10.0
+          },
+          {
+            "label": "Nervous System",
+            "count": 1,
+            "percentage": 10.0
+          },
+          {
+            "label": "Pregnancy / Childbirth",
+            "count": 1,
+            "percentage": 10.0
+          },
+          {
+            "label": "Neoplasms",
+            "count": 1,
+            "percentage": 10.0
+          },
+          {
+            "label": "Respiratory",
+            "count": 1,
+            "percentage": 10.0
+          },
+          {
+            "label": "Endocrine / Metabolic",
+            "count": 1,
+            "percentage": 10.0
+          }
+        ],
+        "losDistribution": [
+          {
+            "label": "1 day",
+            "count": 1,
+            "percentage": 10.0
+          },
+          {
+            "label": "2–3 days",
+            "count": 5,
+            "percentage": 50.0
+          },
+          {
+            "label": "4–7 days",
+            "count": 3,
+            "percentage": 30.0
+          },
+          {
+            "label": "8+ days",
+            "count": 1,
+            "percentage": 10.0
+          }
+        ],
+        "admissionSource": [
+          {
+            "label": "Emergency Ward",
+            "count": 4,
+            "percentage": 40.0
+          },
+          {
+            "label": "Source Not Captured",
+            "count": 4,
+            "percentage": 40.0
+          },
+          {
+            "label": "Operation Theater",
+            "count": 1,
+            "percentage": 10.0
+          },
+          {
+            "label": "Gynecology Ward",
+            "count": 1,
+            "percentage": 10.0
+          }
+        ],
+        "primaryDiagnosisCounts": [
+          {
+            "label": "C11 - Malignant neoplasm of nasopharynx",
+            "count": 1
+          },
+          {
+            "label": "E11.62 - Type 2 diabetes mellitus with skin complications",
+            "count": 1
+          },
+          {
+            "label": "G93.41 - Metabolic encephalopathy",
+            "count": 1
+          },
+          {
+            "label": "I60.9 - Nontraumatic subarachnoid hemorrhage, unspecified",
+            "count": 1
+          },
+          {
+            "label": "I61.5 - Nontraumatic intracerebral hemorrhage, intraventricular",
+            "count": 1
+          },
+          {
+            "label": "J18.0 - Bronchopneumonia, unspecified organism",
+            "count": 1
+          },
+          {
+            "label": "O14.24 - HELLP syndrome, complicating childbirth",
+            "count": 1
+          },
+          {
+            "label": "R57.0 - Cardiogenic shock",
+            "count": 1
+          },
+          {
+            "label": "R65.21 - Severe sepsis with septic shock",
+            "count": 1
+          },
+          {
+            "label": "S06.2X - Diffuse traumatic brain injury",
+            "count": 1
+          }
+        ],
+        "deathCases": [
+          {
+            "caseId": "AUG-D002",
+            "ageGroup": "18–39",
+            "sex": "Female",
+            "ward": "ICU",
+            "admissionSource": "Gynecology Ward",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Symptoms / Abnormal Findings",
+            "losDays": 1,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D003",
+            "ageGroup": "18–39",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Other",
+            "icdChapter": "Injury / Poisoning",
+            "losDays": 3,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D004",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Nervous System",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D007",
+            "ageGroup": "18–39",
+            "sex": "Female",
+            "ward": "ICU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Other",
+            "icdChapter": "Pregnancy / Childbirth",
+            "losDays": 9,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D009",
+            "ageGroup": "18–39",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Circulatory",
+            "losDays": 4,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D013",
+            "ageGroup": "18–39",
+            "sex": "Female",
+            "ward": "ICU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Symptoms / Abnormal Findings",
+            "losDays": 4,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D015",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Neoplasms",
+            "losDays": 5,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D016",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Operation Theater",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Circulatory",
+            "losDays": 3,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D017",
+            "ageGroup": "<18",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Respiratory",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D018",
+            "ageGroup": "40–59",
+            "sex": "Male",
+            "ward": "ICU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Endocrine / Metabolic",
+            "losDays": 3,
+            "disposition": "Death in ICU"
+          }
+        ]
+      }
+    },
+    "HDU": {
+      "overview": {
+        "totalAdmissions": 25,
+        "deaths": 8,
+        "mortalityRate": 32.0,
+        "meanAge": 51.28,
+        "medianAge": 58,
+        "meanLosDays": 4.32,
+        "medianLosDays": 4,
+        "currentlyAdmitted": 1,
+        "discharged": 24
+      },
+      "patientProfile": {
+        "summary": {
+          "totalAdmissions": 25,
+          "meanAge": 51.28,
+          "medianAge": 58,
+          "meanLosDays": 4.32,
+          "medianLosDays": 4
+        },
+        "ageGroupDistribution": [
+          {
+            "label": "<18",
+            "count": 3,
+            "percentage": 12.0
+          },
+          {
+            "label": "18–39",
+            "count": 4,
+            "percentage": 16.0
+          },
+          {
+            "label": "40–59",
+            "count": 6,
+            "percentage": 24.0
+          },
+          {
+            "label": "60–79",
+            "count": 7,
+            "percentage": 28.0
+          },
+          {
+            "label": "80+",
+            "count": 5,
+            "percentage": 20.0
+          }
+        ],
+        "sexDistribution": [
+          {
+            "label": "Male",
+            "count": 16,
+            "percentage": 64.0
+          },
+          {
+            "label": "Female",
+            "count": 9,
+            "percentage": 36.0
+          }
+        ],
+        "wardDistribution": [
+          {
+            "label": "HDU",
+            "count": 25,
+            "percentage": 100.0
+          }
+        ],
+        "losDistribution": [
+          {
+            "label": "1 day",
+            "count": 2,
+            "percentage": 8.0
+          },
+          {
+            "label": "2–3 days",
+            "count": 10,
+            "percentage": 40.0
+          },
+          {
+            "label": "4–7 days",
+            "count": 10,
+            "percentage": 40.0
+          },
+          {
+            "label": "8+ days",
+            "count": 3,
+            "percentage": 12.0
+          }
+        ]
+      },
+      "clinicalProfile": {
+        "admissionSource": [
+          {
+            "label": "Emergency Ward",
+            "count": 10,
+            "percentage": 40.0
+          },
+          {
+            "label": "Source Not Captured",
+            "count": 8,
+            "percentage": 32.0
+          },
+          {
+            "label": "Operation Theater",
+            "count": 5,
+            "percentage": 20.0
+          },
+          {
+            "label": "New Payment Ward",
+            "count": 2,
+            "percentage": 8.0
+          }
+        ],
+        "disposition": [
+          {
+            "label": "Transfer to General Ward",
+            "count": 15,
+            "percentage": 60.0
+          },
+          {
+            "label": "Death in ICU",
+            "count": 8,
+            "percentage": 32.0
+          },
+          {
+            "label": "Still in Admission",
+            "count": 1,
+            "percentage": 4.0
+          },
+          {
+            "label": "Transfer to Another Facility",
+            "count": 1,
+            "percentage": 4.0
+          }
+        ],
+        "diagnosisCategory": [
+          {
+            "label": "NCD",
+            "count": 19,
+            "percentage": 76.0
+          },
+          {
+            "label": "Infectious",
+            "count": 2,
+            "percentage": 8.0
+          },
+          {
+            "label": "Surgery",
+            "count": 3,
+            "percentage": 12.0
+          },
+          {
+            "label": "Other",
+            "count": 1,
+            "percentage": 4.0
+          }
+        ],
+        "icdChapter": [
+          {
+            "label": "Injury / Poisoning",
+            "count": 4,
+            "percentage": 16.0
+          },
+          {
+            "label": "Nervous System",
+            "count": 4,
+            "percentage": 16.0
+          },
+          {
+            "label": "Endocrine / Metabolic",
+            "count": 4,
+            "percentage": 16.0
+          },
+          {
+            "label": "Circulatory",
+            "count": 4,
+            "percentage": 16.0
+          },
+          {
+            "label": "Digestive",
+            "count": 2,
+            "percentage": 8.0
+          },
+          {
+            "label": "Respiratory",
+            "count": 2,
+            "percentage": 8.0
+          },
+          {
+            "label": "Genitourinary",
+            "count": 2,
+            "percentage": 8.0
+          },
+          {
+            "label": "Pregnancy / Childbirth",
+            "count": 1,
+            "percentage": 4.0
+          },
+          {
+            "label": "Skin / Subcutaneous",
+            "count": 1,
+            "percentage": 4.0
+          },
+          {
+            "label": "Symptoms / Abnormal Findings",
+            "count": 1,
+            "percentage": 4.0
+          }
+        ],
+        "primaryDiagnosisCounts": [
+          {
+            "label": "G93.41 - Metabolic encephalopathy",
+            "count": 3
+          },
+          {
+            "label": "E10.10 - Type 1 diabetes mellitus with ketoacidosis without coma",
+            "count": 1
+          },
+          {
+            "label": "E11.11 - Type 2 diabetes mellitus with ketoacidosis with coma",
+            "count": 1
+          },
+          {
+            "label": "E11.62 - Type 2 diabetes mellitus with skin complications",
+            "count": 1
+          },
+          {
+            "label": "E87.2 - Acidosis",
+            "count": 1
+          },
+          {
+            "label": "G37.3 - Acute transverse myelitis in demyelinating disease of central nervous system",
+            "count": 1
+          },
+          {
+            "label": "I50 - Heart failure",
+            "count": 1
+          },
+          {
+            "label": "I50.9 - Heart failure, unspecified",
+            "count": 1
+          },
+          {
+            "label": "I60 - Nontraumatic subarachnoid hemorrhage",
+            "count": 1
+          },
+          {
+            "label": "I60.9 - Nontraumatic subarachnoid hemorrhage, unspecified",
+            "count": 1
+          },
+          {
+            "label": "J15 - Bacterial pneumonia, not elsewhere classified",
+            "count": 1
+          },
+          {
+            "label": "J18 - Pneumonia, unspecified organism",
+            "count": 1
+          },
+          {
+            "label": "K51.012 - Ulcerative (chronic) pancolitis with intestinal obstruction",
+            "count": 1
+          },
+          {
+            "label": "K72.0 - Acute and subacute hepatic failure",
+            "count": 1
+          },
+          {
+            "label": "L51.3 - Stevens-Johnson syndrome-toxic epidermal necrolysis overlap syndrome",
+            "count": 1
+          },
+          {
+            "label": "N17 - Acute kidney failure",
+            "count": 1
+          },
+          {
+            "label": "N18.6 - End stage renal disease",
+            "count": 1
+          },
+          {
+            "label": "O15 - Eclampsia",
+            "count": 1
+          },
+          {
+            "label": "R57.0 - Cardiogenic shock",
+            "count": 1
+          },
+          {
+            "label": "S17.0 - Crushing injury of larynx and trachea",
+            "count": 1
+          },
+          {
+            "label": "S31.639A - Puncture wound without foreign body of abdominal wall, unspecified quadrant with penetration into peritoneal cavity, initial encounter",
+            "count": 1
+          },
+          {
+            "label": "S36.113 - Laceration of liver, unspecified degree",
+            "count": 1
+          },
+          {
+            "label": "T60.0 - Toxic effect of organophosphate and carbamate insecticides",
+            "count": 1
+          }
+        ]
+      },
+      "mortalityReview": {
+        "summary": {
+          "deathCases": 8,
+          "mortalityRate": 32.0,
+          "meanAge": 60.88,
+          "medianAge": 67.5,
+          "meanLosDays": 2.88,
+          "medianLosDays": 2.0
+        },
+        "diagnosisCategory": [
+          {
+            "label": "NCD",
+            "count": 6,
+            "percentage": 75.0
+          },
+          {
+            "label": "Infectious",
+            "count": 2,
+            "percentage": 25.0
+          },
+          {
+            "label": "Surgery",
+            "count": 0,
+            "percentage": 0.0
+          },
+          {
+            "label": "Other",
+            "count": 0,
+            "percentage": 0.0
+          }
+        ],
+        "icdChapter": [
+          {
+            "label": "Nervous System",
+            "count": 2,
+            "percentage": 25.0
+          },
+          {
+            "label": "Respiratory",
+            "count": 2,
+            "percentage": 25.0
+          },
+          {
+            "label": "Endocrine / Metabolic",
+            "count": 1,
+            "percentage": 12.5
+          },
+          {
+            "label": "Circulatory",
+            "count": 1,
+            "percentage": 12.5
+          },
+          {
+            "label": "Digestive",
+            "count": 1,
+            "percentage": 12.5
+          },
+          {
+            "label": "Genitourinary",
+            "count": 1,
+            "percentage": 12.5
+          }
+        ],
+        "losDistribution": [
+          {
+            "label": "1 day",
+            "count": 2,
+            "percentage": 25.0
+          },
+          {
+            "label": "2–3 days",
+            "count": 4,
+            "percentage": 50.0
+          },
+          {
+            "label": "4–7 days",
+            "count": 2,
+            "percentage": 25.0
+          },
+          {
+            "label": "8+ days",
+            "count": 0,
+            "percentage": 0.0
+          }
+        ],
+        "admissionSource": [
+          {
+            "label": "Emergency Ward",
+            "count": 4,
+            "percentage": 50.0
+          },
+          {
+            "label": "Source Not Captured",
+            "count": 3,
+            "percentage": 37.5
+          },
+          {
+            "label": "New Payment Ward",
+            "count": 1,
+            "percentage": 12.5
+          }
+        ],
+        "primaryDiagnosisCounts": [
+          {
+            "label": "G93.41 - Metabolic encephalopathy",
+            "count": 2
+          },
+          {
+            "label": "E87.2 - Acidosis",
+            "count": 1
+          },
+          {
+            "label": "I50 - Heart failure",
+            "count": 1
+          },
+          {
+            "label": "J15 - Bacterial pneumonia, not elsewhere classified",
+            "count": 1
+          },
+          {
+            "label": "J18 - Pneumonia, unspecified organism",
+            "count": 1
+          },
+          {
+            "label": "K72.0 - Acute and subacute hepatic failure",
+            "count": 1
+          },
+          {
+            "label": "N18.6 - End stage renal disease",
+            "count": 1
+          }
+        ],
+        "deathCases": [
+          {
+            "caseId": "AUG-D001",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "New Payment Ward",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Nervous System",
+            "losDays": 1,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D005",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Respiratory",
+            "losDays": 1,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D006",
+            "ageGroup": "40–59",
+            "sex": "Female",
+            "ward": "HDU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "Infectious",
+            "icdChapter": "Respiratory",
+            "losDays": 6,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D008",
+            "ageGroup": "80+",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Endocrine / Metabolic",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D010",
+            "ageGroup": "<18",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "Emergency Ward",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Circulatory",
+            "losDays": 3,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D011",
+            "ageGroup": "80+",
+            "sex": "Female",
+            "ward": "HDU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Digestive",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D012",
+            "ageGroup": "60–79",
+            "sex": "Male",
+            "ward": "HDU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Nervous System",
+            "losDays": 6,
+            "disposition": "Death in ICU"
+          },
+          {
+            "caseId": "AUG-D014",
+            "ageGroup": "60–79",
+            "sex": "Female",
+            "ward": "HDU",
+            "admissionSource": "Source Not Captured",
+            "diagnosisCategory": "NCD",
+            "icdChapter": "Genitourinary",
+            "losDays": 2,
+            "disposition": "Death in ICU"
+          }
+        ]
+      }
+    }
+  }
+}
