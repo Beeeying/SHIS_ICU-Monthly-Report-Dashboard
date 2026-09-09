@@ -1,6 +1,6 @@
 /* ==========================================================================
    HGH ICU Monthly Report Dashboard
-   dashboard.css v2
+   dashboard.css v2 — Chart.js Ready
 
    Visual direction:
    - Clean clinical analytics
@@ -10,6 +10,11 @@
    - No red/green traffic-light semantics
    - Mortality remains visually important through hierarchy, not alarm colors
    ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
 
 :root {
   /* Neutral surfaces */
@@ -42,10 +47,13 @@
   /* Supporting analytics accents */
   --color-blue: #7da0d4;
   --color-blue-soft: #edf3fb;
+
   --color-violet: #a78bca;
   --color-violet-soft: #f4eff9;
+
   --color-amber: #d6a756;
   --color-amber-soft: #fff6e6;
+
   --color-neutral-accent: #b8c0cc;
   --color-neutral-accent-soft: #f2f4f7;
 
@@ -101,6 +109,11 @@
   --page-max-width: 1500px;
 }
 
+
+/* --------------------------------------------------------------------------
+   2. Base / reset
+   -------------------------------------------------------------------------- */
+
 *,
 *::before,
 *::after {
@@ -114,16 +127,20 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+
   background:
     linear-gradient(
       180deg,
       var(--color-bg-top) 0%,
       var(--color-bg) 100%
     );
+
   color: var(--color-text-primary);
+
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   line-height: 1.5;
+
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -167,9 +184,16 @@ h3 {
   display: none !important;
 }
 
+
+/* --------------------------------------------------------------------------
+   3. Main shell
+   -------------------------------------------------------------------------- */
+
 .dashboard-shell {
   width: min(100% - 32px, var(--page-max-width));
+
   margin: 0 auto;
+
   padding: 24px 0 48px;
 }
 
@@ -190,23 +214,38 @@ h3 {
     opacity: 0;
     transform: translateY(3px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+
+/* --------------------------------------------------------------------------
+   4. Global header
+   -------------------------------------------------------------------------- */
+
 .dashboard-header {
   display: flex;
+
   align-items: flex-start;
   justify-content: space-between;
+
   gap: var(--space-8);
+
   padding: var(--space-6) var(--space-7);
+
   margin-bottom: var(--space-4);
+
   background: rgba(255, 255, 255, 0.9);
+
   border: 1px solid rgba(229, 231, 235, 0.92);
+
   border-radius: var(--radius-xl);
+
   box-shadow: var(--shadow-card);
+
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -218,44 +257,66 @@ h3 {
 .eyebrow,
 .section-kicker {
   margin-bottom: var(--space-2);
+
   color: var(--color-primary);
+
   font-size: var(--font-size-xs);
+
   font-weight: 700;
+
   letter-spacing: 0.08em;
+
   text-transform: uppercase;
 }
 
 .dashboard-title-group h1 {
   margin-bottom: var(--space-2);
+
   font-size: clamp(1.7rem, 3vw, 2.2rem);
+
   font-weight: 700;
+
   line-height: 1.1;
 }
 
 .dashboard-subtitle {
   margin-bottom: 0;
+
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-sm);
 }
 
+
+/* --------------------------------------------------------------------------
+   5. Global controls
+   -------------------------------------------------------------------------- */
+
 .global-controls {
   display: flex;
+
   align-items: flex-end;
   justify-content: flex-end;
+
   flex-wrap: wrap;
+
   gap: var(--space-3);
 }
 
 .filter-control {
   display: flex;
+
   flex-direction: column;
+
   gap: 6px;
 }
 
 .filter-control label,
 .compact-filter label {
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-xs);
+
   font-weight: 600;
 }
 
@@ -264,11 +325,17 @@ h3 {
 .table-controls input,
 .global-controls select {
   min-height: 42px;
+
   border: 1px solid var(--color-border-strong);
+
   border-radius: var(--radius-sm);
+
   background: var(--color-surface);
+
   color: var(--color-text-primary);
+
   outline: none;
+
   transition:
     border-color 140ms ease,
     box-shadow 140ms ease,
@@ -277,6 +344,7 @@ h3 {
 
 .global-controls select {
   min-width: 148px;
+
   padding: 0 34px 0 12px;
 }
 
@@ -285,17 +353,26 @@ h3 {
 .table-controls input:focus,
 .global-controls select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(91, 91, 214, 0.12);
+
+  box-shadow:
+    0 0 0 3px rgba(91, 91, 214, 0.12);
 }
 
 .secondary-button {
   min-height: 42px;
+
   padding: 0 15px;
+
   border: 1px solid var(--color-border-strong);
+
   border-radius: var(--radius-sm);
+
   background: var(--color-surface);
+
   color: var(--color-text-secondary);
+
   font-weight: 600;
+
   transition:
     background-color 140ms ease,
     border-color 140ms ease,
@@ -304,56 +381,92 @@ h3 {
 
 .secondary-button:hover {
   border-color: var(--color-primary-soft-strong);
+
   background: var(--color-primary-soft);
+
   color: var(--color-primary);
 }
 
 .last-updated {
   min-height: 42px;
+
   display: flex;
+
   flex-direction: column;
+
   justify-content: center;
+
   padding: 0 4px;
 }
 
 .last-updated span {
   color: var(--color-text-muted);
+
   font-size: var(--font-size-xs);
 }
 
 .last-updated strong {
   font-size: var(--font-size-sm);
+
   font-weight: 650;
 }
 
+
+/* --------------------------------------------------------------------------
+   6. Horizontal navigation
+   -------------------------------------------------------------------------- */
+
 .dashboard-tabs {
   position: sticky;
+
   top: 10px;
+
   z-index: 20;
+
   display: flex;
+
   align-items: center;
+
   gap: 6px;
+
   margin-bottom: var(--space-6);
+
   padding: 7px;
+
   overflow-x: auto;
+
   background: rgba(255, 255, 255, 0.94);
+
   border: 1px solid var(--color-border);
+
   border-radius: var(--radius-lg);
-  box-shadow: 0 5px 18px rgba(31, 41, 51, 0.035);
+
+  box-shadow:
+    0 5px 18px rgba(31, 41, 51, 0.035);
+
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
 .tab-button {
   position: relative;
+
   flex: 0 0 auto;
+
   padding: 10px 16px;
+
   border: 0;
+
   border-radius: 12px;
+
   background: transparent;
+
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-sm);
+
   font-weight: 650;
+
   transition:
     background-color 140ms ease,
     color 140ms ease,
@@ -362,99 +475,153 @@ h3 {
 
 .tab-button:hover {
   background: var(--color-surface-soft);
+
   color: var(--color-text-primary);
 }
 
 .tab-button.active {
   background: var(--color-primary-soft);
+
   color: var(--color-primary);
-  box-shadow: inset 0 0 0 1px rgba(91, 91, 214, 0.05);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(91, 91, 214, 0.05);
 }
 
 .tab-button.active::after {
   content: "";
+
   position: absolute;
+
   left: 18px;
   right: 18px;
   bottom: 4px;
+
   height: 2px;
+
   border-radius: var(--radius-pill);
+
   background: var(--color-primary);
 }
 
+
+/* --------------------------------------------------------------------------
+   7. Page headings
+   -------------------------------------------------------------------------- */
+
 .page-heading {
   display: flex;
+
   align-items: flex-end;
   justify-content: space-between;
+
   gap: var(--space-6);
+
   margin-bottom: var(--space-5);
+
   padding: 0 2px;
 }
 
 .page-heading h2 {
   margin-bottom: 6px;
+
   font-size: clamp(1.4rem, 2vw, 1.7rem);
+
   line-height: 1.2;
 }
 
 .page-heading p:not(.section-kicker) {
   max-width: 760px;
+
   margin-bottom: 0;
+
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-sm);
 }
 
 .subsection-heading {
   display: flex;
+
   align-items: flex-end;
   justify-content: space-between;
+
   gap: var(--space-5);
-  margin: var(--space-8) 2px var(--space-4);
+
+  margin:
+    var(--space-8)
+    2px
+    var(--space-4);
 }
 
 .subsection-heading h3 {
   margin-bottom: 4px;
+
   font-size: var(--font-size-lg);
 }
 
 .subsection-heading p {
   margin-bottom: 0;
+
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-sm);
 }
 
+
+/* --------------------------------------------------------------------------
+   8. KPI cards
+   -------------------------------------------------------------------------- */
+
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
   gap: var(--space-4);
+
   margin-bottom: var(--space-5);
 }
 
 .kpi-grid-overview {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
 }
 
 .mortality-kpi-grid {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(6, minmax(0, 1fr));
 }
 
 .kpi-card {
   position: relative;
+
   min-height: 132px;
+
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
+
   padding: 18px 18px 16px;
+
   background:
     linear-gradient(
       180deg,
       #ffffff 0%,
       #fcfcfd 100%
     );
+
   border: 1px solid var(--color-border);
+
   border-radius: var(--radius-lg);
+
   box-shadow: var(--shadow-card);
+
   overflow: hidden;
+
   transition:
     transform 150ms ease,
     box-shadow 150ms ease,
@@ -463,47 +630,74 @@ h3 {
 
 .kpi-card::before {
   content: "";
+
   position: absolute;
+
   top: 0;
+
   left: 16px;
   right: 16px;
+
   height: 3px;
-  border-radius: 0 0 var(--radius-pill) var(--radius-pill);
+
+  border-radius:
+    0 0 var(--radius-pill) var(--radius-pill);
+
   background: var(--color-primary-soft-strong);
+
   opacity: 0.95;
 }
 
 .kpi-card:hover {
   transform: translateY(-1px);
+
   border-color: #dadde5;
+
   box-shadow: var(--shadow-card-hover);
 }
 
 .kpi-label {
   margin-bottom: var(--space-2);
+
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-sm);
+
   font-weight: 650;
 }
 
 .kpi-value {
   display: block;
+
   margin-top: auto;
+
   margin-bottom: 1px;
+
   color: var(--color-text-primary);
+
   font-size: var(--font-size-kpi);
+
   font-weight: 720;
+
   letter-spacing: -0.045em;
+
   line-height: 1;
 }
 
 .kpi-note {
   margin-top: var(--space-2);
+
   color: var(--color-text-muted);
+
   font-size: var(--font-size-xs);
 }
 
-/* Mortality still gets stronger emphasis, but remains in the same color family */
+
+/*
+ * Mortality-related KPIs receive slightly stronger emphasis,
+ * but remain within the same indigo / lavender visual system.
+ */
+
 #mortality-review .kpi-card:nth-child(1)::before,
 #mortality-review .kpi-card:nth-child(2)::before,
 #overview .kpi-card:nth-child(2)::before,
@@ -518,44 +712,67 @@ h3 {
   color: var(--color-text-primary);
 }
 
+
+/* --------------------------------------------------------------------------
+   9. General dashboard cards
+   -------------------------------------------------------------------------- */
+
 .dashboard-card {
   background: var(--color-surface);
+
   border: 1px solid var(--color-border);
+
   border-radius: var(--radius-lg);
+
   box-shadow: var(--shadow-card);
 }
 
 .card-heading {
   display: flex;
+
   align-items: flex-start;
   justify-content: space-between;
+
   gap: var(--space-4);
+
   padding: 18px 20px 0;
 }
 
 .card-heading h3 {
   margin-bottom: 4px;
+
   font-size: var(--font-size-md);
+
   font-weight: 680;
 }
 
 .card-heading p {
   margin-bottom: 0;
+
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-xs);
 }
 
+
+/* --------------------------------------------------------------------------
+   10. Chart grids and Chart.js containers
+   -------------------------------------------------------------------------- */
+
 .chart-grid {
   display: grid;
+
   gap: var(--space-4);
 }
 
 .chart-grid-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 }
 
 .chart-card {
   min-height: 350px;
+
   overflow: hidden;
 }
 
@@ -563,29 +780,103 @@ h3 {
   grid-column: 1 / -1;
 }
 
-.chart-placeholder {
-  min-height: 275px;
-  margin: 14px 18px 18px;
-  display: grid;
-  place-items: center;
-  border: 1px dashed #d6d9e3;
-  border-radius: var(--radius-md);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(91, 91, 214, 0.022),
-      rgba(139, 143, 232, 0.06)
-    );
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+
+/*
+ * Main Chart.js container.
+ *
+ * Chart.js is configured with maintainAspectRatio = false.
+ * Therefore the parent container controls the actual chart dimensions.
+ */
+
+.chart-container {
+  position: relative;
+
+  width: calc(100% - 36px);
+
+  height: 275px;
+
+  margin:
+    14px
+    18px
+    18px;
 }
 
-.chart-card canvas {
+
+/*
+ * Canvas fills the parent chart container.
+ *
+ * Visual chart settings such as bar radius, colors, legends,
+ * gridlines, axes and tooltips are controlled in chart-config.js.
+ */
+
+.chart-container canvas {
   width: 100% !important;
-  max-height: 290px;
-  padding: 10px 18px 18px;
+
+  height: 100% !important;
+
+  display: block;
 }
+
+
+/*
+ * Optional modifiers for charts that need additional vertical space.
+ *
+ * Example:
+ *
+ * <div class="chart-container chart-container--tall">
+ *   <canvas id="clinical-icd-chart"></canvas>
+ * </div>
+ */
+
+.chart-container--tall {
+  height: 340px;
+}
+
+.chart-container--compact {
+  height: 240px;
+}
+
+
+/*
+ * Empty state.
+ *
+ * Used when the selected reporting period / ward contains no chart data.
+ */
+
+.chart-empty-state {
+  width: calc(100% - 36px);
+
+  height: 275px;
+
+  margin:
+    14px
+    18px
+    18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-5);
+
+  border: 1px dashed var(--color-border);
+
+  border-radius: var(--radius-md);
+
+  background: var(--color-surface-soft);
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-sm);
+
+  text-align: center;
+}
+
+
+/* --------------------------------------------------------------------------
+   11. Tables
+   -------------------------------------------------------------------------- */
 
 .table-card,
 .death-case-card {
@@ -594,52 +885,91 @@ h3 {
 
 .table-wrapper {
   width: 100%;
+
   overflow-x: auto;
-  padding: 12px 18px 18px;
+
+  padding:
+    12px
+    18px
+    18px;
 }
 
 table {
   width: 100%;
+
   border-collapse: separate;
+
   border-spacing: 0;
+
   min-width: 720px;
 }
 
 thead th {
   position: sticky;
+
   top: 0;
+
   padding: 11px 12px;
+
   background: var(--color-surface-soft);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+
+  border-top:
+    1px solid var(--color-border);
+
+  border-bottom:
+    1px solid var(--color-border);
+
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-xs);
+
   font-weight: 700;
+
   letter-spacing: 0.015em;
+
   text-align: left;
+
   white-space: nowrap;
 }
 
 thead th:first-child {
-  border-left: 1px solid var(--color-border);
-  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  border-left:
+    1px solid var(--color-border);
+
+  border-radius:
+    var(--radius-sm)
+    0
+    0
+    var(--radius-sm);
 }
 
 thead th:last-child {
-  border-right: 1px solid var(--color-border);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  border-right:
+    1px solid var(--color-border);
+
+  border-radius:
+    0
+    var(--radius-sm)
+    var(--radius-sm)
+    0;
 }
 
 tbody td {
   padding: 13px 12px;
-  border-bottom: 1px solid #eef0f4;
+
+  border-bottom:
+    1px solid #eef0f4;
+
   color: var(--color-text-primary);
+
   font-size: var(--font-size-sm);
+
   vertical-align: middle;
 }
 
 tbody tr {
-  transition: background-color 120ms ease;
+  transition:
+    background-color 120ms ease;
 }
 
 tbody tr:hover {
@@ -649,6 +979,11 @@ tbody tr:hover {
 tbody tr:last-child td {
   border-bottom: 0;
 }
+
+
+/* --------------------------------------------------------------------------
+   12. Mortality review / case-review work area
+   -------------------------------------------------------------------------- */
 
 .death-case-section {
   margin-top: var(--space-8);
@@ -660,14 +995,22 @@ tbody tr:last-child td {
 
 .record-count {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   min-height: 30px;
+
   padding: 0 11px;
+
   border-radius: var(--radius-pill);
+
   background: var(--color-secondary-soft);
+
   color: var(--color-primary);
+
   font-size: var(--font-size-xs);
+
   font-weight: 700;
 }
 
@@ -677,10 +1020,17 @@ tbody tr:last-child td {
 
 .table-controls {
   display: flex;
+
   align-items: flex-end;
+
   flex-wrap: wrap;
+
   gap: var(--space-3);
-  padding: 18px 18px 6px;
+
+  padding:
+    18px
+    18px
+    6px;
 }
 
 .search-control {
@@ -689,7 +1039,9 @@ tbody tr:last-child td {
 
 .search-control input {
   width: 100%;
+
   min-height: 42px;
+
   padding: 0 13px;
 }
 
@@ -703,46 +1055,88 @@ tbody tr:last-child td {
 
 .compact-filter select {
   width: 100%;
-  padding: 0 34px 0 12px;
+
+  padding:
+    0
+    34px
+    0
+    12px;
 }
+
+
+/* --------------------------------------------------------------------------
+   13. Dashboard status / runtime messages
+   -------------------------------------------------------------------------- */
 
 #dashboard-message {
   margin-bottom: var(--space-4);
+
   padding: 12px 14px;
-  border: 1px solid var(--color-border);
+
+  border:
+    1px solid var(--color-border);
+
   border-radius: var(--radius-md);
+
   background: var(--color-surface);
+
   color: var(--color-text-secondary);
+
   font-size: var(--font-size-sm);
 }
 
 #dashboard-message[data-type="info"] {
   border-color: var(--color-primary-soft-strong);
+
   background: var(--color-primary-soft);
+
   color: var(--color-primary);
 }
 
 #dashboard-message[data-type="error"] {
   border-color: #eadfc7;
+
   background: var(--color-amber-soft);
+
   color: #8b651f;
 }
 
+
+/* --------------------------------------------------------------------------
+   14. Utility classes
+   -------------------------------------------------------------------------- */
+
 .sr-only {
   position: absolute !important;
+
   width: 1px !important;
+
   height: 1px !important;
+
   padding: 0 !important;
+
   margin: -1px !important;
+
   overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
+
+  clip:
+    rect(0, 0, 0, 0) !important;
+
   white-space: nowrap !important;
+
   border: 0 !important;
 }
 
+
+/* --------------------------------------------------------------------------
+   15. Responsive — medium desktop
+   -------------------------------------------------------------------------- */
+
 @media (max-width: 1180px) {
+
   .dashboard-header {
     flex-direction: column;
+
     align-items: stretch;
   }
 
@@ -752,27 +1146,43 @@ tbody tr:last-child td {
 
   .kpi-grid,
   .kpi-grid-overview {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
   }
 
   .mortality-kpi-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
   }
+
 }
 
+
+/* --------------------------------------------------------------------------
+   16. Responsive — tablet
+   -------------------------------------------------------------------------- */
+
 @media (max-width: 900px) {
+
   .dashboard-shell {
-    width: min(100% - 24px, var(--page-max-width));
+    width:
+      min(
+        100% - 24px,
+        var(--page-max-width)
+      );
+
     padding-top: 12px;
   }
 
   .dashboard-header {
     padding: 20px;
+
     border-radius: var(--radius-lg);
   }
 
   .dashboard-tabs {
     top: 6px;
+
     margin-bottom: var(--space-5);
   }
 
@@ -781,17 +1191,45 @@ tbody tr:last-child td {
   }
 
   .chart-card {
-    min-height: 330px;
+    min-height: 340px;
+  }
+
+  .chart-container {
+    height: 260px;
+  }
+
+  .chart-container--tall {
+    height: 320px;
+  }
+
+  .chart-container--compact {
+    height: 225px;
+  }
+
+  .chart-empty-state {
+    height: 260px;
   }
 
   .full-width-card {
     grid-column: auto;
   }
+
 }
 
+
+/* --------------------------------------------------------------------------
+   17. Responsive — mobile
+   -------------------------------------------------------------------------- */
+
 @media (max-width: 680px) {
+
   .dashboard-shell {
-    width: min(100% - 16px, var(--page-max-width));
+    width:
+      min(
+        100% - 16px,
+        var(--page-max-width)
+      );
+
     padding-bottom: 28px;
   }
 
@@ -801,7 +1239,11 @@ tbody tr:last-child td {
 
   .global-controls {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+      1fr
+      1fr;
+
     width: 100%;
   }
 
@@ -818,16 +1260,34 @@ tbody tr:last-child td {
   .kpi-grid,
   .kpi-grid-overview,
   .mortality-kpi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
   .kpi-card {
     min-height: 120px;
+
     padding: 16px;
   }
 
-  .chart-placeholder {
-    min-height: 235px;
+  .chart-card {
+    min-height: 315px;
+  }
+
+  .chart-container {
+    height: 235px;
+  }
+
+  .chart-container--tall {
+    height: 300px;
+  }
+
+  .chart-container--compact {
+    height: 210px;
+  }
+
+  .chart-empty-state {
+    height: 235px;
   }
 
   .table-controls {
@@ -837,11 +1297,19 @@ tbody tr:last-child td {
   .search-control,
   .compact-filter {
     flex: 1 1 100%;
+
     min-width: 100%;
   }
+
 }
 
+
+/* --------------------------------------------------------------------------
+   18. Responsive — small mobile
+   -------------------------------------------------------------------------- */
+
 @media (max-width: 440px) {
+
   .global-controls {
     grid-template-columns: 1fr;
   }
@@ -867,15 +1335,34 @@ tbody tr:last-child td {
   .tab-button {
     padding: 9px 13px;
   }
+
+  .chart-container,
+  .chart-empty-state {
+    width: calc(100% - 28px);
+
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
 }
 
+
+/* --------------------------------------------------------------------------
+   19. Reduced motion support
+   -------------------------------------------------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
     scroll-behavior: auto !important;
+
     animation-duration: 0.01ms !important;
+
     animation-iteration-count: 1 !important;
+
     transition-duration: 0.01ms !important;
   }
+
 }

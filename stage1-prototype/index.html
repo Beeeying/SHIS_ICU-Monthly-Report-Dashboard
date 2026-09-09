@@ -10,10 +10,6 @@
   <title>HGH ICU Monthly Report Dashboard</title>
 
   <link rel="stylesheet" href="./css/dashboard.css" />
-
-  <!-- Chart.js will be enabled in the chart implementation step.
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  -->
 </head>
 
 <body>
@@ -161,8 +157,8 @@
                 <p>ICU and HDU distribution</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="overview-ward-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="overview-ward-chart"></canvas>
             </div>
           </article>
 
@@ -173,8 +169,8 @@
                 <p>Outcome status for the selected cohort</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="overview-disposition-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="overview-disposition-chart"></canvas>
             </div>
           </article>
 
@@ -185,8 +181,8 @@
                 <p>Admissions by age group</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="overview-age-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="overview-age-chart"></canvas>
             </div>
           </article>
 
@@ -197,8 +193,8 @@
                 <p>Where ICU/HDU patients were admitted from</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="overview-admission-source-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="overview-admission-source-chart"></canvas>
             </div>
           </article>
         </div>
@@ -257,8 +253,8 @@
                 <p>Admissions grouped by patient age</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="patient-age-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="patient-age-chart"></canvas>
             </div>
           </article>
 
@@ -269,8 +265,8 @@
                 <p>Male and female admissions</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="patient-sex-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="patient-sex-chart"></canvas>
             </div>
           </article>
 
@@ -281,8 +277,8 @@
                 <p>ICU versus HDU</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="patient-ward-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="patient-ward-chart"></canvas>
             </div>
           </article>
 
@@ -293,8 +289,8 @@
                 <p>Distribution of LOS across admission episodes</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="patient-los-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="patient-los-chart"></canvas>
             </div>
           </article>
         </div>
@@ -322,8 +318,8 @@
                 <p>Where ICU/HDU patients were admitted from</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="clinical-admission-source-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="clinical-admission-source-chart"></canvas>
             </div>
           </article>
 
@@ -334,8 +330,8 @@
                 <p>Transfer, death, and admission status</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="clinical-disposition-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="clinical-disposition-chart"></canvas>
             </div>
           </article>
 
@@ -346,8 +342,8 @@
                 <p>NCD, Infectious, Surgery, and Other</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="clinical-diagnosis-category-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="clinical-diagnosis-category-chart"></canvas>
             </div>
           </article>
 
@@ -358,8 +354,8 @@
                 <p>Clinical distribution using ICD-10 chapter groupings</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="clinical-icd-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="clinical-icd-chart"></canvas>
             </div>
           </article>
 
@@ -456,8 +452,8 @@
                 <p>Primary clinical category among death cases</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="mortality-diagnosis-category-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="mortality-diagnosis-category-chart"></canvas>
             </div>
           </article>
 
@@ -468,8 +464,8 @@
                 <p>ICD-10 distribution among death cases</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="mortality-icd-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="mortality-icd-chart"></canvas>
             </div>
           </article>
 
@@ -480,8 +476,8 @@
                 <p>Length of stay before death</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="mortality-los-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="mortality-los-chart"></canvas>
             </div>
           </article>
 
@@ -492,8 +488,8 @@
                 <p>Where patients who died were admitted from</p>
               </div>
             </div>
-            <div class="chart-placeholder" id="mortality-admission-source-chart">
-              Chart placeholder
+            <div class="chart-container">
+              <canvas id="mortality-admission-source-chart"></canvas>
             </div>
           </article>
         </div>
@@ -574,6 +570,17 @@
     </main>
   </div>
 
+  <!-- =========================================================
+       CHART / DASHBOARD SCRIPTS
+       Load order is important:
+       1. Chart.js library
+       2. Shared chart configuration
+       3. Individual chart rendering functions
+       4. Dashboard data / filters / tab state
+       ========================================================= -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./js/chart-config.js"></script>
+  <script src="./js/charts.js"></script>
   <script src="./js/dashboard.js"></script>
 </body>
 </html>
