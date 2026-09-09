@@ -1,49 +1,53 @@
 /* ==========================================================================
    HGH ICU Monthly Report Dashboard
-   Stage 1 visual prototype
-   Design direction:
+   dashboard.css v2
+
+   Visual direction:
    - Clean clinical analytics
-   - Soft gray page background
-   - White rounded cards
-   - Deep teal healthcare accent
-   - Lightweight shadows
-   - Horizontal tab navigation
+   - Neutral light-gray canvas
+   - White modular cards
+   - Indigo / lavender primary accent
+   - No red/green traffic-light semantics
+   - Mortality remains visually important through hierarchy, not alarm colors
    ========================================================================== */
 
-
-/* --------------------------------------------------------------------------
-   1. Design tokens
-   -------------------------------------------------------------------------- */
-
 :root {
-  /* Core colors */
-  --color-bg: #f4f6f8;
+  /* Neutral surfaces */
+  --color-bg: #f4f5f7;
+  --color-bg-top: #f7f8fa;
   --color-surface: #ffffff;
-  --color-surface-soft: #f8fafb;
-  --color-surface-muted: #eef3f4;
+  --color-surface-soft: #f8f9fb;
+  --color-surface-muted: #f0f2f5;
 
-  --color-text-primary: #182126;
-  --color-text-secondary: #68757d;
-  --color-text-muted: #8b969d;
+  /* Text */
+  --color-text-primary: #1f2933;
+  --color-text-secondary: #667085;
+  --color-text-muted: #98a2b3;
 
-  --color-border: #e4eaed;
-  --color-border-strong: #d8e0e4;
+  /* Borders */
+  --color-border: #e5e7eb;
+  --color-border-strong: #d9dde5;
 
-  /* Primary healthcare accent */
-  --color-primary: #176f68;
-  --color-primary-hover: #125f59;
-  --color-primary-soft: #e8f4f2;
-  --color-primary-soft-strong: #d6ebe8;
+  /* Primary indigo */
+  --color-primary: #5b5bd6;
+  --color-primary-hover: #4b4bc4;
+  --color-primary-soft: #eeeeff;
+  --color-primary-soft-strong: #ddddfc;
 
-  /* Mortality / attention */
-  --color-danger: #b84e56;
-  --color-danger-soft: #f9ecee;
+  /* Secondary lavender */
+  --color-secondary: #8b8fe8;
+  --color-secondary-soft: #f1f1fc;
+  --color-secondary-muted: #b7b9f4;
 
-  /* Supporting states */
-  --color-success: #2f7d59;
-  --color-success-soft: #e8f3ec;
-  --color-warning: #9b6b21;
-  --color-warning-soft: #fbf2df;
+  /* Supporting analytics accents */
+  --color-blue: #7da0d4;
+  --color-blue-soft: #edf3fb;
+  --color-violet: #a78bca;
+  --color-violet-soft: #f4eff9;
+  --color-amber: #d6a756;
+  --color-amber-soft: #fff6e6;
+  --color-neutral-accent: #b8c0cc;
+  --color-neutral-accent-soft: #f2f4f7;
 
   /* Typography */
   --font-family:
@@ -86,22 +90,16 @@
 
   /* Shadow */
   --shadow-card:
-    0 1px 2px rgba(18, 28, 33, 0.03),
-    0 8px 24px rgba(18, 28, 33, 0.04);
+    0 1px 2px rgba(31, 41, 51, 0.025),
+    0 8px 24px rgba(31, 41, 51, 0.045);
 
   --shadow-card-hover:
-    0 2px 4px rgba(18, 28, 33, 0.04),
-    0 12px 28px rgba(18, 28, 33, 0.07);
+    0 2px 4px rgba(31, 41, 51, 0.035),
+    0 12px 28px rgba(31, 41, 51, 0.07);
 
   /* Layout */
   --page-max-width: 1500px;
-  --header-height: auto;
 }
-
-
-/* --------------------------------------------------------------------------
-   2. Base / reset
-   -------------------------------------------------------------------------- */
 
 *,
 *::before,
@@ -117,7 +115,11 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    linear-gradient(180deg, #f6f8f9 0%, var(--color-bg) 100%);
+    linear-gradient(
+      180deg,
+      var(--color-bg-top) 0%,
+      var(--color-bg) 100%
+    );
   color: var(--color-text-primary);
   font-family: var(--font-family);
   font-size: var(--font-size-base);
@@ -165,11 +167,6 @@ h3 {
   display: none !important;
 }
 
-
-/* --------------------------------------------------------------------------
-   3. Main shell
-   -------------------------------------------------------------------------- */
-
 .dashboard-shell {
   width: min(100% - 32px, var(--page-max-width));
   margin: 0 auto;
@@ -193,17 +190,11 @@ h3 {
     opacity: 0;
     transform: translateY(3px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
-
-/* --------------------------------------------------------------------------
-   4. Global header
-   -------------------------------------------------------------------------- */
 
 .dashboard-header {
   display: flex;
@@ -212,12 +203,10 @@ h3 {
   gap: var(--space-8);
   padding: var(--space-6) var(--space-7);
   margin-bottom: var(--space-4);
-
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(224, 231, 235, 0.9);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(229, 231, 235, 0.92);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);
-
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -296,7 +285,7 @@ h3 {
 .table-controls input:focus,
 .global-controls select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(23, 111, 104, 0.12);
+  box-shadow: 0 0 0 3px rgba(91, 91, 214, 0.12);
 }
 
 .secondary-button {
@@ -337,29 +326,20 @@ h3 {
   font-weight: 650;
 }
 
-
-/* --------------------------------------------------------------------------
-   5. Horizontal navigation
-   -------------------------------------------------------------------------- */
-
 .dashboard-tabs {
   position: sticky;
   top: 10px;
   z-index: 20;
-
   display: flex;
   align-items: center;
   gap: 6px;
   margin-bottom: var(--space-6);
   padding: 7px;
-
   overflow-x: auto;
-
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 5px 18px rgba(20, 31, 36, 0.035);
-
+  box-shadow: 0 5px 18px rgba(31, 41, 51, 0.035);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -367,16 +347,13 @@ h3 {
 .tab-button {
   position: relative;
   flex: 0 0 auto;
-
   padding: 10px 16px;
   border: 0;
   border-radius: 12px;
   background: transparent;
-
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: 650;
-
   transition:
     background-color 140ms ease,
     color 140ms ease,
@@ -391,7 +368,7 @@ h3 {
 .tab-button.active {
   background: var(--color-primary-soft);
   color: var(--color-primary);
-  box-shadow: inset 0 0 0 1px rgba(23, 111, 104, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(91, 91, 214, 0.05);
 }
 
 .tab-button.active::after {
@@ -404,11 +381,6 @@ h3 {
   border-radius: var(--radius-pill);
   background: var(--color-primary);
 }
-
-
-/* --------------------------------------------------------------------------
-   6. Page headings
-   -------------------------------------------------------------------------- */
 
 .page-heading {
   display: flex;
@@ -451,11 +423,6 @@ h3 {
   font-size: var(--font-size-sm);
 }
 
-
-/* --------------------------------------------------------------------------
-   7. KPI cards
-   -------------------------------------------------------------------------- */
-
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -474,19 +441,19 @@ h3 {
 .kpi-card {
   position: relative;
   min-height: 132px;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   padding: 18px 18px 16px;
-
   background:
-    linear-gradient(180deg, #ffffff 0%, #fbfcfc 100%);
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fcfcfd 100%
+    );
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-
   overflow: hidden;
   transition:
     transform 150ms ease,
@@ -508,7 +475,7 @@ h3 {
 
 .kpi-card:hover {
   transform: translateY(-1px);
-  border-color: #dce5e8;
+  border-color: #dadde5;
   box-shadow: var(--shadow-card-hover);
 }
 
@@ -523,6 +490,7 @@ h3 {
   display: block;
   margin-top: auto;
   margin-bottom: 1px;
+  color: var(--color-text-primary);
   font-size: var(--font-size-kpi);
   font-weight: 720;
   letter-spacing: -0.045em;
@@ -535,25 +503,20 @@ h3 {
   font-size: var(--font-size-xs);
 }
 
-/* Mortality visual accent without turning the whole page red */
+/* Mortality still gets stronger emphasis, but remains in the same color family */
 #mortality-review .kpi-card:nth-child(1)::before,
 #mortality-review .kpi-card:nth-child(2)::before,
 #overview .kpi-card:nth-child(2)::before,
 #overview .kpi-card:nth-child(3)::before {
-  background: #e9b8bd;
+  background: var(--color-secondary-muted);
 }
 
 #mortality-deaths,
 #mortality-rate,
 #overview-deaths,
 #overview-mortality-rate {
-  color: var(--color-danger);
+  color: var(--color-text-primary);
 }
-
-
-/* --------------------------------------------------------------------------
-   8. General dashboard cards
-   -------------------------------------------------------------------------- */
 
 .dashboard-card {
   background: var(--color-surface);
@@ -582,11 +545,6 @@ h3 {
   font-size: var(--font-size-xs);
 }
 
-
-/* --------------------------------------------------------------------------
-   9. Chart grids and placeholders
-   -------------------------------------------------------------------------- */
-
 .chart-grid {
   display: grid;
   gap: var(--space-4);
@@ -608,35 +566,26 @@ h3 {
 .chart-placeholder {
   min-height: 275px;
   margin: 14px 18px 18px;
-
   display: grid;
   place-items: center;
-
-  border: 1px dashed #cfd8dc;
+  border: 1px dashed #d6d9e3;
   border-radius: var(--radius-md);
   background:
     linear-gradient(
       135deg,
-      rgba(23, 111, 104, 0.025),
-      rgba(23, 111, 104, 0.055)
+      rgba(91, 91, 214, 0.022),
+      rgba(139, 143, 232, 0.06)
     );
-
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   font-weight: 600;
 }
 
-/* Future Chart.js canvas layout */
 .chart-card canvas {
   width: 100% !important;
   max-height: 290px;
   padding: 10px 18px 18px;
 }
-
-
-/* --------------------------------------------------------------------------
-   10. Clinical table / Death case table
-   -------------------------------------------------------------------------- */
 
 .table-card,
 .death-case-card {
@@ -659,13 +608,10 @@ table {
 thead th {
   position: sticky;
   top: 0;
-
   padding: 11px 12px;
-
   background: var(--color-surface-soft);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
-
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 700;
@@ -686,7 +632,7 @@ thead th:last-child {
 
 tbody td {
   padding: 13px 12px;
-  border-bottom: 1px solid #edf1f3;
+  border-bottom: 1px solid #eef0f4;
   color: var(--color-text-primary);
   font-size: var(--font-size-sm);
   vertical-align: middle;
@@ -697,17 +643,12 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: #fafcfc;
+  background: #fafafe;
 }
 
 tbody tr:last-child td {
   border-bottom: 0;
 }
-
-
-/* --------------------------------------------------------------------------
-   11. Mortality review / case-review work area
-   -------------------------------------------------------------------------- */
 
 .death-case-section {
   margin-top: var(--space-8);
@@ -721,20 +662,17 @@ tbody tr:last-child td {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   min-height: 30px;
   padding: 0 11px;
-
   border-radius: var(--radius-pill);
-  background: var(--color-danger-soft);
-  color: var(--color-danger);
-
+  background: var(--color-secondary-soft);
+  color: var(--color-primary);
   font-size: var(--font-size-xs);
   font-weight: 700;
 }
 
 .death-case-card {
-  border-color: #e6e9eb;
+  border-color: var(--color-border);
 }
 
 .table-controls {
@@ -756,7 +694,7 @@ tbody tr:last-child td {
 }
 
 .search-control input::placeholder {
-  color: #9ca7ad;
+  color: #a2a9b5;
 }
 
 .compact-filter {
@@ -768,10 +706,27 @@ tbody tr:last-child td {
   padding: 0 34px 0 12px;
 }
 
+#dashboard-message {
+  margin-bottom: var(--space-4);
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
 
-/* --------------------------------------------------------------------------
-   12. Utility classes
-   -------------------------------------------------------------------------- */
+#dashboard-message[data-type="info"] {
+  border-color: var(--color-primary-soft-strong);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+#dashboard-message[data-type="error"] {
+  border-color: #eadfc7;
+  background: var(--color-amber-soft);
+  color: #8b651f;
+}
 
 .sr-only {
   position: absolute !important;
@@ -784,11 +739,6 @@ tbody tr:last-child td {
   white-space: nowrap !important;
   border: 0 !important;
 }
-
-
-/* --------------------------------------------------------------------------
-   13. Responsive behaviour
-   -------------------------------------------------------------------------- */
 
 @media (max-width: 1180px) {
   .dashboard-header {
@@ -918,11 +868,6 @@ tbody tr:last-child td {
     padding: 9px 13px;
   }
 }
-
-
-/* --------------------------------------------------------------------------
-   14. Reduced motion support
-   -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   *,
