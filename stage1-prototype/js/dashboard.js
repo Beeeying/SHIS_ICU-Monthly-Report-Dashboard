@@ -232,11 +232,6 @@ function renderPatientProfileKpis(dataset) {
   }
 
   setText(
-    "patient-total-admissions",
-    summary.totalAdmissions
-  );
-
-  setText(
     "patient-mean-age",
     formatNumber(summary.meanAge)
   );
