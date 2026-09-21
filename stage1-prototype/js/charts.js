@@ -479,7 +479,59 @@
 
 
   /* ========================================================================
-     8. Generic vertical bar builder
+     8. Doughnut / pie value label plugin
+     ======================================================================== */
+
+  const doughnutValueLabelPlugin = {
+    id: "doughnutValueLabelPlugin",
+
+    afterDatasetsDraw(chart) {
+      const type = chart.config.type;
+
+      if (type !== "doughnut" && type !== "pie") {
+        return;
+      }
+
+      const ctx = chart.ctx;
+      const dataset = chart.data.datasets[0];
+      const meta = chart.getDatasetMeta(0);
+
+      if (!meta || !dataset || !Array.isArray(dataset.data)) {
+        return;
+      }
+
+      const fontFamily =
+        getChartConfig()?.FONT_FAMILY ||
+        "Inter, sans-serif";
+
+      ctx.save();
+      ctx.font = `600 11px ${fontFamily}`;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      meta.data.forEach((arc, index) => {
+        const value = Number(dataset.data[index]);
+
+        if (Number.isNaN(value) || value <= 0) {
+          return;
+        }
+
+        const angle = (arc.startAngle + arc.endAngle) / 2;
+        const radius = (arc.outerRadius + arc.innerRadius) / 2;
+        const x = arc.x + Math.cos(angle) * radius;
+        const y = arc.y + Math.sin(angle) * radius;
+
+        ctx.fillText(String(value), x, y);
+      });
+
+      ctx.restore();
+    }
+  };
+
+
+  /* ========================================================================
+     9. Generic vertical bar builder
      ======================================================================== */
 
   function createVerticalBarChart({
@@ -873,7 +925,8 @@
 
 
           plugins: [
-            doughnutCenterLabelPlugin
+            doughnutCenterLabelPlugin,
+            doughnutValueLabelPlugin
           ]
         }
       );
@@ -1111,7 +1164,11 @@
           })
         }]
       },
-      options
+      options,
+      plugins: [
+        doughnutCenterLabelPlugin,
+        doughnutValueLabelPlugin
+      ]
     });
   }
 
@@ -1226,6 +1283,11 @@
         });
 
         options.plugins.legend.position = "bottom";
+        options.plugins.icuDoughnutCenterLabel = {
+          display: true,
+          total: getTotalCount(diagnosisCategoryData),
+          label: "Cases"
+        };
 
         chartInstances["clinicalDiagnosisCategory"] = new Chart(
           diagnosisChart,
@@ -1242,7 +1304,11 @@
                 })
               }]
             },
-            options
+            options,
+            plugins: [
+              doughnutCenterLabelPlugin,
+              doughnutValueLabelPlugin
+            ]
           }
         );
       }
