@@ -206,20 +206,14 @@
       <section id="patient-profile" class="dashboard-page" hidden>
         <div class="page-heading">
           <div>
-            <p class="section-kicker">Demographics & stay profile</p>
             <h2>Patient Profile</h2>
             <p>
-              Demographic and length-of-stay characteristics of ICU/HDU admissions.
+              Who are the ICU/HDU patients in this cohort?
             </p>
           </div>
         </div>
 
-        <div class="kpi-grid">
-          <article class="kpi-card">
-            <span class="kpi-label">Total Admissions</span>
-            <strong id="patient-total-admissions" class="kpi-value">—</strong>
-          </article>
-
+        <div class="kpi-grid patient-kpi-grid">
           <article class="kpi-card">
             <span class="kpi-label">Mean Age</span>
             <strong id="patient-mean-age" class="kpi-value">—</strong>
@@ -245,7 +239,7 @@
           </article>
         </div>
 
-        <div class="chart-grid chart-grid-2">
+        <div class="chart-grid chart-grid-2 patient-chart-grid">
           <article class="dashboard-card chart-card">
             <div class="card-heading">
               <div>
@@ -270,19 +264,7 @@
             </div>
           </article>
 
-          <article class="dashboard-card chart-card">
-            <div class="card-heading">
-              <div>
-                <h3>Admissions by Ward</h3>
-                <p>ICU versus HDU</p>
-              </div>
-            </div>
-            <div class="chart-container">
-              <canvas id="patient-ward-chart"></canvas>
-            </div>
-          </article>
-
-          <article class="dashboard-card chart-card">
+          <article class="dashboard-card chart-card patient-los-card">
             <div class="card-heading">
               <div>
                 <h3>Length of Stay Distribution</h3>

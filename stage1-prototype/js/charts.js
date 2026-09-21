@@ -1063,6 +1063,89 @@
   }
 
 
+  function renderPatientSexChart(
+    dataset
+  ) {
+
+    const chartKey = "patientSex";
+    const canvas = getCanvas("patient-sex-chart");
+    const config = getChartConfig();
+    const items = dataset?.patientProfile?.sexDistribution || [];
+
+    if (!canvas || !config || !isChartJsAvailable()) {
+      return;
+    }
+
+    if (!hasChartData(items)) {
+      destroyChart(chartKey);
+      showEmptyState(canvas);
+      return;
+    }
+
+    clearEmptyState(canvas);
+    destroyChart(chartKey);
+
+    const options = config.getDoughnutOptions({
+      tooltipCallbacks: config.createCountPercentageTooltip("admission", "admissions"),
+      showLegend: true
+    });
+
+    options.plugins.legend.position = "right";
+
+    options.plugins.icuDoughnutCenterLabel = {
+      display: true,
+      total: getTotalCount(items),
+      label: "Admissions"
+    };
+
+    chartInstances[chartKey] = new Chart(canvas, {
+      type: "doughnut",
+      data: {
+        labels: getLabels(items),
+        datasets: [{
+          label: "Admissions",
+          data: getCounts(items),
+          percentages: getPercentages(items),
+          ...config.getDoughnutDatasetStyle({
+            colors: [config.COLORS.primary, config.COLORS.lavender]
+          })
+        }]
+      },
+      options
+    });
+  }
+
+
+  function renderPatientProfileCharts(
+    dataset
+  ) {
+
+    const patientProfile = dataset?.patientProfile;
+
+    if (!patientProfile) {
+      return;
+    }
+
+    createVerticalBarChart({
+      chartKey: "patientAge",
+      canvasId: "patient-age-chart",
+      items: patientProfile.ageGroupDistribution || [],
+      color: getChartConfig()?.COLORS?.primary
+    });
+
+    renderPatientSexChart(dataset);
+
+    createVerticalBarChart({
+      chartKey: "patientLos",
+      canvasId: "patient-los-chart",
+      items: patientProfile.losDistribution || [],
+      color: getChartConfig()?.COLORS?.primary,
+      unitSingular: "day",
+      unitPlural: "days"
+    });
+  }
+
+
   /* ========================================================================
      15. Main dashboard renderer
      ======================================================================== */
@@ -1097,6 +1180,10 @@
     renderOverviewCharts(
       dataset
     );
+
+    renderPatientProfileCharts(
+      dataset
+    );
   }
 
 
@@ -1118,6 +1205,8 @@
       renderOverviewAgeChart,
 
       renderOverviewAdmissionSourceChart,
+
+      renderPatientProfileCharts,
 
       destroyAllCharts
     });

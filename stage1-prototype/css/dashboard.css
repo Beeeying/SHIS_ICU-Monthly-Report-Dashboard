@@ -589,6 +589,11 @@ h3 {
     repeat(5, minmax(0, 1fr));
 }
 
+.patient-kpi-grid {
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+}
+
 .mortality-kpi-grid {
   grid-template-columns:
     repeat(6, minmax(0, 1fr));
@@ -774,6 +779,22 @@ h3 {
   min-height: 350px;
 
   overflow: hidden;
+}
+
+.patient-chart-grid .chart-card {
+  min-height: 300px;
+}
+
+.patient-chart-grid .chart-container {
+  height: 210px;
+}
+
+.patient-los-card {
+  grid-column: 1 / -1;
+}
+
+.patient-los-card .chart-container {
+  height: 190px;
 }
 
 .full-width-card {
@@ -1150,6 +1171,11 @@ tbody tr:last-child td {
       repeat(3, minmax(0, 1fr));
   }
 
+  .patient-kpi-grid {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+
   .mortality-kpi-grid {
     grid-template-columns:
       repeat(3, minmax(0, 1fr));
@@ -1192,6 +1218,11 @@ tbody tr:last-child td {
 
   .chart-card {
     min-height: 340px;
+  }
+
+  .patient-chart-grid .chart-card,
+  .patient-los-card {
+    min-height: 300px;
   }
 
   .chart-container {
@@ -1260,6 +1291,11 @@ tbody tr:last-child td {
   .kpi-grid,
   .kpi-grid-overview,
   .mortality-kpi-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .patient-kpi-grid {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
   }
