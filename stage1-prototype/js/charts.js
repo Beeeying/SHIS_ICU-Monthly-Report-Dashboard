@@ -1203,6 +1203,67 @@
   }
 
 
+  function renderMortalityCharts(
+    dataset
+  ) {
+
+    const mortalityReview = dataset?.mortalityReview;
+
+    if (!mortalityReview) {
+      return;
+    }
+
+    const config = getChartConfig();
+
+    if (!config) {
+      return;
+    }
+
+    const diagnosisColors =
+      (mortalityReview.diagnosisCategory || []).map(
+        (item) =>
+          config.SEMANTIC_COLORS?.diagnosisCategory?.[item.label] ||
+          config.COLORS.primary
+      );
+
+    createVerticalBarChart({
+      chartKey: "mortalityDiagnosisCategory",
+      canvasId: "mortality-diagnosis-category-chart",
+      items: mortalityReview.diagnosisCategory || [],
+      colors: diagnosisColors,
+      unitSingular: "death",
+      unitPlural: "deaths"
+    });
+
+    createHorizontalBarChart({
+      chartKey: "mortalityIcdChapter",
+      canvasId: "mortality-icd-chart",
+      items: sortByCountDescending(mortalityReview.icdChapter || []),
+      color: config.COLORS.primary,
+      unitSingular: "death",
+      unitPlural: "deaths"
+    });
+
+    createVerticalBarChart({
+      chartKey: "mortalityLos",
+      canvasId: "mortality-los-chart",
+      items: mortalityReview.losDistribution || [],
+      color: config.COLORS.primary,
+      unitSingular: "day",
+      unitPlural: "days"
+    });
+
+    createHorizontalBarChart({
+      chartKey: "mortalityAdmissionSource",
+      canvasId: "mortality-admission-source-chart",
+      items: sortByCountDescending(mortalityReview.admissionSource || []),
+      color: config.COLORS.primary,
+      unitSingular: "death",
+      unitPlural: "deaths"
+    });
+  }
+
+
   function renderClinicalProfileCharts(
     dataset
   ) {
@@ -1433,6 +1494,10 @@
     renderClinicalProfileCharts(
       dataset
     );
+
+    renderMortalityCharts(
+      dataset
+    );
   }
 
 
@@ -1458,6 +1523,8 @@
       renderPatientProfileCharts,
 
       renderClinicalProfileCharts,
+
+      renderMortalityCharts,
 
       destroyAllCharts
     });

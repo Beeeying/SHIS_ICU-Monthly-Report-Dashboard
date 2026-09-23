@@ -317,6 +317,100 @@ function renderMortalityKpis(dataset) {
    10. Render all KPI sections
    ========================================================================== */
 
+function renderDeathCaseTable(dataset = getActiveDataset()) {
+  const table = byId("death-case-table");
+
+  if (!table) {
+    return;
+  }
+
+  const tbody = table.querySelector("tbody");
+
+  if (!tbody) {
+    return;
+  }
+
+  const cases = dataset?.mortalityReview?.deathCases || [];
+
+  const searchInput = byId("death-case-search");
+  const categoryFilter = byId("death-category-filter");
+  const sortSelect = byId("death-sort");
+
+  const searchTerm =
+    (searchInput?.value || "").trim().toLowerCase();
+
+  const categoryValue =
+    categoryFilter?.value || "All";
+
+  const sortValue =
+    sortSelect?.value || "caseId";
+
+  let filteredCases = [...cases];
+
+  if (searchTerm) {
+    filteredCases = filteredCases.filter((item) =>
+      [
+        item.caseId,
+        item.ageGroup,
+        item.sex,
+        item.ward,
+        item.admissionSource,
+        item.diagnosisCategory,
+        item.icdChapter
+      ]
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm)
+    );
+  }
+
+  if (categoryValue !== "All") {
+    filteredCases = filteredCases.filter(
+      (item) => item.diagnosisCategory === categoryValue
+    );
+  }
+
+  if (sortValue === "los-desc") {
+    filteredCases.sort((a, b) => Number(b.losDays) - Number(a.losDays));
+  } else if (sortValue === "los-asc") {
+    filteredCases.sort((a, b) => Number(a.losDays) - Number(b.losDays));
+  } else {
+    filteredCases.sort((a, b) => String(a.caseId).localeCompare(String(b.caseId)));
+  }
+
+  if (!filteredCases.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="9">No death cases match the selected filters.</td>
+      </tr>
+    `;
+    setText("death-case-count", "0 cases");
+    return;
+  }
+
+  tbody.innerHTML = filteredCases
+    .map((item) => `
+      <tr>
+        <td>${item.caseId || "—"}</td>
+        <td>${item.ageGroup || "—"}</td>
+        <td>${item.sex || "—"}</td>
+        <td>${item.ward || "—"}</td>
+        <td>${item.admissionSource || "—"}</td>
+        <td>${item.diagnosisCategory || "—"}</td>
+        <td>${item.icdChapter || "—"}</td>
+        <td>${item.losDays ?? "—"}</td>
+        <td><button type="button" class="table-action-button" aria-label="View case ${item.caseId || "details"}">View</button></td>
+      </tr>
+    `)
+    .join("");
+
+  setText(
+    "death-case-count",
+    `${filteredCases.length} ${filteredCases.length === 1 ? "case" : "cases"}`
+  );
+}
+
+
 function renderAllKpis() {
   const dataset = getActiveDataset();
 
@@ -337,6 +431,7 @@ function renderAllKpis() {
   renderOverviewKpis(dataset);
   renderPatientProfileKpis(dataset);
   renderMortalityKpis(dataset);
+  renderDeathCaseTable(dataset);
 
 
   /* ----------------------------------------------------------
@@ -500,6 +595,15 @@ function setupFilters() {
   const resetButton =
     byId("reset-filters");
 
+  const searchInput =
+    byId("death-case-search");
+
+  const categoryFilter =
+    byId("death-category-filter");
+
+  const sortSelect =
+    byId("death-sort");
+
 
   if (wardFilter) {
     wardFilter.addEventListener(
@@ -514,6 +618,18 @@ function setupFilters() {
       "click",
       resetFilters
     );
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", renderDeathCaseTable);
+  }
+
+  if (categoryFilter) {
+    categoryFilter.addEventListener("change", renderDeathCaseTable);
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener("change", renderDeathCaseTable);
   }
 }
 
@@ -610,7 +726,7 @@ function initDashboard() {
 
   setupFilters();
 
-  activateTab("overview");
+  activateTab("mortality-review");
 
   loadDashboardData();
 
