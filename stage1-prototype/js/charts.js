@@ -1203,48 +1203,101 @@
   }
 
 
-  function renderPrimaryDiagnosisTable(dataset) {
+function renderPrimaryDiagnosisTable(dataset) {
 
-    const rows =
-      dataset?.clinicalProfile?.primaryDiagnosisCounts || [];
+  const rows =
+    dataset?.clinicalProfile?.primaryDiagnosisCounts || [];
 
-    const tableBody =
-      document.querySelector(
-        "#primary-diagnosis-table tbody"
-      );
+  const tableBody =
+    document.querySelector(
+      "#primary-diagnosis-table tbody"
+    );
 
-    if (!tableBody) {
-      return;
-    }
+  if (!tableBody) {
+    return;
+  }
 
-    tableBody.innerHTML = "";
+  tableBody.innerHTML = "";
 
-    if (!Array.isArray(rows) || rows.length === 0) {
-      const emptyRow = document.createElement("tr");
-      emptyRow.innerHTML = '<td colspan="5">No diagnosis data available.</td>';
-      tableBody.appendChild(emptyRow);
-      return;
-    }
+  if (!Array.isArray(rows) || rows.length === 0) {
 
-    const rankedRows = [...rows]
+    const emptyRow =
+      document.createElement("tr");
+
+    emptyRow.innerHTML =
+      '<td colspan="5">No diagnosis data available.</td>';
+
+    tableBody.appendChild(emptyRow);
+
+    return;
+  }
+
+  /*
+   * Percentage denominator:
+   * selected ICU/HDU admission cohort.
+   *
+   * This keeps the definition consistent across
+   * All / ICU / HDU filters.
+   */
+  const totalAdmissions =
+    Number(
+      dataset?.overview?.totalAdmissions ||
+      dataset?.patientProfile?.summary?.totalAdmissions ||
+      getTotalCount(
+        dataset?.patientProfile?.wardDistribution || []
+      )
+    ) || 0;
+
+  const rankedRows =
+    [...rows]
       .map((row) => {
-        const label = row.label || "Unspecified diagnosis";
-        const separatorIndex = label.indexOf(" - ");
+
+        const label =
+          row.label || "Unspecified diagnosis";
+
+        const separatorIndex =
+          label.indexOf(" - ");
 
         return {
-          code: separatorIndex >= 0 ? label.slice(0, separatorIndex).trim() : "—",
-          diagnosis: separatorIndex >= 0 ? label.slice(separatorIndex + 3).trim() : label,
-          count: Number(row.count || 0)
+
+          code:
+            separatorIndex >= 0
+              ? label
+                  .slice(0, separatorIndex)
+                  .trim()
+              : "—",
+
+          diagnosis:
+            separatorIndex >= 0
+              ? label
+                  .slice(separatorIndex + 3)
+                  .trim()
+              : label,
+
+          count:
+            Number(row.count || 0)
         };
       })
-      .sort((a, b) => Number(b.count) - Number(a.count))
+      .sort(
+        (a, b) =>
+          Number(b.count) -
+          Number(a.count)
+      )
       .slice(0, 5);
 
-    const total = rankedRows.reduce((sum, row) => sum + row.count, 0) || 1;
+  rankedRows.forEach(
+    (row, index) => {
 
-    rankedRows.forEach((row, index) => {
-      const tr = document.createElement("tr");
-      const percentage = ((row.count / total) * 100).toFixed(1);
+      const tr =
+        document.createElement("tr");
+
+      const percentage =
+        totalAdmissions > 0
+          ? (
+              (row.count / totalAdmissions) *
+              100
+            ).toFixed(1)
+          : "0.0";
 
       tr.innerHTML = `
         <td>${index + 1}</td>
@@ -1255,8 +1308,9 @@
       `;
 
       tableBody.appendChild(tr);
-    });
-  }
+    }
+  );
+}
 
 
   function renderClinicalProfileCharts(dataset) {
