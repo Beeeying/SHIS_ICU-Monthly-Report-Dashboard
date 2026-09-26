@@ -479,7 +479,59 @@
 
 
   /* ========================================================================
-     8. Generic vertical bar builder
+     8. Doughnut / pie value label plugin
+     ======================================================================== */
+
+  const doughnutValueLabelPlugin = {
+    id: "doughnutValueLabelPlugin",
+
+    afterDatasetsDraw(chart) {
+      const type = chart.config.type;
+
+      if (type !== "doughnut" && type !== "pie") {
+        return;
+      }
+
+      const ctx = chart.ctx;
+      const dataset = chart.data.datasets[0];
+      const meta = chart.getDatasetMeta(0);
+
+      if (!meta || !dataset || !Array.isArray(dataset.data)) {
+        return;
+      }
+
+      const fontFamily =
+        getChartConfig()?.FONT_FAMILY ||
+        "Inter, sans-serif";
+
+      ctx.save();
+      ctx.font = `600 11px ${fontFamily}`;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      meta.data.forEach((arc, index) => {
+        const value = Number(dataset.data[index]);
+
+        if (Number.isNaN(value) || value <= 0) {
+          return;
+        }
+
+        const angle = (arc.startAngle + arc.endAngle) / 2;
+        const radius = (arc.outerRadius + arc.innerRadius) / 2;
+        const x = arc.x + Math.cos(angle) * radius;
+        const y = arc.y + Math.sin(angle) * radius;
+
+        ctx.fillText(String(value), x, y);
+      });
+
+      ctx.restore();
+    }
+  };
+
+
+  /* ========================================================================
+     9. Generic vertical bar builder
      ======================================================================== */
 
   function createVerticalBarChart({
@@ -873,7 +925,8 @@
 
 
           plugins: [
-            doughnutCenterLabelPlugin
+            doughnutCenterLabelPlugin,
+            doughnutValueLabelPlugin
           ]
         }
       );
@@ -1111,7 +1164,11 @@
           })
         }]
       },
-      options
+      options,
+      plugins: [
+        doughnutCenterLabelPlugin,
+        doughnutValueLabelPlugin
+      ]
     });
   }
 
@@ -1296,6 +1353,68 @@
   }
 
 
+  function renderMortalityCharts(
+    dataset
+  ) {
+
+    const mortalityReview = dataset?.mortalityReview;
+
+    if (!mortalityReview) {
+      return;
+    }
+
+    const config = getChartConfig();
+
+    if (!config) {
+      return;
+    }
+
+    const diagnosisColors =
+      (mortalityReview.diagnosisCategory || []).map(
+        (item) =>
+          config.SEMANTIC_COLORS?.diagnosisCategory?.[item.label] ||
+          config.COLORS.primary
+      );
+
+    createVerticalBarChart({
+      chartKey: "mortalityDiagnosisCategory",
+      canvasId: "mortality-diagnosis-category-chart",
+      items: mortalityReview.diagnosisCategory || [],
+      colors: diagnosisColors,
+      unitSingular: "death",
+      unitPlural: "deaths"
+    });
+
+    createHorizontalBarChart({
+      chartKey: "mortalityIcdChapter",
+      canvasId: "mortality-icd-chart",
+      items: sortByCountDescending(mortalityReview.icdChapter || []),
+      color: config.COLORS.primary,
+      unitSingular: "death",
+      unitPlural: "deaths"
+    });
+
+    createVerticalBarChart({
+      chartKey: "mortalityLos",
+      canvasId: "mortality-los-chart",
+      items: mortalityReview.losDistribution || [],
+      color: config.COLORS.primary,
+      unitSingular: "death",
+      unitPlural: "deaths"
+    });
+
+    createHorizontalBarChart({
+      chartKey: "mortalityAdmissionSource",
+      canvasId: "mortality-admission-source-chart",
+      items: sortByCountDescending(mortalityReview.admissionSource || []),
+      color: config.COLORS.primary,
+      unitSingular: "death",
+      unitPlural: "deaths"
+    });
+  }
+
+
+
   /* ========================================================================
      15. Main dashboard renderer
      ======================================================================== */
@@ -1314,31 +1433,34 @@
    */
 
   function renderAll(
-    dataset
-  ) {
+  dataset
+) {
 
-    if (!dataset) {
+  if (!dataset) {
 
-      console.warn(
-        "No dataset provided to ICUCharts.renderAll()."
-      );
-
-      return;
-    }
-
-
-    renderOverviewCharts(
-      dataset
+    console.warn(
+      "No dataset provided to ICUCharts.renderAll()."
     );
 
-    renderPatientProfileCharts(
-      dataset
-    );
-
-    renderClinicalProfileCharts(
-      dataset
-    );
+    return;
   }
+
+  renderOverviewCharts(
+    dataset
+  );
+
+  renderPatientProfileCharts(
+    dataset
+  );
+
+  renderClinicalProfileCharts(
+    dataset
+  );
+
+  renderMortalityCharts(
+    dataset
+  );
+}
 
 
   /* ========================================================================
@@ -1363,6 +1485,8 @@
       renderPatientProfileCharts,
 
       renderClinicalProfileCharts,
+
+      renderMortalityCharts,
 
       destroyAllCharts
     });

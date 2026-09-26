@@ -1217,12 +1217,20 @@ tbody tr:last-child td {
   }
 
   .chart-card {
-    min-height: 340px;
+    min-height: 320px;
   }
 
   .patient-chart-grid .chart-card,
   .patient-los-card {
     min-height: 300px;
+  }
+
+  #clinical-profile .chart-card {
+    min-height: 280px;
+  }
+
+  #clinical-profile .chart-container {
+    height: 190px;
   }
 
   .chart-container {
