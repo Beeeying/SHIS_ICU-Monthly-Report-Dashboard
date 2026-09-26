@@ -1203,6 +1203,156 @@
   }
 
 
+  function renderPrimaryDiagnosisTable(dataset) {
+
+    const rows =
+      dataset?.clinicalProfile?.primaryDiagnosisCounts || [];
+
+    const tableBody =
+      document.querySelector(
+        "#primary-diagnosis-table tbody"
+      );
+
+    if (!tableBody) {
+      return;
+    }
+
+    tableBody.innerHTML = "";
+
+    if (!Array.isArray(rows) || rows.length === 0) {
+      const emptyRow = document.createElement("tr");
+      emptyRow.innerHTML = '<td colspan="5">No diagnosis data available.</td>';
+      tableBody.appendChild(emptyRow);
+      return;
+    }
+
+    const rankedRows = [...rows]
+      .map((row) => {
+        const label = row.label || "Unspecified diagnosis";
+        const separatorIndex = label.indexOf(" - ");
+
+        return {
+          code: separatorIndex >= 0 ? label.slice(0, separatorIndex).trim() : "—",
+          diagnosis: separatorIndex >= 0 ? label.slice(separatorIndex + 3).trim() : label,
+          count: Number(row.count || 0)
+        };
+      })
+      .sort((a, b) => Number(b.count) - Number(a.count))
+      .slice(0, 5);
+
+    const total = rankedRows.reduce((sum, row) => sum + row.count, 0) || 1;
+
+    rankedRows.forEach((row, index) => {
+      const tr = document.createElement("tr");
+      const percentage = ((row.count / total) * 100).toFixed(1);
+
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${row.diagnosis}</td>
+        <td>${row.code}</td>
+        <td>${row.count}</td>
+        <td>${percentage}%</td>
+      `;
+
+      tableBody.appendChild(tr);
+    });
+  }
+
+
+  function renderClinicalProfileCharts(dataset) {
+
+    const clinicalProfile = dataset?.clinicalProfile;
+
+    if (!clinicalProfile) {
+      return;
+    }
+
+    const config = getChartConfig();
+    const admissionSourceData = sortByCountDescending(
+      clinicalProfile.admissionSource || []
+    );
+
+    createHorizontalBarChart({
+      chartKey: "clinicalAdmissionSource",
+      canvasId: "clinical-admission-source-chart",
+      items: admissionSourceData,
+      color: config?.COLORS?.primary
+    });
+
+    const dispositionData = applyPreferredOrder(
+      clinicalProfile.disposition || [],
+      [
+        "Transfer to General Ward",
+        "Death in ICU",
+        "Still in Admission",
+        "Transfer to Another Facility"
+      ]
+    );
+
+    createHorizontalBarChart({
+      chartKey: "clinicalDisposition",
+      canvasId: "clinical-disposition-chart",
+      items: dispositionData,
+      color: config?.COLORS?.primary
+    });
+
+    const diagnosisCategoryData = clinicalProfile.diagnosisCategory || [];
+    const diagnosisLabels = getLabels(diagnosisCategoryData);
+    const totalDiagnosisCount = getTotalCount(diagnosisCategoryData);
+
+    const chartKey = "clinicalDiagnosisCategory";
+    const canvas = getCanvas("clinical-diagnosis-category-chart");
+
+    if (canvas && config && isChartJsAvailable()) {
+      if (!hasChartData(diagnosisCategoryData)) {
+        destroyChart(chartKey);
+        showEmptyState(canvas);
+      } else {
+        clearEmptyState(canvas);
+        destroyChart(chartKey);
+
+        const options = config.getDoughnutOptions({
+          tooltipCallbacks: config.createCountPercentageTooltip("admission", "admissions"),
+          showLegend: true
+        });
+
+        options.plugins.legend.position = "bottom";
+        options.plugins.icuDoughnutCenterLabel = {
+          display: true,
+          total: totalDiagnosisCount,
+          label: totalDiagnosisCount === 1 ? "Diagnosis" : "Diagnoses"
+        };
+
+        chartInstances[chartKey] = new Chart(canvas, {
+          type: "doughnut",
+          data: {
+            labels: diagnosisLabels,
+            datasets: [{
+              label: "Diagnoses",
+              data: getCounts(diagnosisCategoryData),
+              percentages: getPercentages(diagnosisCategoryData),
+              ...config.getDoughnutDatasetStyle({
+                colors: config.getDiagnosisCategoryColors(diagnosisLabels)
+              })
+            }]
+          },
+          options,
+          plugins: [doughnutCenterLabelPlugin]
+        });
+      }
+    }
+
+    createHorizontalBarChart({
+      chartKey: "clinicalIcd",
+      canvasId: "clinical-icd-chart",
+      items: sortByCountDescending(clinicalProfile.icdChapter || []),
+      color: config?.COLORS?.primary
+    });
+
+    renderPrimaryDiagnosisTable(dataset);
+  }
+
+
   function renderMortalityCharts(
     dataset
   ) {
@@ -1249,8 +1399,8 @@
       canvasId: "mortality-los-chart",
       items: mortalityReview.losDistribution || [],
       color: config.COLORS.primary,
-      unitSingular: "day",
-      unitPlural: "days"
+      unitSingular: "death",
+      unitPlural: "deaths"
     });
 
     createHorizontalBarChart({
@@ -1263,193 +1413,6 @@
     });
   }
 
-
-  function renderClinicalProfileCharts(
-    dataset
-  ) {
-
-    const clinicalProfile = dataset?.clinicalProfile;
-
-    if (!clinicalProfile) {
-      return;
-    }
-
-    const config = getChartConfig();
-
-    if (!config) {
-      return;
-    }
-
-    const admissionSourceData =
-      sortByCountDescending(
-        clinicalProfile.admissionSource || []
-      );
-
-    const dispositionData =
-      applyPreferredOrder(
-        clinicalProfile.disposition || [],
-        [
-          "Transfer to General Ward",
-          "Death in ICU",
-          "Still in Admission",
-          "Transfer to Another Facility"
-        ]
-      );
-
-    const diagnosisCategoryData =
-      clinicalProfile.diagnosisCategory || [];
-
-    const icdData =
-      clinicalProfile.icdChapter || [];
-
-    createHorizontalBarChart({
-      chartKey: "clinicalAdmissionSource",
-      canvasId: "clinical-admission-source-chart",
-      items: admissionSourceData,
-      color: config.COLORS.primary,
-      unitSingular: "admission",
-      unitPlural: "admissions"
-    });
-
-    createHorizontalBarChart({
-      chartKey: "clinicalDisposition",
-      canvasId: "clinical-disposition-chart",
-      items: dispositionData,
-      color: config.COLORS.primary,
-      unitSingular: "patient",
-      unitPlural: "patients"
-    });
-
-    const diagnosisColors = diagnosisCategoryData.map(
-      (item) =>
-        config.SEMANTIC_COLORS?.diagnosisCategory?.[item.label] ||
-        config.COLORS.primary
-    );
-
-    const diagnosisChart = getCanvas(
-      "clinical-diagnosis-category-chart"
-    );
-
-    if (diagnosisChart) {
-      if (!hasChartData(diagnosisCategoryData)) {
-        destroyChart("clinicalDiagnosisCategory");
-        showEmptyState(diagnosisChart);
-      } else {
-        clearEmptyState(diagnosisChart);
-        destroyChart("clinicalDiagnosisCategory");
-
-        const options = config.getDoughnutOptions({
-          tooltipCallbacks: config.createCountPercentageTooltip("case", "cases"),
-          showLegend: true
-        });
-
-        options.plugins.legend.position = "bottom";
-        options.plugins.icuDoughnutCenterLabel = {
-          display: true,
-          total: getTotalCount(diagnosisCategoryData),
-          label: "Cases"
-        };
-
-        chartInstances["clinicalDiagnosisCategory"] = new Chart(
-          diagnosisChart,
-          {
-            type: "doughnut",
-            data: {
-              labels: getLabels(diagnosisCategoryData),
-              datasets: [{
-                label: "Cases",
-                data: getCounts(diagnosisCategoryData),
-                percentages: getPercentages(diagnosisCategoryData),
-                ...config.getDoughnutDatasetStyle({
-                  colors: diagnosisColors
-                })
-              }]
-            },
-            options,
-            plugins: [
-              doughnutCenterLabelPlugin,
-              doughnutValueLabelPlugin
-            ]
-          }
-        );
-      }
-    }
-
-    createHorizontalBarChart({
-      chartKey: "clinicalIcdChapter",
-      canvasId: "clinical-icd-chart",
-      items: icdData.slice(0, 8),
-      color: config.COLORS.primary,
-      unitSingular: "case",
-      unitPlural: "cases"
-    });
-
-    renderPrimaryDiagnosisTable(dataset);
-  }
-
-
-  function renderPrimaryDiagnosisTable(
-    dataset
-  ) {
-    const table = document.getElementById(
-      "primary-diagnosis-table"
-    );
-
-    if (!table) {
-      return;
-    }
-
-    const tbody = table.querySelector("tbody");
-
-    if (!tbody) {
-      return;
-    }
-
-    const rows = dataset?.clinicalProfile?.primaryDiagnosisCounts || [];
-
-    if (!rows.length) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="5">No diagnosis data available</td>
-        </tr>
-      `;
-      return;
-    }
-
-    const totalAdmissions =
-      Number(
-        dataset?.overview?.totalAdmissions ||
-        dataset?.patientProfile?.summary?.totalAdmissions ||
-        0
-      );
-
-    const topRows = [...rows]
-      .sort((a, b) => Number(b.count || 0) - Number(a.count || 0))
-      .slice(0, 5)
-      .map((row, index) => {
-        const rawLabel = row.label || "";
-        const match = rawLabel.match(/^([A-Z]\d{2,3}(?:\.\d{1,2})?)\s*-\s*(.*)$/i);
-        const code = match ? match[1] : "—";
-        const diagnosis = match ? match[2].trim() : rawLabel;
-        const cases = Number(row.count || 0);
-        const percentage = totalAdmissions
-          ? ((cases / totalAdmissions) * 100).toFixed(1)
-          : "0.0";
-
-        return `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${diagnosis}</td>
-            <td>${code}</td>
-            <td>${cases}</td>
-            <td>${percentage}%</td>
-          </tr>
-        `;
-      })
-      .join("");
-
-    tbody.innerHTML = topRows;
-  }
 
 
   /* ========================================================================
@@ -1470,35 +1433,34 @@
    */
 
   function renderAll(
-    dataset
-  ) {
+  dataset
+) {
 
-    if (!dataset) {
+  if (!dataset) {
 
-      console.warn(
-        "No dataset provided to ICUCharts.renderAll()."
-      );
-
-      return;
-    }
-
-
-    renderOverviewCharts(
-      dataset
+    console.warn(
+      "No dataset provided to ICUCharts.renderAll()."
     );
 
-    renderPatientProfileCharts(
-      dataset
-    );
-
-    renderClinicalProfileCharts(
-      dataset
-    );
-
-    renderMortalityCharts(
-      dataset
-    );
+    return;
   }
+
+  renderOverviewCharts(
+    dataset
+  );
+
+  renderPatientProfileCharts(
+    dataset
+  );
+
+  renderClinicalProfileCharts(
+    dataset
+  );
+
+  renderMortalityCharts(
+    dataset
+  );
+}
 
 
   /* ========================================================================
