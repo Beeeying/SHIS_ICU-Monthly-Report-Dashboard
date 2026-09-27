@@ -621,15 +621,24 @@ function setupFilters() {
   }
 
   if (searchInput) {
-    searchInput.addEventListener("input", renderDeathCaseTable);
+    searchInput.addEventListener(
+      "input",
+      () => renderDeathCaseTable()
+    );
   }
 
   if (categoryFilter) {
-    categoryFilter.addEventListener("change", renderDeathCaseTable);
+    categoryFilter.addEventListener(
+      "change",
+      () => renderDeathCaseTable()
+    );
   }
 
   if (sortSelect) {
-    sortSelect.addEventListener("change", renderDeathCaseTable);
+    sortSelect.addEventListener(
+      "change",
+      () => renderDeathCaseTable()
+    );
   }
 }
 
