@@ -6,7 +6,7 @@
     "periodLabel": "August 2026",
     "reportStart": "2026-08-01",
     "reportCutoff": "2026-08-31",
-    "dataThrough": "2026-08-30",
+    "dataThrough": "2026-08-31",
     "cohortLabel": "August 2026 ICU/HDU Admission Cohort",
     "cohortDefinition": "Patients admitted to ICU/HDU during August 2026; outcomes are followed through the same inpatient admission episode.",
     "unitOfAnalysis": "Inpatient admission episode",
@@ -42,6 +42,160 @@
         "medianLosDays": 3,
         "currentlyAdmitted": 2,
         "discharged": 39
+      },
+      "overviewCharts": {
+        "mortalityByWard": [
+          {
+            "label": "ICU",
+            "admissions": 16,
+            "deaths": 10,
+            "mortalityRate": 62.5
+          },
+          {
+            "label": "HDU",
+            "admissions": 25,
+            "deaths": 8,
+            "mortalityRate": 32.0
+          }
+        ],
+        "admissionsOverTime": [
+          {
+            "date": "2026-08-01",
+            "count": 2
+          },
+          {
+            "date": "2026-08-02",
+            "count": 0
+          },
+          {
+            "date": "2026-08-03",
+            "count": 0
+          },
+          {
+            "date": "2026-08-04",
+            "count": 1
+          },
+          {
+            "date": "2026-08-05",
+            "count": 1
+          },
+          {
+            "date": "2026-08-06",
+            "count": 0
+          },
+          {
+            "date": "2026-08-07",
+            "count": 1
+          },
+          {
+            "date": "2026-08-08",
+            "count": 3
+          },
+          {
+            "date": "2026-08-09",
+            "count": 3
+          },
+          {
+            "date": "2026-08-10",
+            "count": 0
+          },
+          {
+            "date": "2026-08-11",
+            "count": 2
+          },
+          {
+            "date": "2026-08-12",
+            "count": 0
+          },
+          {
+            "date": "2026-08-13",
+            "count": 4
+          },
+          {
+            "date": "2026-08-14",
+            "count": 0
+          },
+          {
+            "date": "2026-08-15",
+            "count": 1
+          },
+          {
+            "date": "2026-08-16",
+            "count": 2
+          },
+          {
+            "date": "2026-08-17",
+            "count": 3
+          },
+          {
+            "date": "2026-08-18",
+            "count": 0
+          },
+          {
+            "date": "2026-08-19",
+            "count": 1
+          },
+          {
+            "date": "2026-08-20",
+            "count": 4
+          },
+          {
+            "date": "2026-08-21",
+            "count": 1
+          },
+          {
+            "date": "2026-08-22",
+            "count": 2
+          },
+          {
+            "date": "2026-08-23",
+            "count": 2
+          },
+          {
+            "date": "2026-08-24",
+            "count": 1
+          },
+          {
+            "date": "2026-08-25",
+            "count": 1
+          },
+          {
+            "date": "2026-08-26",
+            "count": 1
+          },
+          {
+            "date": "2026-08-27",
+            "count": 1
+          },
+          {
+            "date": "2026-08-28",
+            "count": 0
+          },
+          {
+            "date": "2026-08-29",
+            "count": 2
+          },
+          {
+            "date": "2026-08-30",
+            "count": 2
+          },
+          {
+            "date": "2026-08-31",
+            "count": 0
+          }
+        ],
+        "losByWard": [
+          {
+            "label": "ICU",
+            "meanLos": 3.81,
+            "medianLos": 3.0
+          },
+          {
+            "label": "HDU",
+            "meanLos": 4.32,
+            "medianLos": 4.0
+          }
+        ]
       },
       "patientProfile": {
         "summary": {
@@ -814,6 +968,149 @@
         "currentlyAdmitted": 1,
         "discharged": 15
       },
+      "overviewCharts": {
+        "mortalityByWard": [
+          {
+            "label": "ICU",
+            "admissions": 16,
+            "deaths": 10,
+            "mortalityRate": 62.5
+          }
+        ],
+        "admissionsOverTime": [
+          {
+            "date": "2026-08-01",
+            "count": 1
+          },
+          {
+            "date": "2026-08-02",
+            "count": 0
+          },
+          {
+            "date": "2026-08-03",
+            "count": 0
+          },
+          {
+            "date": "2026-08-04",
+            "count": 0
+          },
+          {
+            "date": "2026-08-05",
+            "count": 0
+          },
+          {
+            "date": "2026-08-06",
+            "count": 0
+          },
+          {
+            "date": "2026-08-07",
+            "count": 1
+          },
+          {
+            "date": "2026-08-08",
+            "count": 2
+          },
+          {
+            "date": "2026-08-09",
+            "count": 1
+          },
+          {
+            "date": "2026-08-10",
+            "count": 0
+          },
+          {
+            "date": "2026-08-11",
+            "count": 0
+          },
+          {
+            "date": "2026-08-12",
+            "count": 0
+          },
+          {
+            "date": "2026-08-13",
+            "count": 2
+          },
+          {
+            "date": "2026-08-14",
+            "count": 0
+          },
+          {
+            "date": "2026-08-15",
+            "count": 0
+          },
+          {
+            "date": "2026-08-16",
+            "count": 2
+          },
+          {
+            "date": "2026-08-17",
+            "count": 1
+          },
+          {
+            "date": "2026-08-18",
+            "count": 0
+          },
+          {
+            "date": "2026-08-19",
+            "count": 0
+          },
+          {
+            "date": "2026-08-20",
+            "count": 0
+          },
+          {
+            "date": "2026-08-21",
+            "count": 0
+          },
+          {
+            "date": "2026-08-22",
+            "count": 0
+          },
+          {
+            "date": "2026-08-23",
+            "count": 1
+          },
+          {
+            "date": "2026-08-24",
+            "count": 1
+          },
+          {
+            "date": "2026-08-25",
+            "count": 1
+          },
+          {
+            "date": "2026-08-26",
+            "count": 1
+          },
+          {
+            "date": "2026-08-27",
+            "count": 1
+          },
+          {
+            "date": "2026-08-28",
+            "count": 0
+          },
+          {
+            "date": "2026-08-29",
+            "count": 1
+          },
+          {
+            "date": "2026-08-30",
+            "count": 0
+          },
+          {
+            "date": "2026-08-31",
+            "count": 0
+          }
+        ],
+        "losByWard": [
+          {
+            "label": "ICU",
+            "meanLos": 3.81,
+            "medianLos": 3.0
+          }
+        ]
+      },
       "patientProfile": {
         "summary": {
           "totalAdmissions": 16,
@@ -1346,6 +1643,149 @@
         "medianLosDays": 4,
         "currentlyAdmitted": 1,
         "discharged": 24
+      },
+      "overviewCharts": {
+        "mortalityByWard": [
+          {
+            "label": "HDU",
+            "admissions": 25,
+            "deaths": 8,
+            "mortalityRate": 32.0
+          }
+        ],
+        "admissionsOverTime": [
+          {
+            "date": "2026-08-01",
+            "count": 1
+          },
+          {
+            "date": "2026-08-02",
+            "count": 0
+          },
+          {
+            "date": "2026-08-03",
+            "count": 0
+          },
+          {
+            "date": "2026-08-04",
+            "count": 1
+          },
+          {
+            "date": "2026-08-05",
+            "count": 1
+          },
+          {
+            "date": "2026-08-06",
+            "count": 0
+          },
+          {
+            "date": "2026-08-07",
+            "count": 0
+          },
+          {
+            "date": "2026-08-08",
+            "count": 1
+          },
+          {
+            "date": "2026-08-09",
+            "count": 2
+          },
+          {
+            "date": "2026-08-10",
+            "count": 0
+          },
+          {
+            "date": "2026-08-11",
+            "count": 2
+          },
+          {
+            "date": "2026-08-12",
+            "count": 0
+          },
+          {
+            "date": "2026-08-13",
+            "count": 2
+          },
+          {
+            "date": "2026-08-14",
+            "count": 0
+          },
+          {
+            "date": "2026-08-15",
+            "count": 1
+          },
+          {
+            "date": "2026-08-16",
+            "count": 0
+          },
+          {
+            "date": "2026-08-17",
+            "count": 2
+          },
+          {
+            "date": "2026-08-18",
+            "count": 0
+          },
+          {
+            "date": "2026-08-19",
+            "count": 1
+          },
+          {
+            "date": "2026-08-20",
+            "count": 4
+          },
+          {
+            "date": "2026-08-21",
+            "count": 1
+          },
+          {
+            "date": "2026-08-22",
+            "count": 2
+          },
+          {
+            "date": "2026-08-23",
+            "count": 1
+          },
+          {
+            "date": "2026-08-24",
+            "count": 0
+          },
+          {
+            "date": "2026-08-25",
+            "count": 0
+          },
+          {
+            "date": "2026-08-26",
+            "count": 0
+          },
+          {
+            "date": "2026-08-27",
+            "count": 0
+          },
+          {
+            "date": "2026-08-28",
+            "count": 0
+          },
+          {
+            "date": "2026-08-29",
+            "count": 1
+          },
+          {
+            "date": "2026-08-30",
+            "count": 2
+          },
+          {
+            "date": "2026-08-31",
+            "count": 0
+          }
+        ],
+        "losByWard": [
+          {
+            "label": "HDU",
+            "meanLos": 4.32,
+            "medianLos": 4.0
+          }
+        ]
       },
       "patientProfile": {
         "summary": {
