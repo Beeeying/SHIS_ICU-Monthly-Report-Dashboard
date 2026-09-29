@@ -735,7 +735,7 @@ function initDashboard() {
 
   setupFilters();
 
-  activateTab("mortality-review");
+  activateTab("overview");
 
   loadDashboardData();
 
