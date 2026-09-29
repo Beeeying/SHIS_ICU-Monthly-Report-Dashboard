@@ -26,21 +26,35 @@
      ======================================================================== */
 
   const COLORS = Object.freeze({
+
     primary: "#5B5BD6",
+
     lavender: "#8B8FE8",
+
     blue: "#7DA0D4",
+
     violet: "#A78BCA",
+
     amber: "#D6A756",
+
     gray: "#B8C0CC",
 
+
     textPrimary: "#1F2933",
+
     textSecondary: "#667085",
+
     textMuted: "#98A2B3",
 
+
     gridline: "#E8EAF0",
+
     tooltipBackground: "#25303A",
+
     white: "#FFFFFF"
+
   });
+
 
 
   /* ========================================================================
@@ -50,23 +64,45 @@
   const SEMANTIC_COLORS = Object.freeze({
 
     diagnosisCategory: Object.freeze({
-      NCD: COLORS.primary,
-      Infectious: COLORS.lavender,
-      Surgery: COLORS.blue,
-      Other: COLORS.gray
+
+      NCD:
+        COLORS.primary,
+
+      Infectious:
+        COLORS.lavender,
+
+      Surgery:
+        COLORS.blue,
+
+      Other:
+        COLORS.gray
+
     }),
+
 
     ward: Object.freeze({
-      ICU: COLORS.primary,
-      HDU: COLORS.lavender
+
+      ICU:
+        COLORS.primary,
+
+      HDU:
+        COLORS.lavender
+
     }),
 
+
     sex: Object.freeze({
-      Male: COLORS.primary,
-      Female: COLORS.blue
+
+      Male:
+        COLORS.primary,
+
+      Female:
+        COLORS.blue
+
     })
 
   });
+
 
 
   /* ========================================================================
@@ -76,55 +112,93 @@
   const FONT_FAMILY =
     'Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
+
   const INTERACTION = Object.freeze({
-    mode: "nearest",
-    intersect: true
+
+    mode:
+      "nearest",
+
+    intersect:
+      true
+
   });
+
 
 
   /* ========================================================================
      4. Formatting helpers
      ======================================================================== */
 
-  function formatNumber(value, maximumFractionDigits = 1) {
+  function formatNumber(
+    value,
+    maximumFractionDigits = 1
+  ) {
 
     if (
       value === null ||
       value === undefined ||
-      Number.isNaN(Number(value))
+      Number.isNaN(
+        Number(value)
+      )
     ) {
+
       return "—";
+
     }
 
-    return new Intl.NumberFormat("en-US", {
-      maximumFractionDigits
-    }).format(Number(value));
+
+    return new Intl.NumberFormat(
+      "en-US",
+      {
+
+        maximumFractionDigits
+
+      }
+    ).format(
+      Number(value)
+    );
 
   }
 
 
-  function formatPercent(value) {
+
+  function formatPercent(
+    value
+  ) {
 
     if (
       value === null ||
       value === undefined ||
-      Number.isNaN(Number(value))
+      Number.isNaN(
+        Number(value)
+      )
     ) {
+
       return "—";
+
     }
 
-    return `${Number(value).toFixed(1)}%`;
+
+    return (
+      `${Number(value).toFixed(1)}%`
+    );
 
   }
 
 
-  function pluralize(count, singular, plural = `${singular}s`) {
+
+  function pluralize(
+    count,
+    singular,
+    plural = `${singular}s`
+  ) {
 
     return Number(count) === 1
       ? singular
       : plural;
 
   }
+
 
 
   /* ========================================================================
@@ -137,18 +211,35 @@
    * dataset.percentages = [61.0, 39.0, ...]
    */
 
-  function getPercentageFromContext(context) {
+  function getPercentageFromContext(
+    context
+  ) {
 
     const percentages =
-      context?.dataset?.percentages;
+      context
+        ?.dataset
+        ?.percentages;
 
-    if (!Array.isArray(percentages)) {
+
+    if (
+      !Array.isArray(
+        percentages
+      )
+    ) {
+
       return null;
+
     }
 
-    return percentages[context.dataIndex] ?? null;
+
+    return (
+      percentages[
+        context.dataIndex
+      ] ?? null
+    );
 
   }
+
 
 
   /**
@@ -170,11 +261,19 @@
 
       title(items) {
 
-        if (!items?.length) {
+        if (
+          !items?.length
+        ) {
+
           return "";
+
         }
 
-        return items[0].label || "";
+
+        return (
+          items[0].label ||
+          ""
+        );
 
       },
 
@@ -182,7 +281,10 @@
       label(context) {
 
         const count =
-          Number(context.raw ?? 0);
+          Number(
+            context.raw ?? 0
+          );
+
 
         const unit =
           pluralize(
@@ -191,7 +293,10 @@
             pluralUnit
           );
 
-        return `${formatNumber(count, 0)} ${unit}`;
+
+        return (
+          `${formatNumber(count, 0)} ${unit}`
+        );
 
       },
 
@@ -199,11 +304,16 @@
       afterLabel(context) {
 
         const percentage =
-          getPercentageFromContext(context);
+          getPercentageFromContext(
+            context
+          );
+
 
         return percentage === null
           ? ""
-          : formatPercent(percentage);
+          : formatPercent(
+              percentage
+            );
 
       }
 
@@ -212,45 +322,71 @@
   }
 
 
+
   /* ========================================================================
      6. Tooltip options
      ======================================================================== */
 
   function getTooltipOptions(
-    callbacks = createCountPercentageTooltip()
+    callbacks =
+      createCountPercentageTooltip()
   ) {
 
     return {
 
-      enabled: true,
+      enabled:
+        true,
 
-      displayColors: false,
+
+      displayColors:
+        false,
+
 
       backgroundColor:
         COLORS.tooltipBackground,
 
+
       titleColor:
         COLORS.white,
+
 
       bodyColor:
         COLORS.white,
 
-      cornerRadius: 8,
 
-      padding: 11,
+      cornerRadius:
+        8,
+
+
+      padding:
+        11,
 
 
       titleFont: {
-        family: FONT_FAMILY,
-        size: 13,
-        weight: "600"
+
+        family:
+          FONT_FAMILY,
+
+        size:
+          13,
+
+        weight:
+          "600"
+
       },
 
 
       bodyFont: {
-        family: FONT_FAMILY,
-        size: 12,
-        weight: "400"
+
+        family:
+          FONT_FAMILY,
+
+        size:
+          12,
+
+        weight:
+          "400"
+
       },
 
 
@@ -259,6 +395,7 @@
     };
 
   }
+
 
 
   /* ========================================================================
@@ -279,24 +416,41 @@
 
       labels: {
 
-        usePointStyle: true,
+        usePointStyle:
+          true,
 
-        pointStyle: "circle",
 
-        boxWidth: 8,
+        pointStyle:
+          "circle",
 
-        boxHeight: 8,
 
-        padding: 16,
+        boxWidth:
+          8,
+
+
+        boxHeight:
+          8,
+
+
+        padding:
+          16,
+
 
         color:
           COLORS.textSecondary,
 
 
         font: {
-          family: FONT_FAMILY,
-          size: 12,
-          weight: "500"
+
+          family:
+            FONT_FAMILY,
+
+          size:
+            12,
+
+          weight:
+            "500"
+
         }
 
       }
@@ -304,6 +458,7 @@
     };
 
   }
+
 
 
   /* ========================================================================
@@ -318,14 +473,24 @@
     return {
 
       grid: {
-        display: displayGrid,
-        color: COLORS.gridline,
-        drawBorder: false
+
+        display:
+          displayGrid,
+
+        color:
+          COLORS.gridline,
+
+        drawBorder:
+          false
+
       },
 
 
       border: {
-        display: false
+
+        display:
+          false
+
       },
 
 
@@ -336,14 +501,21 @@
 
         autoSkip,
 
-        maxRotation: 0,
+        maxRotation:
+          0,
 
-        minRotation: 0,
+        minRotation:
+          0,
 
 
         font: {
-          family: FONT_FAMILY,
-          size: 11
+
+          family:
+            FONT_FAMILY,
+
+          size:
+            11
+
         }
 
       }
@@ -351,6 +523,7 @@
     };
 
   }
+
 
 
   function getCountAxis({
@@ -365,18 +538,23 @@
 
       grid: {
 
-        display: true,
+        display:
+          true,
 
         color:
           COLORS.gridline,
 
-        drawBorder: false
+        drawBorder:
+          false
 
       },
 
 
       border: {
-        display: false
+
+        display:
+          false
+
       },
 
 
@@ -389,8 +567,13 @@
 
 
         font: {
-          family: FONT_FAMILY,
-          size: 11
+
+          family:
+            FONT_FAMILY,
+
+          size:
+            11
+
         }
 
       }
@@ -400,6 +583,7 @@
   }
 
 
+
   /* ========================================================================
      9. Base chart options
      ======================================================================== */
@@ -407,27 +591,35 @@
   function getBaseOptions({
     showLegend = false,
     legendPosition = "bottom",
-    tooltipCallbacks = createCountPercentageTooltip()
+    tooltipCallbacks =
+      createCountPercentageTooltip()
   } = {}) {
 
     return {
 
-      responsive: true,
+      responsive:
+        true,
 
-      maintainAspectRatio: false,
+
+      maintainAspectRatio:
+        false,
 
 
       animation: {
 
-        duration: 320,
+        duration:
+          320,
 
-        easing: "easeOutQuart"
+        easing:
+          "easeOutQuart"
 
       },
 
 
       interaction: {
+
         ...INTERACTION
+
       },
 
 
@@ -435,8 +627,13 @@
 
         legend:
           getLegendOptions({
-            display: showLegend,
-            position: legendPosition
+
+            display:
+              showLegend,
+
+            position:
+              legendPosition
+
           }),
 
 
@@ -452,19 +649,24 @@
   }
 
 
+
   /* ========================================================================
      10. Vertical bar options
      ======================================================================== */
 
   function getVerticalBarOptions({
-    tooltipCallbacks = createCountPercentageTooltip(),
+    tooltipCallbacks =
+      createCountPercentageTooltip(),
     showLegend = false
   } = {}) {
 
     const base =
       getBaseOptions({
+
         showLegend,
+
         tooltipCallbacks
+
       });
 
 
@@ -477,15 +679,25 @@
 
         x:
           getCategoryAxis({
-            displayGrid: false,
-            autoSkip: false
+
+            displayGrid:
+              false,
+
+            autoSkip:
+              false
+
           }),
 
 
         y:
           getCountAxis({
-            beginAtZero: true,
-            precision: 0
+
+            beginAtZero:
+              true,
+
+            precision:
+              0
+
           })
 
       }
@@ -493,6 +705,7 @@
     };
 
   }
+
 
 
   /* ========================================================================
@@ -500,14 +713,18 @@
      ======================================================================== */
 
   function getHorizontalBarOptions({
-    tooltipCallbacks = createCountPercentageTooltip(),
+    tooltipCallbacks =
+      createCountPercentageTooltip(),
     showLegend = false
   } = {}) {
 
     const base =
       getBaseOptions({
+
         showLegend,
+
         tooltipCallbacks
+
       });
 
 
@@ -515,22 +732,34 @@
 
       ...base,
 
-      indexAxis: "y",
+
+      indexAxis:
+        "y",
 
 
       scales: {
 
         x:
           getCountAxis({
-            beginAtZero: true,
-            precision: 0
+
+            beginAtZero:
+              true,
+
+            precision:
+              0
+
           }),
 
 
         y:
           getCategoryAxis({
-            displayGrid: false,
-            autoSkip: false
+
+            displayGrid:
+              false,
+
+            autoSkip:
+              false
+
           })
 
       }
@@ -540,20 +769,27 @@
   }
 
 
+
   /* ========================================================================
      12. Doughnut options
      ======================================================================== */
 
   function getDoughnutOptions({
-    tooltipCallbacks = createCountPercentageTooltip(),
+    tooltipCallbacks =
+      createCountPercentageTooltip(),
     showLegend = true
   } = {}) {
 
     const base =
       getBaseOptions({
+
         showLegend,
-        legendPosition: "bottom",
+
+        legendPosition:
+          "bottom",
+
         tooltipCallbacks
+
       });
 
 
@@ -561,11 +797,16 @@
 
       ...base,
 
-      cutout: "70%",
+
+      cutout:
+        "70%",
 
 
       layout: {
-        padding: 6
+
+        padding:
+          6
+
       },
 
 
@@ -573,9 +814,11 @@
 
         arc: {
 
-          borderWidth: 0,
+          borderWidth:
+            0,
 
-          hoverOffset: 4
+          hoverOffset:
+            4
 
         }
 
@@ -586,8 +829,9 @@
   }
 
 
+
   /* ========================================================================
-     13. Future line-chart options
+     13. Line chart options
      ======================================================================== */
 
   function getLineOptions({
@@ -601,7 +845,8 @@
 
         showLegend,
 
-        legendPosition: "bottom",
+        legendPosition:
+          "bottom",
 
 
         tooltipCallbacks:
@@ -609,7 +854,10 @@
 
             title(items) {
 
-              return items?.[0]?.label || "";
+              return (
+                items?.[0]?.label ||
+                ""
+              );
 
             },
 
@@ -617,11 +865,19 @@
             label(context) {
 
               const label =
-                context.dataset.label
+                context
+                  .dataset
+                  .label
                   ? `${context.dataset.label}: `
                   : "";
 
-              return `${label}${formatNumber(context.raw, 1)}`;
+
+              return (
+                `${label}${formatNumber(
+                  context.raw,
+                  1
+                )}`
+              );
 
             }
 
@@ -637,9 +893,11 @@
 
       interaction: {
 
-        mode: "index",
+        mode:
+          "index",
 
-        intersect: false
+        intersect:
+          false
 
       },
 
@@ -648,15 +906,25 @@
 
         x:
           getCategoryAxis({
-            displayGrid: false,
-            autoSkip: true
+
+            displayGrid:
+              false,
+
+            autoSkip:
+              true
+
           }),
 
 
         y:
           getCountAxis({
-            beginAtZero: yBeginAtZero,
-            precision: 0
+
+            beginAtZero:
+              yBeginAtZero,
+
+            precision:
+              0
+
           })
 
       },
@@ -666,22 +934,28 @@
 
         line: {
 
-          borderWidth: 2.25,
+          borderWidth:
+            2.25,
 
-          tension: 0.15,
+          tension:
+            0.15,
 
-          fill: false
+          fill:
+            false
 
         },
 
 
         point: {
 
-          radius: 3.5,
+          radius:
+            3.5,
 
-          hoverRadius: 5,
+          hoverRadius:
+            5,
 
-          borderWidth: 0
+          borderWidth:
+            0
 
         }
 
@@ -690,6 +964,7 @@
     };
 
   }
+
 
 
   /* ========================================================================
@@ -702,25 +977,41 @@
 
     return {
 
-      backgroundColor: color,
+      backgroundColor:
+        color,
 
-      borderColor: color,
 
-      borderWidth: 0,
+      borderColor:
+        color,
 
-      borderRadius: 7,
 
-      borderSkipped: false,
+      borderWidth:
+        0,
 
-      categoryPercentage: 0.72,
 
-      barPercentage: 0.78,
+      borderRadius:
+        7,
 
-      maxBarThickness: 48
+
+      borderSkipped:
+        false,
+
+
+      categoryPercentage:
+        0.72,
+
+
+      barPercentage:
+        0.78,
+
+
+      maxBarThickness:
+        48
 
     };
 
   }
+
 
 
   /* ========================================================================
@@ -736,17 +1027,25 @@
 
     return {
 
-      backgroundColor: colors,
+      backgroundColor:
+        colors,
 
-      borderWidth: 0,
 
-      hoverBorderWidth: 0,
+      borderWidth:
+        0,
 
-      hoverOffset: 4
+
+      hoverBorderWidth:
+        0,
+
+
+      hoverOffset:
+        4
 
     };
 
   }
+
 
 
   /* ========================================================================
@@ -759,67 +1058,100 @@
 
     return {
 
-      borderColor: color,
+      borderColor:
+        color,
 
-      backgroundColor: color,
 
-      pointBackgroundColor: color,
+      backgroundColor:
+        color,
 
-      pointBorderColor: color,
 
-      borderWidth: 2.25,
+      pointBackgroundColor:
+        color,
 
-      pointRadius: 3.5,
 
-      pointHoverRadius: 5,
+      pointBorderColor:
+        color,
 
-      tension: 0.15,
 
-      fill: false
+      borderWidth:
+        2.25,
+
+
+      pointRadius:
+        3.5,
+
+
+      pointHoverRadius:
+        5,
+
+
+      tension:
+        0.15,
+
+
+      fill:
+        false
 
     };
 
   }
 
 
+
   /* ========================================================================
      17. Semantic color helpers
      ======================================================================== */
 
-  function getDiagnosisCategoryColors(labels) {
+  function getDiagnosisCategoryColors(
+    labels
+  ) {
 
     return labels.map(
       (label) =>
         SEMANTIC_COLORS
-          .diagnosisCategory[label]
-        || COLORS.gray
+          .diagnosisCategory[
+            label
+          ] ||
+        COLORS.gray
     );
 
   }
 
 
-  function getWardColors(labels) {
+
+  function getWardColors(
+    labels
+  ) {
 
     return labels.map(
       (label) =>
         SEMANTIC_COLORS
-          .ward[label]
-        || COLORS.gray
+          .ward[
+            label
+          ] ||
+        COLORS.gray
     );
 
   }
 
 
-  function getSexColors(labels) {
+
+  function getSexColors(
+    labels
+  ) {
 
     return labels.map(
       (label) =>
         SEMANTIC_COLORS
-          .sex[label]
-        || COLORS.gray
+          .sex[
+            label
+          ] ||
+        COLORS.gray
     );
 
   }
+
 
 
   /* ========================================================================
@@ -828,11 +1160,16 @@
 
   function applyGlobalDefaults() {
 
-    if (typeof Chart === "undefined") {
+    if (
+      typeof Chart ===
+      "undefined"
+    ) {
 
       console.warn(
-        "Chart.js has not been loaded yet. Load Chart.js before chart-config.js."
+        "Chart.js has not been loaded yet. " +
+        "Load Chart.js before chart-config.js."
       );
+
 
       return;
 
@@ -863,14 +1200,22 @@
       "easeOutQuart";
 
 
-    Chart.defaults.plugins.legend.labels.color =
-      COLORS.textSecondary;
+    Chart.defaults
+      .plugins
+      .legend
+      .labels
+      .color =
+        COLORS.textSecondary;
 
 
-    Chart.defaults.plugins.tooltip.backgroundColor =
-      COLORS.tooltipBackground;
+    Chart.defaults
+      .plugins
+      .tooltip
+      .backgroundColor =
+        COLORS.tooltipBackground;
 
   }
+
 
 
   /* ========================================================================
@@ -932,11 +1277,15 @@
     });
 
 
+
   /* ========================================================================
      20. Apply defaults automatically
      ======================================================================== */
 
-  if (typeof Chart !== "undefined") {
+  if (
+    typeof Chart !==
+    "undefined"
+  ) {
 
     applyGlobalDefaults();
 
