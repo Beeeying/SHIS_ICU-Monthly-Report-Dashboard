@@ -42,7 +42,7 @@
 
 
 
-const DATA_URL = "./data/icu_monthly_data_aug_sep_2026.json";
+const DATA_URL = "./data/icu_monthly_data_aug_sep_oct_2026.json";
 
 
 
