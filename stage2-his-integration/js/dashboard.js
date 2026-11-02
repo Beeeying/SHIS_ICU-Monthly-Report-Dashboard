@@ -6,7 +6,7 @@
 
    HGH ICU Monthly Report Dashboard
 
-   Stage 1 — dashboard.js
+   Stage 2A — HIS-ready dashboard.js
 
 
 
@@ -18,7 +18,7 @@
 
    3. Support All / ICU / HDU ward filtering
 
-   4. Support four dashboard tabs
+   4. Support three HIS-ready dashboard tabs
 
    5. Reset filters
 
@@ -26,7 +26,7 @@
 
 
 
-   Charts and detailed tables will be added later.
+   Diagnosis-dependent modules are excluded from the Stage 2 core data contract.
 
    ========================================================================== */
 
@@ -42,7 +42,7 @@
 
 
 
-const DATA_URL = "./data/icu_monthly_data_aug_sep_2026.json";
+const DATA_URL = "./data/icu_monthly_data_stage2_core.json";
 
 
 
@@ -284,7 +284,7 @@ function getSelectedMonth() {
 
       || dashboardData?.metadata?.defaultReportingPeriod
 
-      || "2026-09"
+      || "2026-10"
 
     );
 
@@ -750,12 +750,6 @@ function renderDeathCaseTable(dataset = getActiveDataset()) {
 
 
 
-  const categoryFilter =
-
-    byId("death-category-filter");
-
-
-
   const sortSelect =
 
     byId("death-sort");
@@ -769,12 +763,6 @@ function renderDeathCaseTable(dataset = getActiveDataset()) {
       .trim()
 
       .toLowerCase();
-
-
-
-  const categoryValue =
-
-    categoryFilter?.value || "All";
 
 
 
@@ -818,9 +806,7 @@ function renderDeathCaseTable(dataset = getActiveDataset()) {
 
             item.admissionSource,
 
-            item.diagnosisCategory,
-
-            item.icdChapter
+            item.disposition
 
           ]
 
@@ -829,32 +815,6 @@ function renderDeathCaseTable(dataset = getActiveDataset()) {
             .toLowerCase()
 
             .includes(searchTerm)
-
-      );
-
-  }
-
-
-
-
-
-  /* ----------------------------------------------------------
-
-     Diagnosis category filter
-
-     ---------------------------------------------------------- */
-
-
-
-  if (categoryValue !== "All") {
-
-    filteredCases =
-
-      filteredCases.filter(
-
-        (item) =>
-
-          item.diagnosisCategory === categoryValue
 
       );
 
@@ -936,7 +896,7 @@ function renderDeathCaseTable(dataset = getActiveDataset()) {
 
       <tr>
 
-        <td colspan="9">
+        <td colspan="7">
 
           No death cases match the selected filters.
 
@@ -1016,37 +976,13 @@ function renderDeathCaseTable(dataset = getActiveDataset()) {
 
             <td>
 
-              ${item.diagnosisCategory || "—"}
-
-            </td>
-
-            <td>
-
-              ${item.icdChapter || "—"}
-
-            </td>
-
-            <td>
-
               ${item.losDays ?? "—"}
 
             </td>
 
             <td>
 
-              <button
-
-                type="button"
-
-                class="table-action-button"
-
-                aria-label="View case ${item.caseId || "details"}"
-
-              >
-
-                View
-
-              </button>
+              ${item.disposition || "—"}
 
             </td>
 
@@ -1478,7 +1414,7 @@ function resetFilters() {
 
         ?.defaultReportingPeriod
 
-      || "2026-09";
+      || "2026-10";
 
   }
 
@@ -1528,12 +1464,6 @@ function resetFilters() {
 
 
 
-  const categoryFilter =
-
-    byId("death-category-filter");
-
-
-
   const sortSelect =
 
     byId("death-sort");
@@ -1543,14 +1473,6 @@ function resetFilters() {
   if (searchInput) {
 
     searchInput.value = "";
-
-  }
-
-
-
-  if (categoryFilter) {
-
-    categoryFilter.value = "All";
 
   }
 
@@ -1617,12 +1539,6 @@ function setupFilters() {
   const searchInput =
 
     byId("death-case-search");
-
-
-
-  const categoryFilter =
-
-    byId("death-category-filter");
 
 
 
@@ -1719,32 +1635,6 @@ function setupFilters() {
     searchInput.addEventListener(
 
       "input",
-
-      () =>
-
-        renderDeathCaseTable()
-
-    );
-
-  }
-
-
-
-
-
-  /* ----------------------------------------------------------
-
-     Death case category filter
-
-     ---------------------------------------------------------- */
-
-
-
-  if (categoryFilter) {
-
-    categoryFilter.addEventListener(
-
-      "change",
 
       () =>
 

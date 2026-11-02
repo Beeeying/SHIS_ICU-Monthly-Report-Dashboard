@@ -1,0 +1,3973 @@
+{
+  "metadata": {
+    "dashboard": "HGH ICU Monthly Report Dashboard",
+    "schemaVersion": "3.0-stage2-core",
+    "defaultReportingPeriod": "2026-10",
+    "availableReportingPeriods": [
+      "2026-08",
+      "2026-09",
+      "2026-10"
+    ],
+    "privacy": {
+      "containsPatientNames": false,
+      "containsMobileNumbers": false,
+      "containsHealthIds": false,
+      "containsInpatientIds": false
+    },
+    "capabilities": {
+      "primaryDiagnosis": false,
+      "primaryDiagnosisCategory": false,
+      "primaryDiagnosisIcdChapter": false
+    },
+    "dataContract": "HIS-ready core metrics only; diagnosis-dependent fields are optional and omitted."
+  },
+  "filters": {
+    "month": {
+      "default": "2026-10",
+      "options": [
+        {
+          "value": "2026-08",
+          "label": "August 2026"
+        },
+        {
+          "value": "2026-09",
+          "label": "September 2026"
+        },
+        {
+          "value": "2026-10",
+          "label": "October 2026"
+        }
+      ]
+    },
+    "ward": {
+      "default": "All",
+      "options": [
+        "All",
+        "ICU",
+        "HDU"
+      ]
+    }
+  },
+  "periods": {
+    "2026-08": {
+      "metadata": {
+        "dashboard": "HGH ICU Monthly Report Dashboard",
+        "sourceWorkbook": "ICU August Report Final Version.xlsx",
+        "reportingPeriod": "2026-08",
+        "periodLabel": "August 2026",
+        "reportStart": "2026-08-01",
+        "reportCutoff": "2026-08-31",
+        "dataThrough": "2026-08-31",
+        "cohortLabel": "August 2026 ICU/HDU Admission Cohort",
+        "cohortDefinition": "Patients admitted to ICU/HDU during August 2026; outcomes are followed through the same inpatient admission episode.",
+        "unitOfAnalysis": "Inpatient admission episode",
+        "mockData": true,
+        "privacy": {
+          "containsPatientNames": false,
+          "containsMobileNumbers": false,
+          "containsHealthIds": false,
+          "containsInpatientIds": false,
+          "deathCaseDetailsAreSynthetic": true,
+          "note": "Aggregate values are derived from the validated August workbook. Death-case detail rows are de-identified prototype rows and should not be used as clinical source data."
+        },
+        "capabilities": {
+          "primaryDiagnosis": false,
+          "primaryDiagnosisCategory": false,
+          "primaryDiagnosisIcdChapter": false
+        }
+      },
+      "datasets": {
+        "All": {
+          "overview": {
+            "totalAdmissions": 41,
+            "deaths": 18,
+            "mortalityRate": 43.9,
+            "meanAge": 45.44,
+            "medianAge": 46,
+            "meanLosDays": 4.12,
+            "medianLosDays": 3,
+            "currentlyAdmitted": 2,
+            "discharged": 39
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "ICU",
+                "admissions": 16,
+                "deaths": 10,
+                "mortalityRate": 62.5
+              },
+              {
+                "label": "HDU",
+                "admissions": 25,
+                "deaths": 8,
+                "mortalityRate": 32.0
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-08-01",
+                "count": 2
+              },
+              {
+                "date": "2026-08-02",
+                "count": 0
+              },
+              {
+                "date": "2026-08-03",
+                "count": 0
+              },
+              {
+                "date": "2026-08-04",
+                "count": 1
+              },
+              {
+                "date": "2026-08-05",
+                "count": 1
+              },
+              {
+                "date": "2026-08-06",
+                "count": 0
+              },
+              {
+                "date": "2026-08-07",
+                "count": 1
+              },
+              {
+                "date": "2026-08-08",
+                "count": 3
+              },
+              {
+                "date": "2026-08-09",
+                "count": 3
+              },
+              {
+                "date": "2026-08-10",
+                "count": 0
+              },
+              {
+                "date": "2026-08-11",
+                "count": 2
+              },
+              {
+                "date": "2026-08-12",
+                "count": 0
+              },
+              {
+                "date": "2026-08-13",
+                "count": 4
+              },
+              {
+                "date": "2026-08-14",
+                "count": 0
+              },
+              {
+                "date": "2026-08-15",
+                "count": 1
+              },
+              {
+                "date": "2026-08-16",
+                "count": 2
+              },
+              {
+                "date": "2026-08-17",
+                "count": 3
+              },
+              {
+                "date": "2026-08-18",
+                "count": 0
+              },
+              {
+                "date": "2026-08-19",
+                "count": 1
+              },
+              {
+                "date": "2026-08-20",
+                "count": 4
+              },
+              {
+                "date": "2026-08-21",
+                "count": 1
+              },
+              {
+                "date": "2026-08-22",
+                "count": 2
+              },
+              {
+                "date": "2026-08-23",
+                "count": 2
+              },
+              {
+                "date": "2026-08-24",
+                "count": 1
+              },
+              {
+                "date": "2026-08-25",
+                "count": 1
+              },
+              {
+                "date": "2026-08-26",
+                "count": 1
+              },
+              {
+                "date": "2026-08-27",
+                "count": 1
+              },
+              {
+                "date": "2026-08-28",
+                "count": 0
+              },
+              {
+                "date": "2026-08-29",
+                "count": 2
+              },
+              {
+                "date": "2026-08-30",
+                "count": 2
+              },
+              {
+                "date": "2026-08-31",
+                "count": 0
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "ICU",
+                "meanLos": 3.81,
+                "medianLos": 3.0
+              },
+              {
+                "label": "HDU",
+                "meanLos": 4.32,
+                "medianLos": 4.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 41,
+              "meanAge": 45.44,
+              "medianAge": 46,
+              "meanLosDays": 4.12,
+              "medianLosDays": 3
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 6,
+                "percentage": 14.6
+              },
+              {
+                "label": "18–39",
+                "count": 10,
+                "percentage": 24.4
+              },
+              {
+                "label": "40–59",
+                "count": 10,
+                "percentage": 24.4
+              },
+              {
+                "label": "60–79",
+                "count": 10,
+                "percentage": 24.4
+              },
+              {
+                "label": "80+",
+                "count": 5,
+                "percentage": 12.2
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 28,
+                "percentage": 68.3
+              },
+              {
+                "label": "Female",
+                "count": 13,
+                "percentage": 31.7
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "ICU",
+                "count": 16,
+                "percentage": 39.0
+              },
+              {
+                "label": "HDU",
+                "count": 25,
+                "percentage": 61.0
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 5,
+                "percentage": 12.2
+              },
+              {
+                "label": "2–3 days",
+                "count": 16,
+                "percentage": 39.0
+              },
+              {
+                "label": "4–7 days",
+                "count": 14,
+                "percentage": 34.1
+              },
+              {
+                "label": "8+ days",
+                "count": 6,
+                "percentage": 14.6
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Emergency Ward",
+                "count": 18,
+                "percentage": 43.9
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 12,
+                "percentage": 29.3
+              },
+              {
+                "label": "Operation Theater",
+                "count": 8,
+                "percentage": 19.5
+              },
+              {
+                "label": "New Payment Ward",
+                "count": 2,
+                "percentage": 4.9
+              },
+              {
+                "label": "Gynecology Ward",
+                "count": 1,
+                "percentage": 2.4
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 20,
+                "percentage": 48.8
+              },
+              {
+                "label": "Death in ICU",
+                "count": 18,
+                "percentage": 43.9
+              },
+              {
+                "label": "Still in Admission",
+                "count": 2,
+                "percentage": 4.9
+              },
+              {
+                "label": "Transfer to Another Facility",
+                "count": 1,
+                "percentage": 2.4
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 18,
+              "mortalityRate": 43.9,
+              "meanAge": 49.78,
+              "medianAge": 58.0,
+              "meanLosDays": 3.28,
+              "medianLosDays": 3.0
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 3,
+                "percentage": 16.7
+              },
+              {
+                "label": "2–3 days",
+                "count": 9,
+                "percentage": 50.0
+              },
+              {
+                "label": "4–7 days",
+                "count": 5,
+                "percentage": 27.8
+              },
+              {
+                "label": "8+ days",
+                "count": 1,
+                "percentage": 5.6
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Emergency Ward",
+                "count": 8,
+                "percentage": 44.4
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 7,
+                "percentage": 38.9
+              },
+              {
+                "label": "Operation Theater",
+                "count": 1,
+                "percentage": 5.6
+              },
+              {
+                "label": "New Payment Ward",
+                "count": 1,
+                "percentage": 5.6
+              },
+              {
+                "label": "Gynecology Ward",
+                "count": 1,
+                "percentage": 5.6
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "AUG-D001",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "New Payment Ward",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D002",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Gynecology Ward",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D003",
+                "ageGroup": "18–39",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D004",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D005",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D006",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 6,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D007",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 9,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D008",
+                "ageGroup": "80+",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D009",
+                "ageGroup": "18–39",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D010",
+                "ageGroup": "<18",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D011",
+                "ageGroup": "80+",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D012",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 6,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D013",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D014",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D015",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 5,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D016",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Operation Theater",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D017",
+                "ageGroup": "<18",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D018",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        },
+        "ICU": {
+          "overview": {
+            "totalAdmissions": 16,
+            "deaths": 10,
+            "mortalityRate": 62.5,
+            "meanAge": 36.31,
+            "medianAge": 35.0,
+            "meanLosDays": 3.81,
+            "medianLosDays": 3.0,
+            "currentlyAdmitted": 1,
+            "discharged": 15
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "ICU",
+                "admissions": 16,
+                "deaths": 10,
+                "mortalityRate": 62.5
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-08-01",
+                "count": 1
+              },
+              {
+                "date": "2026-08-02",
+                "count": 0
+              },
+              {
+                "date": "2026-08-03",
+                "count": 0
+              },
+              {
+                "date": "2026-08-04",
+                "count": 0
+              },
+              {
+                "date": "2026-08-05",
+                "count": 0
+              },
+              {
+                "date": "2026-08-06",
+                "count": 0
+              },
+              {
+                "date": "2026-08-07",
+                "count": 1
+              },
+              {
+                "date": "2026-08-08",
+                "count": 2
+              },
+              {
+                "date": "2026-08-09",
+                "count": 1
+              },
+              {
+                "date": "2026-08-10",
+                "count": 0
+              },
+              {
+                "date": "2026-08-11",
+                "count": 0
+              },
+              {
+                "date": "2026-08-12",
+                "count": 0
+              },
+              {
+                "date": "2026-08-13",
+                "count": 2
+              },
+              {
+                "date": "2026-08-14",
+                "count": 0
+              },
+              {
+                "date": "2026-08-15",
+                "count": 0
+              },
+              {
+                "date": "2026-08-16",
+                "count": 2
+              },
+              {
+                "date": "2026-08-17",
+                "count": 1
+              },
+              {
+                "date": "2026-08-18",
+                "count": 0
+              },
+              {
+                "date": "2026-08-19",
+                "count": 0
+              },
+              {
+                "date": "2026-08-20",
+                "count": 0
+              },
+              {
+                "date": "2026-08-21",
+                "count": 0
+              },
+              {
+                "date": "2026-08-22",
+                "count": 0
+              },
+              {
+                "date": "2026-08-23",
+                "count": 1
+              },
+              {
+                "date": "2026-08-24",
+                "count": 1
+              },
+              {
+                "date": "2026-08-25",
+                "count": 1
+              },
+              {
+                "date": "2026-08-26",
+                "count": 1
+              },
+              {
+                "date": "2026-08-27",
+                "count": 1
+              },
+              {
+                "date": "2026-08-28",
+                "count": 0
+              },
+              {
+                "date": "2026-08-29",
+                "count": 1
+              },
+              {
+                "date": "2026-08-30",
+                "count": 0
+              },
+              {
+                "date": "2026-08-31",
+                "count": 0
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "ICU",
+                "meanLos": 3.81,
+                "medianLos": 3.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 16,
+              "meanAge": 36.31,
+              "medianAge": 35.0,
+              "meanLosDays": 3.81,
+              "medianLosDays": 3.0
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 3,
+                "percentage": 18.8
+              },
+              {
+                "label": "18–39",
+                "count": 6,
+                "percentage": 37.5
+              },
+              {
+                "label": "40–59",
+                "count": 4,
+                "percentage": 25.0
+              },
+              {
+                "label": "60–79",
+                "count": 3,
+                "percentage": 18.8
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 12,
+                "percentage": 75.0
+              },
+              {
+                "label": "Female",
+                "count": 4,
+                "percentage": 25.0
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "ICU",
+                "count": 16,
+                "percentage": 100.0
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 3,
+                "percentage": 18.8
+              },
+              {
+                "label": "2–3 days",
+                "count": 6,
+                "percentage": 37.5
+              },
+              {
+                "label": "4–7 days",
+                "count": 4,
+                "percentage": 25.0
+              },
+              {
+                "label": "8+ days",
+                "count": 3,
+                "percentage": 18.8
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Emergency Ward",
+                "count": 8,
+                "percentage": 50.0
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 4,
+                "percentage": 25.0
+              },
+              {
+                "label": "Operation Theater",
+                "count": 3,
+                "percentage": 18.8
+              },
+              {
+                "label": "Gynecology Ward",
+                "count": 1,
+                "percentage": 6.2
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 5,
+                "percentage": 31.2
+              },
+              {
+                "label": "Death in ICU",
+                "count": 10,
+                "percentage": 62.5
+              },
+              {
+                "label": "Still in Admission",
+                "count": 1,
+                "percentage": 6.2
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 10,
+              "mortalityRate": 62.5,
+              "meanAge": 40.9,
+              "medianAge": 35.0,
+              "meanLosDays": 3.6,
+              "medianLosDays": 3.0
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 1,
+                "percentage": 10.0
+              },
+              {
+                "label": "2–3 days",
+                "count": 5,
+                "percentage": 50.0
+              },
+              {
+                "label": "4–7 days",
+                "count": 3,
+                "percentage": 30.0
+              },
+              {
+                "label": "8+ days",
+                "count": 1,
+                "percentage": 10.0
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Emergency Ward",
+                "count": 4,
+                "percentage": 40.0
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 4,
+                "percentage": 40.0
+              },
+              {
+                "label": "Operation Theater",
+                "count": 1,
+                "percentage": 10.0
+              },
+              {
+                "label": "Gynecology Ward",
+                "count": 1,
+                "percentage": 10.0
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "AUG-D002",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Gynecology Ward",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D003",
+                "ageGroup": "18–39",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D004",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D007",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 9,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D009",
+                "ageGroup": "18–39",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D013",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D015",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 5,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D016",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Operation Theater",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D017",
+                "ageGroup": "<18",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D018",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        },
+        "HDU": {
+          "overview": {
+            "totalAdmissions": 25,
+            "deaths": 8,
+            "mortalityRate": 32.0,
+            "meanAge": 51.28,
+            "medianAge": 58,
+            "meanLosDays": 4.32,
+            "medianLosDays": 4,
+            "currentlyAdmitted": 1,
+            "discharged": 24
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "HDU",
+                "admissions": 25,
+                "deaths": 8,
+                "mortalityRate": 32.0
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-08-01",
+                "count": 1
+              },
+              {
+                "date": "2026-08-02",
+                "count": 0
+              },
+              {
+                "date": "2026-08-03",
+                "count": 0
+              },
+              {
+                "date": "2026-08-04",
+                "count": 1
+              },
+              {
+                "date": "2026-08-05",
+                "count": 1
+              },
+              {
+                "date": "2026-08-06",
+                "count": 0
+              },
+              {
+                "date": "2026-08-07",
+                "count": 0
+              },
+              {
+                "date": "2026-08-08",
+                "count": 1
+              },
+              {
+                "date": "2026-08-09",
+                "count": 2
+              },
+              {
+                "date": "2026-08-10",
+                "count": 0
+              },
+              {
+                "date": "2026-08-11",
+                "count": 2
+              },
+              {
+                "date": "2026-08-12",
+                "count": 0
+              },
+              {
+                "date": "2026-08-13",
+                "count": 2
+              },
+              {
+                "date": "2026-08-14",
+                "count": 0
+              },
+              {
+                "date": "2026-08-15",
+                "count": 1
+              },
+              {
+                "date": "2026-08-16",
+                "count": 0
+              },
+              {
+                "date": "2026-08-17",
+                "count": 2
+              },
+              {
+                "date": "2026-08-18",
+                "count": 0
+              },
+              {
+                "date": "2026-08-19",
+                "count": 1
+              },
+              {
+                "date": "2026-08-20",
+                "count": 4
+              },
+              {
+                "date": "2026-08-21",
+                "count": 1
+              },
+              {
+                "date": "2026-08-22",
+                "count": 2
+              },
+              {
+                "date": "2026-08-23",
+                "count": 1
+              },
+              {
+                "date": "2026-08-24",
+                "count": 0
+              },
+              {
+                "date": "2026-08-25",
+                "count": 0
+              },
+              {
+                "date": "2026-08-26",
+                "count": 0
+              },
+              {
+                "date": "2026-08-27",
+                "count": 0
+              },
+              {
+                "date": "2026-08-28",
+                "count": 0
+              },
+              {
+                "date": "2026-08-29",
+                "count": 1
+              },
+              {
+                "date": "2026-08-30",
+                "count": 2
+              },
+              {
+                "date": "2026-08-31",
+                "count": 0
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "HDU",
+                "meanLos": 4.32,
+                "medianLos": 4.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 25,
+              "meanAge": 51.28,
+              "medianAge": 58,
+              "meanLosDays": 4.32,
+              "medianLosDays": 4
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 3,
+                "percentage": 12.0
+              },
+              {
+                "label": "18–39",
+                "count": 4,
+                "percentage": 16.0
+              },
+              {
+                "label": "40–59",
+                "count": 6,
+                "percentage": 24.0
+              },
+              {
+                "label": "60–79",
+                "count": 7,
+                "percentage": 28.0
+              },
+              {
+                "label": "80+",
+                "count": 5,
+                "percentage": 20.0
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 16,
+                "percentage": 64.0
+              },
+              {
+                "label": "Female",
+                "count": 9,
+                "percentage": 36.0
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "HDU",
+                "count": 25,
+                "percentage": 100.0
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 2,
+                "percentage": 8.0
+              },
+              {
+                "label": "2–3 days",
+                "count": 10,
+                "percentage": 40.0
+              },
+              {
+                "label": "4–7 days",
+                "count": 10,
+                "percentage": 40.0
+              },
+              {
+                "label": "8+ days",
+                "count": 3,
+                "percentage": 12.0
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Emergency Ward",
+                "count": 10,
+                "percentage": 40.0
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 8,
+                "percentage": 32.0
+              },
+              {
+                "label": "Operation Theater",
+                "count": 5,
+                "percentage": 20.0
+              },
+              {
+                "label": "New Payment Ward",
+                "count": 2,
+                "percentage": 8.0
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 15,
+                "percentage": 60.0
+              },
+              {
+                "label": "Death in ICU",
+                "count": 8,
+                "percentage": 32.0
+              },
+              {
+                "label": "Still in Admission",
+                "count": 1,
+                "percentage": 4.0
+              },
+              {
+                "label": "Transfer to Another Facility",
+                "count": 1,
+                "percentage": 4.0
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 8,
+              "mortalityRate": 32.0,
+              "meanAge": 60.88,
+              "medianAge": 67.5,
+              "meanLosDays": 2.88,
+              "medianLosDays": 2.0
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 2,
+                "percentage": 25.0
+              },
+              {
+                "label": "2–3 days",
+                "count": 4,
+                "percentage": 50.0
+              },
+              {
+                "label": "4–7 days",
+                "count": 2,
+                "percentage": 25.0
+              },
+              {
+                "label": "8+ days",
+                "count": 0,
+                "percentage": 0.0
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Emergency Ward",
+                "count": 4,
+                "percentage": 50.0
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 3,
+                "percentage": 37.5
+              },
+              {
+                "label": "New Payment Ward",
+                "count": 1,
+                "percentage": 12.5
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "AUG-D001",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "New Payment Ward",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D005",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D006",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 6,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D008",
+                "ageGroup": "80+",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D010",
+                "ageGroup": "<18",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Emergency Ward",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D011",
+                "ageGroup": "80+",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D012",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 6,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "AUG-D014",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "2026-09": {
+      "metadata": {
+        "dashboard": "HGH ICU Monthly Report Dashboard",
+        "sourceWorkbook": "ICU_Sep_Rawdata_20260930_Final_Formula_Fixed.xlsx",
+        "reportingPeriod": "2026-09",
+        "periodLabel": "September 2026",
+        "reportStart": "2026-09-01",
+        "reportCutoff": "2026-09-30",
+        "dataThrough": "2026-09-30",
+        "cohortLabel": "September 2026 ICU/HDU Admission Cohort",
+        "cohortDefinition": "Patients admitted to ICU/HDU during September 2026; outcomes are followed through the same inpatient admission episode.",
+        "unitOfAnalysis": "Inpatient admission episode",
+        "mockData": false,
+        "privacy": {
+          "containsPatientNames": false,
+          "containsMobileNumbers": false,
+          "containsHealthIds": false,
+          "containsInpatientIds": false,
+          "deathCaseDetailsAreSynthetic": false,
+          "deathCaseIdsAreSynthetic": true,
+          "note": "Aggregate values and de-identified death-case attributes are derived from the validated September workbook. Synthetic case IDs are used; direct patient identifiers are excluded."
+        },
+        "capabilities": {
+          "primaryDiagnosis": false,
+          "primaryDiagnosisCategory": false,
+          "primaryDiagnosisIcdChapter": false
+        }
+      },
+      "datasets": {
+        "All": {
+          "overview": {
+            "totalAdmissions": 48,
+            "deaths": 16,
+            "mortalityRate": 33.3,
+            "meanAge": 46.08,
+            "medianAge": 44.5,
+            "meanLosDays": 6.27,
+            "medianLosDays": 5.0,
+            "currentlyAdmitted": 7,
+            "discharged": 41
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "ICU",
+                "admissions": 17,
+                "deaths": 8,
+                "mortalityRate": 47.1
+              },
+              {
+                "label": "HDU",
+                "admissions": 31,
+                "deaths": 8,
+                "mortalityRate": 25.8
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-09-01",
+                "count": 1
+              },
+              {
+                "date": "2026-09-02",
+                "count": 0
+              },
+              {
+                "date": "2026-09-03",
+                "count": 1
+              },
+              {
+                "date": "2026-09-04",
+                "count": 1
+              },
+              {
+                "date": "2026-09-05",
+                "count": 4
+              },
+              {
+                "date": "2026-09-06",
+                "count": 3
+              },
+              {
+                "date": "2026-09-07",
+                "count": 3
+              },
+              {
+                "date": "2026-09-08",
+                "count": 0
+              },
+              {
+                "date": "2026-09-09",
+                "count": 2
+              },
+              {
+                "date": "2026-09-10",
+                "count": 4
+              },
+              {
+                "date": "2026-09-11",
+                "count": 1
+              },
+              {
+                "date": "2026-09-12",
+                "count": 2
+              },
+              {
+                "date": "2026-09-13",
+                "count": 2
+              },
+              {
+                "date": "2026-09-14",
+                "count": 1
+              },
+              {
+                "date": "2026-09-15",
+                "count": 1
+              },
+              {
+                "date": "2026-09-16",
+                "count": 0
+              },
+              {
+                "date": "2026-09-17",
+                "count": 1
+              },
+              {
+                "date": "2026-09-18",
+                "count": 2
+              },
+              {
+                "date": "2026-09-19",
+                "count": 2
+              },
+              {
+                "date": "2026-09-20",
+                "count": 1
+              },
+              {
+                "date": "2026-09-21",
+                "count": 3
+              },
+              {
+                "date": "2026-09-22",
+                "count": 1
+              },
+              {
+                "date": "2026-09-23",
+                "count": 2
+              },
+              {
+                "date": "2026-09-24",
+                "count": 0
+              },
+              {
+                "date": "2026-09-25",
+                "count": 1
+              },
+              {
+                "date": "2026-09-26",
+                "count": 2
+              },
+              {
+                "date": "2026-09-27",
+                "count": 2
+              },
+              {
+                "date": "2026-09-28",
+                "count": 2
+              },
+              {
+                "date": "2026-09-29",
+                "count": 0
+              },
+              {
+                "date": "2026-09-30",
+                "count": 3
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "ICU",
+                "meanLos": 4.88,
+                "medianLos": 3.0
+              },
+              {
+                "label": "HDU",
+                "meanLos": 7.03,
+                "medianLos": 6.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 48,
+              "meanAge": 46.08,
+              "medianAge": 44.5,
+              "meanLosDays": 6.27,
+              "medianLosDays": 5.0
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 8,
+                "percentage": 16.7
+              },
+              {
+                "label": "18–39",
+                "count": 9,
+                "percentage": 18.8
+              },
+              {
+                "label": "40–59",
+                "count": 14,
+                "percentage": 29.2
+              },
+              {
+                "label": "60–79",
+                "count": 14,
+                "percentage": 29.2
+              },
+              {
+                "label": "80+",
+                "count": 3,
+                "percentage": 6.2
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 20,
+                "percentage": 41.7
+              },
+              {
+                "label": "Female",
+                "count": 28,
+                "percentage": 58.3
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "ICU",
+                "count": 17,
+                "percentage": 35.4
+              },
+              {
+                "label": "HDU",
+                "count": 31,
+                "percentage": 64.6
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 1,
+                "percentage": 2.1
+              },
+              {
+                "label": "2–3 days",
+                "count": 18,
+                "percentage": 37.5
+              },
+              {
+                "label": "4–7 days",
+                "count": 15,
+                "percentage": 31.2
+              },
+              {
+                "label": "8+ days",
+                "count": 14,
+                "percentage": 29.2
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 13,
+                "percentage": 27.1
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 35,
+                "percentage": 72.9
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 22,
+                "percentage": 45.8
+              },
+              {
+                "label": "Death in ICU",
+                "count": 16,
+                "percentage": 33.3
+              },
+              {
+                "label": "Still in Admission",
+                "count": 7,
+                "percentage": 14.6
+              },
+              {
+                "label": "Transfer to Another Facility",
+                "count": 1,
+                "percentage": 2.1
+              },
+              {
+                "label": "Discharge Home From ICU",
+                "count": 1,
+                "percentage": 2.1
+              },
+              {
+                "label": "Unknown / Not Recorded",
+                "count": 1,
+                "percentage": 2.1
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 16,
+              "mortalityRate": 33.3,
+              "meanAge": 49.5,
+              "medianAge": 44.5,
+              "meanLosDays": 4.88,
+              "medianLosDays": 4.0
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 1,
+                "percentage": 6.2
+              },
+              {
+                "label": "2–3 days",
+                "count": 6,
+                "percentage": 37.5
+              },
+              {
+                "label": "4–7 days",
+                "count": 7,
+                "percentage": 43.8
+              },
+              {
+                "label": "8+ days",
+                "count": 2,
+                "percentage": 12.5
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 4,
+                "percentage": 25.0
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 12,
+                "percentage": 75.0
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "SEP-D001",
+                "ageGroup": "<18",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Operation Theater",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D002",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 11,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D003",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D004",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D005",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 7,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D006",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Operation Theater",
+                "losDays": 13,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D007",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 6,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D008",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 7,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D009",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D010",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D011",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 5,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D012",
+                "ageGroup": "80+",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 7,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D013",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D014",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D015",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D016",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        },
+        "ICU": {
+          "overview": {
+            "totalAdmissions": 17,
+            "deaths": 8,
+            "mortalityRate": 47.1,
+            "meanAge": 43.29,
+            "medianAge": 43.0,
+            "meanLosDays": 4.88,
+            "medianLosDays": 3.0,
+            "currentlyAdmitted": 4,
+            "discharged": 13
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "ICU",
+                "admissions": 17,
+                "deaths": 8,
+                "mortalityRate": 47.1
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-09-01",
+                "count": 0
+              },
+              {
+                "date": "2026-09-02",
+                "count": 0
+              },
+              {
+                "date": "2026-09-03",
+                "count": 0
+              },
+              {
+                "date": "2026-09-04",
+                "count": 0
+              },
+              {
+                "date": "2026-09-05",
+                "count": 1
+              },
+              {
+                "date": "2026-09-06",
+                "count": 2
+              },
+              {
+                "date": "2026-09-07",
+                "count": 2
+              },
+              {
+                "date": "2026-09-08",
+                "count": 0
+              },
+              {
+                "date": "2026-09-09",
+                "count": 1
+              },
+              {
+                "date": "2026-09-10",
+                "count": 1
+              },
+              {
+                "date": "2026-09-11",
+                "count": 1
+              },
+              {
+                "date": "2026-09-12",
+                "count": 1
+              },
+              {
+                "date": "2026-09-13",
+                "count": 0
+              },
+              {
+                "date": "2026-09-14",
+                "count": 0
+              },
+              {
+                "date": "2026-09-15",
+                "count": 0
+              },
+              {
+                "date": "2026-09-16",
+                "count": 0
+              },
+              {
+                "date": "2026-09-17",
+                "count": 0
+              },
+              {
+                "date": "2026-09-18",
+                "count": 0
+              },
+              {
+                "date": "2026-09-19",
+                "count": 2
+              },
+              {
+                "date": "2026-09-20",
+                "count": 1
+              },
+              {
+                "date": "2026-09-21",
+                "count": 1
+              },
+              {
+                "date": "2026-09-22",
+                "count": 1
+              },
+              {
+                "date": "2026-09-23",
+                "count": 0
+              },
+              {
+                "date": "2026-09-24",
+                "count": 0
+              },
+              {
+                "date": "2026-09-25",
+                "count": 0
+              },
+              {
+                "date": "2026-09-26",
+                "count": 1
+              },
+              {
+                "date": "2026-09-27",
+                "count": 1
+              },
+              {
+                "date": "2026-09-28",
+                "count": 0
+              },
+              {
+                "date": "2026-09-29",
+                "count": 0
+              },
+              {
+                "date": "2026-09-30",
+                "count": 1
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "ICU",
+                "meanLos": 4.88,
+                "medianLos": 3.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 17,
+              "meanAge": 43.29,
+              "medianAge": 43.0,
+              "meanLosDays": 4.88,
+              "medianLosDays": 3.0
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 4,
+                "percentage": 23.5
+              },
+              {
+                "label": "18–39",
+                "count": 2,
+                "percentage": 11.8
+              },
+              {
+                "label": "40–59",
+                "count": 6,
+                "percentage": 35.3
+              },
+              {
+                "label": "60–79",
+                "count": 4,
+                "percentage": 23.5
+              },
+              {
+                "label": "80+",
+                "count": 1,
+                "percentage": 5.9
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 7,
+                "percentage": 41.2
+              },
+              {
+                "label": "Female",
+                "count": 10,
+                "percentage": 58.8
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "ICU",
+                "count": 17,
+                "percentage": 100.0
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "2–3 days",
+                "count": 9,
+                "percentage": 52.9
+              },
+              {
+                "label": "4–7 days",
+                "count": 5,
+                "percentage": 29.4
+              },
+              {
+                "label": "8+ days",
+                "count": 3,
+                "percentage": 17.6
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 3,
+                "percentage": 17.6
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 14,
+                "percentage": 82.4
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 4,
+                "percentage": 23.5
+              },
+              {
+                "label": "Death in ICU",
+                "count": 8,
+                "percentage": 47.1
+              },
+              {
+                "label": "Still in Admission",
+                "count": 4,
+                "percentage": 23.5
+              },
+              {
+                "label": "Unknown / Not Recorded",
+                "count": 1,
+                "percentage": 5.9
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 8,
+              "mortalityRate": 47.1,
+              "meanAge": 41.0,
+              "medianAge": 43.5,
+              "meanLosDays": 4.75,
+              "medianLosDays": 3.5
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 0,
+                "percentage": 0.0
+              },
+              {
+                "label": "2–3 days",
+                "count": 4,
+                "percentage": 50.0
+              },
+              {
+                "label": "4–7 days",
+                "count": 3,
+                "percentage": 37.5
+              },
+              {
+                "label": "8+ days",
+                "count": 1,
+                "percentage": 12.5
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 2,
+                "percentage": 25.0
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 6,
+                "percentage": 75.0
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "SEP-D001",
+                "ageGroup": "<18",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Operation Theater",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D002",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D003",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 7,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D004",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Operation Theater",
+                "losDays": 13,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D005",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 3,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D006",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D007",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 5,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D008",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        },
+        "HDU": {
+          "overview": {
+            "totalAdmissions": 31,
+            "deaths": 8,
+            "mortalityRate": 25.8,
+            "meanAge": 47.61,
+            "medianAge": 45.0,
+            "meanLosDays": 7.03,
+            "medianLosDays": 6.0,
+            "currentlyAdmitted": 3,
+            "discharged": 28
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "HDU",
+                "admissions": 31,
+                "deaths": 8,
+                "mortalityRate": 25.8
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-09-01",
+                "count": 1
+              },
+              {
+                "date": "2026-09-02",
+                "count": 0
+              },
+              {
+                "date": "2026-09-03",
+                "count": 1
+              },
+              {
+                "date": "2026-09-04",
+                "count": 1
+              },
+              {
+                "date": "2026-09-05",
+                "count": 3
+              },
+              {
+                "date": "2026-09-06",
+                "count": 1
+              },
+              {
+                "date": "2026-09-07",
+                "count": 1
+              },
+              {
+                "date": "2026-09-08",
+                "count": 0
+              },
+              {
+                "date": "2026-09-09",
+                "count": 1
+              },
+              {
+                "date": "2026-09-10",
+                "count": 3
+              },
+              {
+                "date": "2026-09-11",
+                "count": 0
+              },
+              {
+                "date": "2026-09-12",
+                "count": 1
+              },
+              {
+                "date": "2026-09-13",
+                "count": 2
+              },
+              {
+                "date": "2026-09-14",
+                "count": 1
+              },
+              {
+                "date": "2026-09-15",
+                "count": 1
+              },
+              {
+                "date": "2026-09-16",
+                "count": 0
+              },
+              {
+                "date": "2026-09-17",
+                "count": 1
+              },
+              {
+                "date": "2026-09-18",
+                "count": 2
+              },
+              {
+                "date": "2026-09-19",
+                "count": 0
+              },
+              {
+                "date": "2026-09-20",
+                "count": 0
+              },
+              {
+                "date": "2026-09-21",
+                "count": 2
+              },
+              {
+                "date": "2026-09-22",
+                "count": 0
+              },
+              {
+                "date": "2026-09-23",
+                "count": 2
+              },
+              {
+                "date": "2026-09-24",
+                "count": 0
+              },
+              {
+                "date": "2026-09-25",
+                "count": 1
+              },
+              {
+                "date": "2026-09-26",
+                "count": 1
+              },
+              {
+                "date": "2026-09-27",
+                "count": 1
+              },
+              {
+                "date": "2026-09-28",
+                "count": 2
+              },
+              {
+                "date": "2026-09-29",
+                "count": 0
+              },
+              {
+                "date": "2026-09-30",
+                "count": 2
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "HDU",
+                "meanLos": 7.03,
+                "medianLos": 6.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 31,
+              "meanAge": 47.61,
+              "medianAge": 45.0,
+              "meanLosDays": 7.03,
+              "medianLosDays": 6.0
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 4,
+                "percentage": 12.9
+              },
+              {
+                "label": "18–39",
+                "count": 7,
+                "percentage": 22.6
+              },
+              {
+                "label": "40–59",
+                "count": 8,
+                "percentage": 25.8
+              },
+              {
+                "label": "60–79",
+                "count": 10,
+                "percentage": 32.3
+              },
+              {
+                "label": "80+",
+                "count": 2,
+                "percentage": 6.5
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 13,
+                "percentage": 41.9
+              },
+              {
+                "label": "Female",
+                "count": 18,
+                "percentage": 58.1
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "HDU",
+                "count": 31,
+                "percentage": 100.0
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 1,
+                "percentage": 3.2
+              },
+              {
+                "label": "2–3 days",
+                "count": 9,
+                "percentage": 29.0
+              },
+              {
+                "label": "4–7 days",
+                "count": 10,
+                "percentage": 32.3
+              },
+              {
+                "label": "8+ days",
+                "count": 11,
+                "percentage": 35.5
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 10,
+                "percentage": 32.3
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 21,
+                "percentage": 67.7
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 18,
+                "percentage": 58.1
+              },
+              {
+                "label": "Death in ICU",
+                "count": 8,
+                "percentage": 25.8
+              },
+              {
+                "label": "Still in Admission",
+                "count": 3,
+                "percentage": 9.7
+              },
+              {
+                "label": "Transfer to Another Facility",
+                "count": 1,
+                "percentage": 3.2
+              },
+              {
+                "label": "Discharge Home From ICU",
+                "count": 1,
+                "percentage": 3.2
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 8,
+              "mortalityRate": 25.8,
+              "meanAge": 58.0,
+              "medianAge": 57.0,
+              "meanLosDays": 5.0,
+              "medianLosDays": 5.0
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 1,
+                "percentage": 12.5
+              },
+              {
+                "label": "2–3 days",
+                "count": 2,
+                "percentage": 25.0
+              },
+              {
+                "label": "4–7 days",
+                "count": 4,
+                "percentage": 50.0
+              },
+              {
+                "label": "8+ days",
+                "count": 1,
+                "percentage": 12.5
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 2,
+                "percentage": 25.0
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 6,
+                "percentage": 75.0
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "SEP-D001",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 11,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D002",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D003",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 6,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D004",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 7,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D005",
+                "ageGroup": "80+",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 7,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D006",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D007",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "SEP-D008",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "2026-10": {
+      "metadata": {
+        "dashboard": "HGH ICU Monthly Report Dashboard",
+        "sourceWorkbook": "ICU_Report_Oct_Final_Fixed.xlsx",
+        "reportingPeriod": "2026-10",
+        "periodLabel": "October 2026",
+        "reportStart": "2026-10-01",
+        "reportCutoff": "2026-10-31",
+        "dataThrough": "2026-10-31",
+        "cohortLabel": "October 2026 ICU/HDU Admission Cohort",
+        "cohortDefinition": "Patients admitted to ICU/HDU during October 2026; outcomes are followed through the same inpatient admission episode.",
+        "unitOfAnalysis": "Inpatient admission episode",
+        "mockData": false,
+        "privacy": {
+          "containsPatientNames": false,
+          "containsMobileNumbers": false,
+          "containsHealthIds": false,
+          "containsInpatientIds": false,
+          "deathCaseDetailsAreSynthetic": false,
+          "deathCaseIdsAreSynthetic": true,
+          "note": "Aggregate values and de-identified death-case attributes are derived from the validated October workbook. Synthetic case IDs are used; direct patient identifiers are excluded."
+        },
+        "capabilities": {
+          "primaryDiagnosis": false,
+          "primaryDiagnosisCategory": false,
+          "primaryDiagnosisIcdChapter": false
+        }
+      },
+      "datasets": {
+        "All": {
+          "overview": {
+            "totalAdmissions": 47,
+            "deaths": 15,
+            "mortalityRate": 31.9,
+            "meanAge": 46.21,
+            "medianAge": 47.0,
+            "meanLosDays": 4.04,
+            "medianLosDays": 3.0,
+            "currentlyAdmitted": 5,
+            "discharged": 42
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "ICU",
+                "admissions": 14,
+                "deaths": 6,
+                "mortalityRate": 42.9
+              },
+              {
+                "label": "HDU",
+                "admissions": 33,
+                "deaths": 9,
+                "mortalityRate": 27.3
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-10-01",
+                "count": 1
+              },
+              {
+                "date": "2026-10-02",
+                "count": 3
+              },
+              {
+                "date": "2026-10-03",
+                "count": 0
+              },
+              {
+                "date": "2026-10-04",
+                "count": 2
+              },
+              {
+                "date": "2026-10-05",
+                "count": 2
+              },
+              {
+                "date": "2026-10-06",
+                "count": 1
+              },
+              {
+                "date": "2026-10-07",
+                "count": 1
+              },
+              {
+                "date": "2026-10-08",
+                "count": 3
+              },
+              {
+                "date": "2026-10-09",
+                "count": 2
+              },
+              {
+                "date": "2026-10-10",
+                "count": 1
+              },
+              {
+                "date": "2026-10-11",
+                "count": 5
+              },
+              {
+                "date": "2026-10-12",
+                "count": 2
+              },
+              {
+                "date": "2026-10-13",
+                "count": 2
+              },
+              {
+                "date": "2026-10-14",
+                "count": 1
+              },
+              {
+                "date": "2026-10-15",
+                "count": 2
+              },
+              {
+                "date": "2026-10-16",
+                "count": 1
+              },
+              {
+                "date": "2026-10-17",
+                "count": 2
+              },
+              {
+                "date": "2026-10-18",
+                "count": 1
+              },
+              {
+                "date": "2026-10-19",
+                "count": 2
+              },
+              {
+                "date": "2026-10-20",
+                "count": 1
+              },
+              {
+                "date": "2026-10-21",
+                "count": 1
+              },
+              {
+                "date": "2026-10-22",
+                "count": 1
+              },
+              {
+                "date": "2026-10-23",
+                "count": 1
+              },
+              {
+                "date": "2026-10-24",
+                "count": 1
+              },
+              {
+                "date": "2026-10-25",
+                "count": 2
+              },
+              {
+                "date": "2026-10-26",
+                "count": 0
+              },
+              {
+                "date": "2026-10-27",
+                "count": 0
+              },
+              {
+                "date": "2026-10-28",
+                "count": 3
+              },
+              {
+                "date": "2026-10-29",
+                "count": 2
+              },
+              {
+                "date": "2026-10-30",
+                "count": 0
+              },
+              {
+                "date": "2026-10-31",
+                "count": 1
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "ICU",
+                "meanLos": 4.5,
+                "medianLos": 4.0
+              },
+              {
+                "label": "HDU",
+                "meanLos": 3.85,
+                "medianLos": 3.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 47,
+              "meanAge": 46.21,
+              "medianAge": 47.0,
+              "meanLosDays": 4.04,
+              "medianLosDays": 3.0
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 5,
+                "percentage": 10.6
+              },
+              {
+                "label": "18–39",
+                "count": 16,
+                "percentage": 34.0
+              },
+              {
+                "label": "40–59",
+                "count": 8,
+                "percentage": 17.0
+              },
+              {
+                "label": "60–79",
+                "count": 16,
+                "percentage": 34.0
+              },
+              {
+                "label": "80+",
+                "count": 2,
+                "percentage": 4.3
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 24,
+                "percentage": 51.1
+              },
+              {
+                "label": "Female",
+                "count": 23,
+                "percentage": 48.9
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "ICU",
+                "count": 14,
+                "percentage": 29.8
+              },
+              {
+                "label": "HDU",
+                "count": 33,
+                "percentage": 70.2
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 6,
+                "percentage": 12.8
+              },
+              {
+                "label": "2–3 days",
+                "count": 20,
+                "percentage": 42.6
+              },
+              {
+                "label": "4–7 days",
+                "count": 15,
+                "percentage": 31.9
+              },
+              {
+                "label": "8+ days",
+                "count": 6,
+                "percentage": 12.8
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 20,
+                "percentage": 42.6
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 27,
+                "percentage": 57.4
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 22,
+                "percentage": 46.8
+              },
+              {
+                "label": "Death in ICU",
+                "count": 15,
+                "percentage": 31.9
+              },
+              {
+                "label": "Still in Admission",
+                "count": 5,
+                "percentage": 10.6
+              },
+              {
+                "label": "Transfer to Another Facility",
+                "count": 2,
+                "percentage": 4.3
+              },
+              {
+                "label": "Discharge Home From ICU",
+                "count": 3,
+                "percentage": 6.4
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 15,
+              "mortalityRate": 31.9,
+              "meanAge": 54.93,
+              "medianAge": 60.0,
+              "meanLosDays": 2.67,
+              "medianLosDays": 2.0
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 3,
+                "percentage": 20.0
+              },
+              {
+                "label": "2–3 days",
+                "count": 8,
+                "percentage": 53.3
+              },
+              {
+                "label": "4–7 days",
+                "count": 4,
+                "percentage": 26.7
+              },
+              {
+                "label": "8+ days",
+                "count": 0,
+                "percentage": 0.0
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 4,
+                "percentage": 26.7
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 11,
+                "percentage": 73.3
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "OCT-D001",
+                "ageGroup": "<18",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D002",
+                "ageGroup": "<18",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D003",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 7,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D004",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D005",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D006",
+                "ageGroup": "18–39",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D007",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D008",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D009",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D010",
+                "ageGroup": "80+",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Operation Theater",
+                "losDays": 5,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D011",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D012",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 5,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D013",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D014",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D015",
+                "ageGroup": "80+",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        },
+        "ICU": {
+          "overview": {
+            "totalAdmissions": 14,
+            "deaths": 6,
+            "mortalityRate": 42.9,
+            "meanAge": 46.71,
+            "medianAge": 44.0,
+            "meanLosDays": 4.5,
+            "medianLosDays": 4.0,
+            "currentlyAdmitted": 4,
+            "discharged": 10
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "ICU",
+                "admissions": 14,
+                "deaths": 6,
+                "mortalityRate": 42.9
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-10-01",
+                "count": 0
+              },
+              {
+                "date": "2026-10-02",
+                "count": 0
+              },
+              {
+                "date": "2026-10-03",
+                "count": 0
+              },
+              {
+                "date": "2026-10-04",
+                "count": 0
+              },
+              {
+                "date": "2026-10-05",
+                "count": 1
+              },
+              {
+                "date": "2026-10-06",
+                "count": 0
+              },
+              {
+                "date": "2026-10-07",
+                "count": 1
+              },
+              {
+                "date": "2026-10-08",
+                "count": 1
+              },
+              {
+                "date": "2026-10-09",
+                "count": 0
+              },
+              {
+                "date": "2026-10-10",
+                "count": 0
+              },
+              {
+                "date": "2026-10-11",
+                "count": 0
+              },
+              {
+                "date": "2026-10-12",
+                "count": 0
+              },
+              {
+                "date": "2026-10-13",
+                "count": 0
+              },
+              {
+                "date": "2026-10-14",
+                "count": 0
+              },
+              {
+                "date": "2026-10-15",
+                "count": 1
+              },
+              {
+                "date": "2026-10-16",
+                "count": 1
+              },
+              {
+                "date": "2026-10-17",
+                "count": 0
+              },
+              {
+                "date": "2026-10-18",
+                "count": 1
+              },
+              {
+                "date": "2026-10-19",
+                "count": 0
+              },
+              {
+                "date": "2026-10-20",
+                "count": 1
+              },
+              {
+                "date": "2026-10-21",
+                "count": 1
+              },
+              {
+                "date": "2026-10-22",
+                "count": 1
+              },
+              {
+                "date": "2026-10-23",
+                "count": 1
+              },
+              {
+                "date": "2026-10-24",
+                "count": 1
+              },
+              {
+                "date": "2026-10-25",
+                "count": 1
+              },
+              {
+                "date": "2026-10-26",
+                "count": 0
+              },
+              {
+                "date": "2026-10-27",
+                "count": 0
+              },
+              {
+                "date": "2026-10-28",
+                "count": 0
+              },
+              {
+                "date": "2026-10-29",
+                "count": 2
+              },
+              {
+                "date": "2026-10-30",
+                "count": 0
+              },
+              {
+                "date": "2026-10-31",
+                "count": 0
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "ICU",
+                "meanLos": 4.5,
+                "medianLos": 4.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 14,
+              "meanAge": 46.71,
+              "medianAge": 44.0,
+              "meanLosDays": 4.5,
+              "medianLosDays": 4.0
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 3,
+                "percentage": 21.4
+              },
+              {
+                "label": "18–39",
+                "count": 4,
+                "percentage": 28.6
+              },
+              {
+                "label": "40–59",
+                "count": 1,
+                "percentage": 7.1
+              },
+              {
+                "label": "60–79",
+                "count": 5,
+                "percentage": 35.7
+              },
+              {
+                "label": "80+",
+                "count": 1,
+                "percentage": 7.1
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 7,
+                "percentage": 50.0
+              },
+              {
+                "label": "Female",
+                "count": 7,
+                "percentage": 50.0
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "ICU",
+                "count": 14,
+                "percentage": 100.0
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 2,
+                "percentage": 14.3
+              },
+              {
+                "label": "2–3 days",
+                "count": 4,
+                "percentage": 28.6
+              },
+              {
+                "label": "4–7 days",
+                "count": 5,
+                "percentage": 35.7
+              },
+              {
+                "label": "8+ days",
+                "count": 3,
+                "percentage": 21.4
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 4,
+                "percentage": 28.6
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 10,
+                "percentage": 71.4
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 3,
+                "percentage": 21.4
+              },
+              {
+                "label": "Death in ICU",
+                "count": 6,
+                "percentage": 42.9
+              },
+              {
+                "label": "Still in Admission",
+                "count": 4,
+                "percentage": 28.6
+              },
+              {
+                "label": "Discharge Home From ICU",
+                "count": 1,
+                "percentage": 7.1
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 6,
+              "mortalityRate": 42.9,
+              "meanAge": 52.33,
+              "medianAge": 57.5,
+              "meanLosDays": 3.17,
+              "medianLosDays": 3.0
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 1,
+                "percentage": 16.7
+              },
+              {
+                "label": "2–3 days",
+                "count": 2,
+                "percentage": 33.3
+              },
+              {
+                "label": "4–7 days",
+                "count": 3,
+                "percentage": 50.0
+              },
+              {
+                "label": "8+ days",
+                "count": 0,
+                "percentage": 0.0
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 1,
+                "percentage": 16.7
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 5,
+                "percentage": 83.3
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "OCT-D001",
+                "ageGroup": "<18",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 4,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D002",
+                "ageGroup": "<18",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D003",
+                "ageGroup": "40–59",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D004",
+                "ageGroup": "80+",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Operation Theater",
+                "losDays": 5,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D005",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 5,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D006",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "ICU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        },
+        "HDU": {
+          "overview": {
+            "totalAdmissions": 33,
+            "deaths": 9,
+            "mortalityRate": 27.3,
+            "meanAge": 46.0,
+            "medianAge": 47.0,
+            "meanLosDays": 3.85,
+            "medianLosDays": 3.0,
+            "currentlyAdmitted": 1,
+            "discharged": 32
+          },
+          "overviewCharts": {
+            "mortalityByWard": [
+              {
+                "label": "HDU",
+                "admissions": 33,
+                "deaths": 9,
+                "mortalityRate": 27.3
+              }
+            ],
+            "admissionsOverTime": [
+              {
+                "date": "2026-10-01",
+                "count": 1
+              },
+              {
+                "date": "2026-10-02",
+                "count": 3
+              },
+              {
+                "date": "2026-10-03",
+                "count": 0
+              },
+              {
+                "date": "2026-10-04",
+                "count": 2
+              },
+              {
+                "date": "2026-10-05",
+                "count": 1
+              },
+              {
+                "date": "2026-10-06",
+                "count": 1
+              },
+              {
+                "date": "2026-10-07",
+                "count": 0
+              },
+              {
+                "date": "2026-10-08",
+                "count": 2
+              },
+              {
+                "date": "2026-10-09",
+                "count": 2
+              },
+              {
+                "date": "2026-10-10",
+                "count": 1
+              },
+              {
+                "date": "2026-10-11",
+                "count": 5
+              },
+              {
+                "date": "2026-10-12",
+                "count": 2
+              },
+              {
+                "date": "2026-10-13",
+                "count": 2
+              },
+              {
+                "date": "2026-10-14",
+                "count": 1
+              },
+              {
+                "date": "2026-10-15",
+                "count": 1
+              },
+              {
+                "date": "2026-10-16",
+                "count": 0
+              },
+              {
+                "date": "2026-10-17",
+                "count": 2
+              },
+              {
+                "date": "2026-10-18",
+                "count": 0
+              },
+              {
+                "date": "2026-10-19",
+                "count": 2
+              },
+              {
+                "date": "2026-10-20",
+                "count": 0
+              },
+              {
+                "date": "2026-10-21",
+                "count": 0
+              },
+              {
+                "date": "2026-10-22",
+                "count": 0
+              },
+              {
+                "date": "2026-10-23",
+                "count": 0
+              },
+              {
+                "date": "2026-10-24",
+                "count": 0
+              },
+              {
+                "date": "2026-10-25",
+                "count": 1
+              },
+              {
+                "date": "2026-10-26",
+                "count": 0
+              },
+              {
+                "date": "2026-10-27",
+                "count": 0
+              },
+              {
+                "date": "2026-10-28",
+                "count": 3
+              },
+              {
+                "date": "2026-10-29",
+                "count": 0
+              },
+              {
+                "date": "2026-10-30",
+                "count": 0
+              },
+              {
+                "date": "2026-10-31",
+                "count": 1
+              }
+            ],
+            "losByWard": [
+              {
+                "label": "HDU",
+                "meanLos": 3.85,
+                "medianLos": 3.0
+              }
+            ]
+          },
+          "patientProfile": {
+            "summary": {
+              "totalAdmissions": 33,
+              "meanAge": 46.0,
+              "medianAge": 47.0,
+              "meanLosDays": 3.85,
+              "medianLosDays": 3.0
+            },
+            "ageGroupDistribution": [
+              {
+                "label": "<18",
+                "count": 2,
+                "percentage": 6.1
+              },
+              {
+                "label": "18–39",
+                "count": 12,
+                "percentage": 36.4
+              },
+              {
+                "label": "40–59",
+                "count": 7,
+                "percentage": 21.2
+              },
+              {
+                "label": "60–79",
+                "count": 11,
+                "percentage": 33.3
+              },
+              {
+                "label": "80+",
+                "count": 1,
+                "percentage": 3.0
+              }
+            ],
+            "sexDistribution": [
+              {
+                "label": "Male",
+                "count": 17,
+                "percentage": 51.5
+              },
+              {
+                "label": "Female",
+                "count": 16,
+                "percentage": 48.5
+              }
+            ],
+            "wardDistribution": [
+              {
+                "label": "HDU",
+                "count": 33,
+                "percentage": 100.0
+              }
+            ],
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 4,
+                "percentage": 12.1
+              },
+              {
+                "label": "2–3 days",
+                "count": 16,
+                "percentage": 48.5
+              },
+              {
+                "label": "4–7 days",
+                "count": 10,
+                "percentage": 30.3
+              },
+              {
+                "label": "8+ days",
+                "count": 3,
+                "percentage": 9.1
+              }
+            ]
+          },
+          "clinicalProfile": {
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 16,
+                "percentage": 48.5
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 17,
+                "percentage": 51.5
+              }
+            ],
+            "disposition": [
+              {
+                "label": "Transfer to General Ward",
+                "count": 19,
+                "percentage": 57.6
+              },
+              {
+                "label": "Death in ICU",
+                "count": 9,
+                "percentage": 27.3
+              },
+              {
+                "label": "Still in Admission",
+                "count": 1,
+                "percentage": 3.0
+              },
+              {
+                "label": "Transfer to Another Facility",
+                "count": 2,
+                "percentage": 6.1
+              },
+              {
+                "label": "Discharge Home From ICU",
+                "count": 2,
+                "percentage": 6.1
+              }
+            ]
+          },
+          "mortalityReview": {
+            "summary": {
+              "deathCases": 9,
+              "mortalityRate": 27.3,
+              "meanAge": 56.67,
+              "medianAge": 60.0,
+              "meanLosDays": 2.33,
+              "medianLosDays": 2.0
+            },
+            "losDistribution": [
+              {
+                "label": "1 day",
+                "count": 2,
+                "percentage": 22.2
+              },
+              {
+                "label": "2–3 days",
+                "count": 6,
+                "percentage": 66.7
+              },
+              {
+                "label": "4–7 days",
+                "count": 1,
+                "percentage": 11.1
+              },
+              {
+                "label": "8+ days",
+                "count": 0,
+                "percentage": 0.0
+              }
+            ],
+            "admissionSource": [
+              {
+                "label": "Operation Theater",
+                "count": 3,
+                "percentage": 33.3
+              },
+              {
+                "label": "Source Not Captured",
+                "count": 6,
+                "percentage": 66.7
+              }
+            ],
+            "deathCases": [
+              {
+                "caseId": "OCT-D001",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 7,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D002",
+                "ageGroup": "18–39",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D003",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D004",
+                "ageGroup": "18–39",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D005",
+                "ageGroup": "60–79",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Operation Theater",
+                "losDays": 1,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D006",
+                "ageGroup": "40–59",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D007",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D008",
+                "ageGroup": "60–79",
+                "sex": "Male",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              },
+              {
+                "caseId": "OCT-D009",
+                "ageGroup": "80+",
+                "sex": "Female",
+                "ward": "HDU",
+                "admissionSource": "Source Not Captured",
+                "losDays": 2,
+                "disposition": "Death in ICU"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

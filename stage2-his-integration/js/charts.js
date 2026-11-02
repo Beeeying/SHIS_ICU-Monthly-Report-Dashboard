@@ -2,7 +2,7 @@
  * HGH ICU Monthly Report Dashboard
  * charts.js
  *
- * Stage 1 Reference Implementation
+ * Stage 2A HIS-ready Core Implementation
  *
  * Implemented:
  *
@@ -1958,119 +1958,7 @@ function renderPatientSexChart(
       unitPlural: "days"
     });
   }
-
-
-function renderPrimaryDiagnosisTable(dataset) {
-
-  const rows =
-    dataset?.clinicalProfile?.primaryDiagnosisCounts || [];
-
-  const tableBody =
-    document.querySelector(
-      "#primary-diagnosis-table tbody"
-    );
-
-  if (!tableBody) {
-    return;
-  }
-
-  tableBody.innerHTML = "";
-
-  if (!Array.isArray(rows) || rows.length === 0) {
-
-    const emptyRow =
-      document.createElement("tr");
-
-    emptyRow.innerHTML =
-      '<td colspan="5">No diagnosis data available.</td>';
-
-    tableBody.appendChild(emptyRow);
-
-    return;
-  }
-
-  /*
-   * Percentage denominator:
-   * selected ICU/HDU admission cohort.
-   *
-   * This keeps the definition consistent across
-   * All / ICU / HDU filters.
-   */
-  const totalAdmissions =
-    Number(
-      dataset?.overview?.totalAdmissions ||
-      dataset?.patientProfile?.summary?.totalAdmissions ||
-      getTotalCount(
-        dataset?.patientProfile?.wardDistribution || []
-      )
-    ) || 0;
-
-  const rankedRows =
-    [...rows]
-      .map((row) => {
-
-        const label =
-          row.label || "Unspecified diagnosis";
-
-        const separatorIndex =
-          label.indexOf(" - ");
-
-        return {
-
-          code:
-            separatorIndex >= 0
-              ? label
-                  .slice(0, separatorIndex)
-                  .trim()
-              : "—",
-
-          diagnosis:
-            separatorIndex >= 0
-              ? label
-                  .slice(separatorIndex + 3)
-                  .trim()
-              : label,
-
-          count:
-            Number(row.count || 0)
-        };
-      })
-      .sort(
-        (a, b) =>
-          Number(b.count) -
-          Number(a.count)
-      )
-      .slice(0, 5);
-
-  rankedRows.forEach(
-    (row, index) => {
-
-      const tr =
-        document.createElement("tr");
-
-      const percentage =
-        totalAdmissions > 0
-          ? (
-              (row.count / totalAdmissions) *
-              100
-            ).toFixed(1)
-          : "0.0";
-
-      tr.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${row.diagnosis}</td>
-        <td>${row.code}</td>
-        <td>${row.count}</td>
-        <td>${percentage}%</td>
-      `;
-
-      tableBody.appendChild(tr);
-    }
-  );
-}
-
-
-  function renderClinicalProfileCharts(dataset) {
+  function renderOperationalProfileCharts(dataset) {
 
     const clinicalProfile = dataset?.clinicalProfile;
 
@@ -2079,6 +1967,7 @@ function renderPrimaryDiagnosisTable(dataset) {
     }
 
     const config = getChartConfig();
+
     const admissionSourceData = sortByCountDescending(
       clinicalProfile.admissionSource || []
     );
@@ -2096,7 +1985,10 @@ function renderPrimaryDiagnosisTable(dataset) {
         "Transfer to General Ward",
         "Death in ICU",
         "Still in Admission",
-        "Transfer to Another Facility"
+        "Transfer to Another Facility",
+        "Discharge Home From ICU",
+        "Discharge Against Medical Advice (AMA)",
+        "Unknown / Not Recorded"
       ]
     );
 
@@ -2106,61 +1998,6 @@ function renderPrimaryDiagnosisTable(dataset) {
       items: dispositionData,
       color: config?.COLORS?.primary
     });
-
-    const diagnosisCategoryData = clinicalProfile.diagnosisCategory || [];
-    const diagnosisLabels = getLabels(diagnosisCategoryData);
-    const totalDiagnosisCount = getTotalCount(diagnosisCategoryData);
-
-    const chartKey = "clinicalDiagnosisCategory";
-    const canvas = getCanvas("clinical-diagnosis-category-chart");
-
-    if (canvas && config && isChartJsAvailable()) {
-      if (!hasChartData(diagnosisCategoryData)) {
-        destroyChart(chartKey);
-        showEmptyState(canvas);
-      } else {
-        clearEmptyState(canvas);
-        destroyChart(chartKey);
-
-        const options = config.getDoughnutOptions({
-          tooltipCallbacks: config.createCountPercentageTooltip("admission", "admissions"),
-          showLegend: true
-        });
-
-        options.plugins.legend.position = "bottom";
-        options.plugins.icuDoughnutCenterLabel = {
-          display: true,
-          total: totalDiagnosisCount,
-          label: totalDiagnosisCount === 1 ? "Diagnosis" : "Diagnoses"
-        };
-
-        chartInstances[chartKey] = new Chart(canvas, {
-          type: "doughnut",
-          data: {
-            labels: diagnosisLabels,
-            datasets: [{
-              label: "Diagnoses",
-              data: getCounts(diagnosisCategoryData),
-              percentages: getPercentages(diagnosisCategoryData),
-              ...config.getDoughnutDatasetStyle({
-                colors: config.getDiagnosisCategoryColors(diagnosisLabels)
-              })
-            }]
-          },
-          options,
-          plugins: [doughnutCenterLabelPlugin]
-        });
-      }
-    }
-
-    createHorizontalBarChart({
-      chartKey: "clinicalIcd",
-      canvasId: "clinical-icd-chart",
-      items: sortByCountDescending(clinicalProfile.icdChapter || []),
-      color: config?.COLORS?.primary
-    });
-
-    renderPrimaryDiagnosisTable(dataset);
   }
 
 
@@ -2179,31 +2016,6 @@ function renderPrimaryDiagnosisTable(dataset) {
     if (!config) {
       return;
     }
-
-    const diagnosisColors =
-      (mortalityReview.diagnosisCategory || []).map(
-        (item) =>
-          config.SEMANTIC_COLORS?.diagnosisCategory?.[item.label] ||
-          config.COLORS.primary
-      );
-
-    createVerticalBarChart({
-      chartKey: "mortalityDiagnosisCategory",
-      canvasId: "mortality-diagnosis-category-chart",
-      items: mortalityReview.diagnosisCategory || [],
-      colors: diagnosisColors,
-      unitSingular: "death",
-      unitPlural: "deaths"
-    });
-
-    createHorizontalBarChart({
-      chartKey: "mortalityIcdChapter",
-      canvasId: "mortality-icd-chart",
-      items: sortByCountDescending(mortalityReview.icdChapter || []),
-      color: config.COLORS.primary,
-      unitSingular: "death",
-      unitPlural: "deaths"
-    });
 
     createVerticalBarChart({
       chartKey: "mortalityLos",
@@ -2255,7 +2067,7 @@ function renderPrimaryDiagnosisTable(dataset) {
     dataset
   );
 
-  renderClinicalProfileCharts(
+  renderOperationalProfileCharts(
     dataset
   );
 
@@ -2286,7 +2098,7 @@ function renderPrimaryDiagnosisTable(dataset) {
 
       renderPatientProfileCharts,
 
-      renderClinicalProfileCharts,
+      renderOperationalProfileCharts,
 
       renderMortalityCharts,
 

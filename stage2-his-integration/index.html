@@ -10,7 +10,7 @@
 
   <meta
     name="description"
-    content="Stage 1 structural prototype for the HGH ICU Monthly Report Dashboard."
+    content="Stage 2 HIS integration dashboard for the HGH ICU Monthly Report Dashboard."
   />
 
   <title>HGH ICU Monthly Report Dashboard</title>
@@ -153,19 +153,6 @@
       >
         Patient Profile
       </button>
-
-
-      <button
-        class="tab-button"
-        type="button"
-        data-tab="clinical-profile"
-        aria-controls="clinical-profile"
-        aria-selected="false"
-      >
-        Clinical Profile
-      </button>
-
-
       <button
         class="tab-button"
         type="button"
@@ -173,7 +160,7 @@
         aria-controls="mortality-review"
         aria-selected="false"
       >
-        Mortality Review
+        Mortality & Outcomes
       </button>
 
     </nav>
@@ -464,7 +451,7 @@
             </h2>
 
             <p>
-              Who are the ICU/HDU patients in this cohort?
+              Patient characteristics, length of stay, and admission profile for the selected cohort.
             </p>
 
           </div>
@@ -612,7 +599,7 @@
           </article>
 
 
-          <article class="dashboard-card chart-card patient-los-card">
+          <article class="dashboard-card chart-card">
 
             <div class="card-heading">
 
@@ -638,45 +625,6 @@
 
           </article>
 
-        </div>
-
-      </section>
-
-
-      <!-- =======================================================
-           PAGE 3 — CLINICAL PROFILE
-           ======================================================= -->
-
-      <section
-        id="clinical-profile"
-        class="dashboard-page"
-        hidden
-      >
-
-        <div class="page-heading">
-
-          <div>
-
-            <p class="section-kicker">
-              Clinical characteristics
-            </p>
-
-            <h2>
-              Clinical Profile
-            </h2>
-
-            <p>
-              Where did patients come from, why were they admitted, and what happened to them?
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="chart-grid chart-grid-2">
-
-          <!-- Admission Source -->
 
           <article class="dashboard-card chart-card">
 
@@ -704,173 +652,12 @@
 
           </article>
 
-
-          <!-- Patient Disposition -->
-
-          <article class="dashboard-card chart-card">
-
-            <div class="card-heading">
-
-              <div>
-
-                <h3>
-                  Patient Disposition
-                </h3>
-
-                <p>
-                  Transfer, death, and current admission status
-                </p>
-
-              </div>
-
-            </div>
-
-            <div class="chart-container">
-
-              <canvas id="clinical-disposition-chart"></canvas>
-
-            </div>
-
-          </article>
-
-
-          <!-- Primary Diagnosis Category -->
-
-          <article class="dashboard-card chart-card">
-
-            <div class="card-heading">
-
-              <div>
-
-                <h3>
-                  Primary Diagnosis Category
-                </h3>
-
-                <p>
-                  NCD, Infectious, Surgery, and Other
-                </p>
-
-              </div>
-
-            </div>
-
-            <div class="chart-container">
-
-              <canvas id="clinical-diagnosis-category-chart"></canvas>
-
-            </div>
-
-          </article>
-
-
-          <!-- ICD-10 Chapter -->
-
-          <article class="dashboard-card chart-card">
-
-            <div class="card-heading">
-
-              <div>
-
-                <h3>
-                  Primary Diagnosis by ICD-10 Chapter
-                </h3>
-
-                <p>
-                  Clinical distribution using ICD-10 chapter groupings
-                </p>
-
-              </div>
-
-            </div>
-
-            <div class="chart-container">
-
-              <canvas id="clinical-icd-chart"></canvas>
-
-            </div>
-
-          </article>
-
-
-          <!-- Top Primary Diagnoses -->
-
-          <article class="dashboard-card table-card full-width-card">
-
-            <div class="card-heading">
-
-              <div>
-
-                <h3>
-                  Top Primary Diagnoses
-                </h3>
-
-                <p>
-                  Ranked diagnosis summary for the selected cohort
-                </p>
-
-              </div>
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-              <table id="primary-diagnosis-table">
-
-                <thead>
-
-                  <tr>
-
-                    <th>
-                      Rank
-                    </th>
-
-                    <th>
-                      Primary Diagnosis
-                    </th>
-
-                    <th>
-                      ICD-10 Code
-                    </th>
-
-                    <th>
-                      Cases
-                    </th>
-
-                    <th>
-                      % of Admissions
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                  <tr>
-
-                    <td colspan="5">
-                      Table placeholder
-                    </td>
-
-                  </tr>
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-          </article>
-
         </div>
 
       </section>
 
-
-      <!-- =======================================================
-           PAGE 4 — MORTALITY REVIEW
+<!-- =======================================================
+           PAGE 3 — MORTALITY & OUTCOMES
            ======================================================= -->
 
       <section
@@ -888,11 +675,11 @@
             </p>
 
             <h2>
-              Mortality Review
+              Mortality & Outcomes
             </h2>
 
             <p>
-              Mortality indicators, patterns, and de-identified death case review.
+              Mortality indicators, patient outcomes, and de-identified death case review.
             </p>
 
           </div>
@@ -998,6 +785,54 @@
         </div>
 
 
+
+        <div class="subsection-heading">
+
+          <div>
+
+            <h3>
+              Outcome Profile
+            </h3>
+
+            <p>
+              Disposition of patients in the selected ICU/HDU admission cohort.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="chart-grid chart-grid-2">
+
+          <article class="dashboard-card chart-card full-width-card">
+
+            <div class="card-heading">
+
+              <div>
+
+                <h3>
+                  Patient Disposition
+                </h3>
+
+                <p>
+                  Transfer, death, and current admission status
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="chart-container">
+
+              <canvas id="clinical-disposition-chart"></canvas>
+
+            </div>
+
+          </article>
+
+        </div>
+
         <div class="subsection-heading">
 
           <div>
@@ -1016,60 +851,6 @@
 
 
         <div class="chart-grid chart-grid-2">
-
-          <article class="dashboard-card chart-card">
-
-            <div class="card-heading">
-
-              <div>
-
-                <h3>
-                  Deaths by Diagnosis Category
-                </h3>
-
-                <p>
-                  Primary clinical category among death cases
-                </p>
-
-              </div>
-
-            </div>
-
-            <div class="chart-container">
-
-              <canvas id="mortality-diagnosis-category-chart"></canvas>
-
-            </div>
-
-          </article>
-
-
-          <article class="dashboard-card chart-card">
-
-            <div class="card-heading">
-
-              <div>
-
-                <h3>
-                  Deaths by ICD-10 Chapter
-                </h3>
-
-                <p>
-                  ICD-10 distribution among death cases
-                </p>
-
-              </div>
-
-            </div>
-
-            <div class="chart-container">
-
-              <canvas id="mortality-icd-chart"></canvas>
-
-            </div>
-
-          </article>
-
 
           <article class="dashboard-card chart-card">
 
@@ -1169,49 +950,12 @@
                 <input
                   id="death-case-search"
                   type="search"
-                  placeholder="Search case ID or clinical category..."
+                  placeholder="Search case ID, ward, source, or disposition..."
                 />
 
               </div>
 
-
-              <div class="filter-control compact-filter">
-
-                <label for="death-category-filter">
-                  Category
-                </label>
-
-                <select id="death-category-filter">
-
-                  <option
-                    value="All"
-                    selected
-                  >
-                    All
-                  </option>
-
-                  <option value="NCD">
-                    NCD
-                  </option>
-
-                  <option value="Infectious">
-                    Infectious
-                  </option>
-
-                  <option value="Surgery">
-                    Surgery
-                  </option>
-
-                  <option value="Other">
-                    Other
-                  </option>
-
-                </select>
-
-              </div>
-
-
-              <div class="filter-control compact-filter">
+<div class="filter-control compact-filter">
 
                 <label for="death-sort">
                   Sort by
@@ -1249,39 +993,13 @@
 
                   <tr>
 
-                    <th>
-                      Case ID
-                    </th>
-
-                    <th>
-                      Age Group
-                    </th>
-
-                    <th>
-                      Sex
-                    </th>
-
-                    <th>
-                      Ward
-                    </th>
-
-                    <th>
-                      Admission Source
-                    </th>
-
-                    <th>
-                      Diagnosis Category
-                    </th>
-
-                    <th>
-                      ICD-10 Chapter
-                    </th>
-
-                    <th>
-                      LOS
-                    </th>
-
-                    <th aria-label="View details"></th>
+                    <th>Case ID</th>
+                    <th>Age Group</th>
+                    <th>Sex</th>
+                    <th>Ward</th>
+                    <th>Admission Source</th>
+                    <th>LOS</th>
+                    <th>Disposition</th>
 
                   </tr>
 
@@ -1292,7 +1010,7 @@
 
                   <tr>
 
-                    <td colspan="9">
+                    <td colspan="7">
                       Table placeholder
                     </td>
 
